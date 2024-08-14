@@ -2,6 +2,7 @@ package com.devatrii.statussaver.views.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,15 +59,24 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                 }
 
                 statusDownload.setOnClickListener {
-                    val isDownloaded = context.saveStatus(mediaModel)
-                    if (isDownloaded) {
-                        // status is downloaded
-                        Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-                        mediaModel.isDownloaded = true
-                        statusDownload.setImageResource(R.drawable.ic_downloaded)
+                    // Check if the status is already downloaded
+                    if (mediaModel.isDownloaded) {
+                        // Show a message that the status is already downloaded
+                        Toast.makeText(context, "Already saved", Toast.LENGTH_SHORT).show()
                     } else {
-                        // unable to download status
-                        Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()
+                        // Attempt to download the status
+                        val isDownloaded = context.saveStatus(mediaModel)
+                        if (isDownloaded) {
+                            // Mark the status as downloaded
+                            mediaModel.isDownloaded = true
+                            // Update the icon to indicate it's downloaded
+                            statusDownload.setImageResource(R.drawable.ic_downloaded)
+                            // Optionally show a toast message for confirmation
+                            Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Handle the failure to download status
+                            Toast.makeText(context, "Unable to save status", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
 

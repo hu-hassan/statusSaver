@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.ActivityMainBinding
 import com.devatrii.statussaver.utils.Constants
@@ -28,116 +29,91 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+//        SharedPrefUtils.syncDeletionWithGallery(this)
         SharedPrefUtils.init(activity)
-        binding.apply {
+        binding.apply{
             splashLogic()
-            requestPermission()
-            val fragmentWhatsAppStatus = FragmentStatus()
-            val bundle = Bundle()
+            val fragmentWhatsapp = FragmentStatus()
+            val  bundle = Bundle()
             bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-            replaceFragment(fragmentWhatsAppStatus, bundle)
-            toolBar.setNavigationOnClickListener {
-                drawerLayout.open()
-            }
-            navigationView.setNavigationItemSelectedListener {
-                when (it.itemId) {
+            replaceFragment(fragmentWhatsapp,bundle)
+            bottomNavigationView.setOnItemSelectedListener {
+                when(it.itemId){
                     R.id.menu_status -> {
                         // whatsapp status
-                        val fragmentWhatsAppStatus = FragmentStatus()
-                        val bundle = Bundle()
+                        val fragmentWhatsapp = FragmentStatus()
+                        val  bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-                        replaceFragment(fragmentWhatsAppStatus, bundle)
-                        drawerLayout.close()
+                        replaceFragment(fragmentWhatsapp,bundle)
                     }
-
                     R.id.menu_business_status -> {
                         // whatsapp business status
-                        val fragmentWhatsAppStatus = FragmentStatus()
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.FRAGMENT_TYPE_KEY,
-                            Constants.TYPE_WHATSAPP_BUSINESS
-                        )
-                        replaceFragment(fragmentWhatsAppStatus, bundle)
-                        drawerLayout.close()
+                        val fragmentWhatsapp = FragmentStatus()
+                        val  bundle = Bundle()
+                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_BUSINESS)
+                        replaceFragment(fragmentWhatsapp,bundle)
                     }
-
                     R.id.menu_settings -> {
-                        // settings
+                        // whatsapp settings status
                         replaceFragment(FragmentSettings())
-                        drawerLayout.close()
+
                     }
                 }
-
-                return@setNavigationItemSelectedListener true
+                return@setOnItemSelectedListener true;
             }
 
         }
     }
 
-    private val PERMISSION_REQUEST_CODE = 50
-    private fun requestPermission() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-            val isPermissionsGranted = SharedPrefUtils.getPrefBoolean(
-                SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
-                false
-            )
-            if (!isPermissionsGranted) {
-                ActivityCompat.requestPermissions(
-                    /* activity = */ activity,
-                    /* permissions = */ arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    /* requestCode = */ PERMISSION_REQUEST_CODE
-                )
-                Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+
+    }
+//    override fun onStart() {
+//        super.onStart()
+//
+//        // Check if the permission is already granted
+//        if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
+//            // If not, request the permission
+//            ActivityCompat.requestPermissions(this, arrayOf("android.permission.POST_NOTIFICATIONS"), 101)
+//        }
+//    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
-            val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-            if (isGranted) {
-                SharedPrefUtils.putPrefBoolean(SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED, true)
+        if (requestCode == 101) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission was granted
+                Toast.makeText(this, "Notification permission granted!", Toast.LENGTH_SHORT).show()
             } else {
-                SharedPrefUtils.putPrefBoolean(
-                    SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
-                    false
-                )
-
+                // Permission was denied
+                Toast.makeText(this, "Notification permission denied!", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
     private fun splashLogic() {
         binding.apply {
-            splashLayout.cardView.slideFromStart()
+            splashScreen.cardView.slideFromStart()
             Handler(Looper.myLooper()!!).postDelayed({
                 splashScreenHolder.slideToEndWithFadeOut()
                 splashScreenHolder.visibility = View.GONE
+                // Check if the permission is already granted
+                if (ContextCompat.checkSelfPermission(activity, "android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
+                    // If not, request the permission
+                    ActivityCompat.requestPermissions(activity, arrayOf("android.permission.POST_NOTIFICATIONS"), 101)
+                }
             }, 2000)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager?.findFragmentById(R.id.fragment_container)
-        fragment?.onActivityResult(requestCode, resultCode, data)
-    }
+
 }
-
-
-
-
-
-
-
-
-

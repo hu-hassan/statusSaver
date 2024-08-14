@@ -15,7 +15,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:show_buffering="when_playing"
-        app:show_shuffle_button="true" />
+        app:show_next_button="false"
+        app:show_previous_button="false"
+        app:show_shuffle_button="true"
+/>
 
     <LinearLayout
         android:id="@+id/tools_holder"
@@ -25,6 +28,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
+
+<!--        <Button-->
+<!--            android:id="@+id/backwardButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Backward" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/forwardButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Forward" />-->
 
         <include
             android:id="@+id/tools"

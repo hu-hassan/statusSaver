@@ -35,27 +35,33 @@ fun Context.saveStatus(model: MediaModel): Boolean {
     if (isStatusExist(model.fileName)) {
         return true
     }
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-        return saveStatusBeforeQ(this,Uri.parse(model.pathUri))
-    }
 
     val extension = getFileExtension(model.fileName)
     val mimeType = "${model.type}/$extension"
     val inputStream = contentResolver.openInputStream(model.pathUri.toUri())
+
     try {
         val values = ContentValues()
         values.apply {
             put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
             put(MediaStore.MediaColumns.DISPLAY_NAME, model.fileName)
-            put(
-                MediaStore.MediaColumns.RELATIVE_PATH,
-                Environment.DIRECTORY_DOCUMENTS + "/" + getString(R.string.app_name)
-            )
+
+            // Change RELATIVE_PATH based on media type
+            val relativePath = if (model.type == "image") {
+                Environment.DIRECTORY_PICTURES + "/" + getString(R.string.app_name)
+            } else { // Assuming video if not image
+                Environment.DIRECTORY_MOVIES + "/" + getString(R.string.app_name)
+            }
+            put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
         }
-        val uri = contentResolver.insert(
-            MediaStore.Files.getContentUri("external"),
-            values
-        )
+
+        val contentUri = if (model.type == "image") {
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        } else {
+            MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+        }
+
+        val uri = contentResolver.insert(contentUri, values)
         uri?.let {
             val outputStream = contentResolver.openOutputStream(it)
             if (inputStream != null) {

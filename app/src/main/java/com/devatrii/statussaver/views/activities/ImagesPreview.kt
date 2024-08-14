@@ -18,12 +18,11 @@ class ImagesPreview : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            val list =
-                intent.getSerializableExtra(Constants.MEDIA_LIST_KEY) as ArrayList<MediaModel>
+            val list = intent.getSerializableExtra(Constants.MEDIA_LIST_KEY) as ArrayList<MediaModel>
             val scrollTo = intent.getIntExtra(Constants.MEDIA_SCROLL_KEY, 0)
             adapter = ImagePreviewAdapter(list, activity)
             imagesViewPager.adapter = adapter
-            imagesViewPager.currentItem = scrollTo
+            imagesViewPager.setCurrentItem(scrollTo, false)
         }
 
     }
