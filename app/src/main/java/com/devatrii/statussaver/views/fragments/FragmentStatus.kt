@@ -281,6 +281,42 @@ class FragmentStatus : Fragment() {
         // Show the notification
         notificationManager.notify(0, notificationBuilder.build())
     }
+    override fun onResume() {
+        super.onResume()
+        when (type) {
+            Constants.TYPE_WHATSAPP_MAIN -> {
+                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+                    false
+                )
+                if (isPermissionGranted) {
+                    getWhatsAppStatuses()
+
+                    binding.swipeRefreshLayout.setOnRefreshListener {
+                        refreshStatuses()
+                    }
+
+                }
+
+            }
+            Constants.TYPE_WHATSAPP_BUSINESS -> {
+                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+                    false
+                )
+                if (isPermissionGranted) {
+                    getWhatsAppBusinessStatuses()
+
+                    binding.swipeRefreshLayout.setOnRefreshListener {
+                        refreshStatuses()
+                    }
+
+                }
+            }
+
+        }
+
+    }
 
 }
 
