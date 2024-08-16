@@ -301,7 +301,7 @@ class FragmentStatus : Fragment() {
             }
             Constants.TYPE_WHATSAPP_BUSINESS -> {
                 val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
-                    SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+                    SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
                     false
                 )
                 if (isPermissionGranted) {
