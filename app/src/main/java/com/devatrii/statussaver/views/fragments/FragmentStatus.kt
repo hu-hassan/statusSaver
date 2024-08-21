@@ -28,9 +28,11 @@ import com.devatrii.statussaver.utils.Constants
 import com.devatrii.statussaver.utils.SharedPrefKeys
 import com.devatrii.statussaver.utils.SharedPrefUtils
 import com.devatrii.statussaver.utils.getFolderPermissions
+import com.devatrii.statussaver.utils.isStatusExistInStatuses
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.devatrii.statussaver.views.activities.MainActivity
+import com.devatrii.statussaver.views.adapters.MediaAdapter
 import com.devatrii.statussaver.views.adapters.MediaViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -290,8 +292,8 @@ class FragmentStatus : Fragment() {
                     false
                 )
                 if (isPermissionGranted) {
+//                    viewModel.clearWhatsAppStatuses()
                     getWhatsAppStatuses()
-
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }

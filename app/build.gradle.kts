@@ -52,7 +52,7 @@ dependencies {
     implementation ("com.jsibbold:zoomage:1.3.1")
     implementation ("androidx.media3:media3-exoplayer:1.1.1")
     implementation ("androidx.media3:media3-exoplayer-dash:1.1.1")
-    implementation ("androidx.media3:media3-ui:1.1.1")
+    implementation ("androidx.media3:media3-ui:1.4.0")
 
     implementation ("androidx.documentfile:documentfile:1.0.1")
     implementation ("com.github.bumptech.glide:glide:4.16.0")

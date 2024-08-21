@@ -15,6 +15,9 @@ import com.devatrii.statussaver.databinding.ItemMediaBinding
 import com.devatrii.statussaver.models.MEDIA_TYPE_IMAGE
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
+import com.devatrii.statussaver.utils.isStatusExist
+import com.devatrii.statussaver.utils.isStatusExistInStatuses
+import com.devatrii.statussaver.utils.isStatusSaved
 import com.devatrii.statussaver.utils.saveStatus
 import com.devatrii.statussaver.views.activities.ImagesPreview
 import com.devatrii.statussaver.views.activities.VideosPreview
@@ -31,7 +34,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                 if (mediaModel.type == MEDIA_TYPE_IMAGE) {
                     statusPlay.visibility = View.GONE
                 }
-                val downloadImage = if (mediaModel.isDownloaded) {
+                val downloadImage = if (context.isStatusExist(mediaModel.fileName)|| context.isStatusSaved(mediaModel.fileName)) {
                     R.drawable.ic_downloaded
                 } else {
                     R.drawable.ic_download
@@ -60,7 +63,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
 
                 statusDownload.setOnClickListener {
                     // Check if the status is already downloaded
-                    if (mediaModel.isDownloaded) {
+                    if (context.isStatusExist(mediaModel.fileName)||context.isStatusSaved(mediaModel.fileName)) {
                         // Show a message that the status is already downloaded
                         Toast.makeText(context, "Already saved", Toast.LENGTH_SHORT).show()
                     } else {

@@ -1,6 +1,7 @@
 package com.devatrii.statussaver.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import com.devatrii.statussaver.data.StatusRepo
 import com.devatrii.statussaver.databinding.FragmentMediaBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
+import com.devatrii.statussaver.utils.isStatusExistInStatuses
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.devatrii.statussaver.views.adapters.MediaAdapter
@@ -34,13 +36,20 @@ class FragmentMedia : Fragment() {
                 when (mediaType) {
                     Constants.MEDIA_TYPE_WHATSAPP_IMAGES -> {
                         viewModel.whatsAppImagesLiveData.observe(requireActivity()) { unFilteredList ->
+                            val fileNames = unFilteredList.map { it.fileName }
                             val filteredList = unFilteredList.distinctBy { model ->
                                 model.fileName
                             }
 
                             val list = ArrayList<MediaModel>()
                             filteredList.forEach { model ->
-                                list.add(model)
+                                if(isStatusExistInStatuses(model.fileName)){
+                                    list.add(model)
+                                }
+                                if(!isStatusExistInStatuses(model.fileName)){
+                                    list.remove(model)
+                                }
+
                             }
                             adapter = MediaAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
@@ -61,8 +70,12 @@ class FragmentMedia : Fragment() {
 
                             val list = ArrayList<MediaModel>()
                             filteredList.forEach { model ->
-                                list.add(model)
-                            }
+                                if(isStatusExistInStatuses(model.fileName)){
+                                    list.add(model)
+                                }
+                                if(!isStatusExistInStatuses(model.fileName)){
+                                    list.remove(model)
+                                }                            }
                             adapter = MediaAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
                             if (list.size == 0) {
@@ -81,7 +94,12 @@ class FragmentMedia : Fragment() {
 
                             val list = ArrayList<MediaModel>()
                             filteredList.forEach { model ->
-                                list.add(model)
+                                if(isStatusExistInStatuses(model.fileName)){
+                                    list.add(model)
+                                }
+                                if(!isStatusExistInStatuses(model.fileName)){
+                                    list.remove(model)
+                                }
                             }
                             adapter = MediaAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
@@ -101,7 +119,12 @@ class FragmentMedia : Fragment() {
 
                             val list = ArrayList<MediaModel>()
                             filteredList.forEach { model ->
-                                list.add(model)
+                                if(isStatusExistInStatuses(model.fileName)){
+                                    list.add(model)
+                                }
+                                if(!isStatusExistInStatuses(model.fileName)){
+                                    list.remove(model)
+                                }
                             }
                             adapter = MediaAdapter(list, requireActivity())
                             mediaRecyclerView.adapter = adapter
@@ -123,6 +146,7 @@ class FragmentMedia : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
+
 
 
 }

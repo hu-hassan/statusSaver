@@ -15,6 +15,7 @@ import com.devatrii.statussaver.databinding.ItemMediaBinding
 import com.devatrii.statussaver.models.MEDIA_TYPE_IMAGE
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.SharedPrefUtils
+import com.devatrii.statussaver.utils.isStatusExist
 import com.devatrii.statussaver.utils.saveStatus
 
 class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context) :
@@ -30,7 +31,7 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                 // Retrieve the isDownloaded property from shared preferences
 //                mediaModel.isDownloaded = SharedPrefUtils.isStatusDownloaded(mediaModel.fileName)
 
-                val downloadImage = if (mediaModel.isDownloaded) {
+                val downloadImage = if (context.isStatusExist(mediaModel.fileName)) {
                     R.drawable.ic_downloaded
                 } else {
                     R.drawable.ic_download
@@ -38,7 +39,7 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                 tools.statusDownload.setImageResource(downloadImage)
 
                 tools.download.setOnClickListener {
-                    if (!mediaModel.isDownloaded) {
+                    if (!context.isStatusExist(mediaModel.fileName)) {
                         val isDownloaded = context.saveStatus(mediaModel)
                         if (isDownloaded) {
                             // Status is downloaded

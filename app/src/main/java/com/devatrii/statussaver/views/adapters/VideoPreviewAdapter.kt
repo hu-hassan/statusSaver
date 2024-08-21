@@ -17,6 +17,8 @@ import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.ItemVideoPreviewBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.SharedPrefUtils
+import com.devatrii.statussaver.utils.isStatusExist
+import com.devatrii.statussaver.utils.isStatusSaved
 import com.devatrii.statussaver.utils.saveStatus
 import java.io.File
 
@@ -38,7 +40,7 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
                 player.prepare()
                 player.repeatMode = Player.REPEAT_MODE_ONE
 
-                val downloadImage = if (mediaModel.isDownloaded) {
+                val downloadImage = if (context.isStatusSaved(mediaModel.fileName)) {
                     R.drawable.ic_downloaded
                 } else {
                     R.drawable.ic_download
@@ -46,7 +48,7 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
                 tools.statusDownload.setImageResource(downloadImage)
 
                 tools.download.setOnClickListener {
-                    if (!mediaModel.isDownloaded) {
+                    if (!context.isStatusSaved(mediaModel.fileName)) {
                         val isDownloaded = context.saveStatus(mediaModel)
                         if (isDownloaded) {
                             // Status is downloaded

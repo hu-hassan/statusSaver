@@ -3,9 +3,9 @@ package com.devatrii.statussaver.utils
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import com.anggrayudi.storage.file.toRawFile
@@ -16,10 +16,29 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 fun Context.isStatusExist(fileName: String): Boolean {
-    val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+    val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val file = File("${downloadDir}/${getString(R.string.app_name)}", fileName)
     return file.exists()
 }
+fun Context.isStatusSaved(fileName: String): Boolean {
+    val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
+    val file = File("${downloadDir}/${getString(R.string.app_name)}", fileName)
+    return file.exists()
+}
+fun isStatusExistInStatuses(fileName: String): Boolean {
+    val statusesDir = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp/WhatsApp/Media/.Statuses")
+    Log.d("FileUtils", "isStatusExistInStatuses: Path - ${statusesDir.absolutePath}")
+
+    if (statusesDir.exists() && statusesDir.isDirectory) {
+        Log.d("FileUtils", "isStatusExistInStatuses: Status directory exists")
+        val file = File(statusesDir, fileName)
+        return file.exists()
+    } else {
+        Log.d("FileUtils", "isStatusExistInStatuses: Status directory does not exist")
+    }
+    return false
+}
+
 
 
 fun getFileExtension(fileName: String): String {

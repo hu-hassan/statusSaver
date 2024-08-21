@@ -15,6 +15,7 @@ import com.devatrii.statussaver.utils.SharedPrefKeys
 import com.devatrii.statussaver.utils.SharedPrefUtils
 import com.devatrii.statussaver.utils.getFileExtension
 import com.devatrii.statussaver.utils.isStatusExist
+import com.devatrii.statussaver.utils.isStatusSaved
 
 class StatusRepo(val context: Context) {
 
@@ -47,12 +48,12 @@ class StatusRepo(val context: Context) {
         )
 
         val fileDocument = DocumentFile.fromTreeUri(activity, treeUri)
-
+        val fileNames = whatsAppStatusesLiveData.value?.map { it.fileName } ?: emptyList()
         fileDocument?.let {
             it.listFiles().forEach { file->
                 Log.d(TAG, "getAllStatuses: ${file.name}")
                 if (file.name != ".nomedia" && file.isFile) {
-                    val isDownloaded = context.isStatusExist(file.name!!)
+                    val isDownloaded = context.isStatusExist(file.name!!) || context.isStatusSaved(file.name!!)
                     Log.d(TAG, "getAllStatusesExtension: Extension: ${getFileExtension(file.name!!)} ||${file.name}")
                     val type = if (getFileExtension(file.name!!) == "mp4") {
                         MEDIA_TYPE_VIDEO
@@ -68,11 +69,12 @@ class StatusRepo(val context: Context) {
                     )
                     when (whatsAppType) {
                         Constants.TYPE_WHATSAPP_MAIN -> {
-
                             wpStatusesList.add(model)
+
                         }
 
                         else -> {
+
                             wpBusinessStatusesList.add(model)
                         }
 

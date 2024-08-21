@@ -44,7 +44,7 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
         isPermissionsGranted = wpPermissions && wpBusinessPermissions
         Log.d(TAG, "Status View Model: isPermissions=> $isPermissionsGranted ")
         if (isPermissionsGranted) {
-        Log.d(TAG, "Status View Model: Permissions Already Granted Getting Statuses ")
+            Log.d(TAG, "Status View Model: Permissions Already Granted Getting Statuses ")
             CoroutineScope(Dispatchers.IO).launch {
                 repo.getAllStatuses()
 
@@ -75,7 +75,8 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
         wpStatusLiveData.observe(repo.activity as LifecycleOwner) {
             val tempList = ArrayList<MediaModel>()
             it.forEach {mediaModel->
-                if (mediaModel.type == MEDIA_TYPE_IMAGE){
+
+                if(mediaModel.type == MEDIA_TYPE_IMAGE){
                     tempList.add(mediaModel)
                 }
             }
@@ -135,15 +136,3 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

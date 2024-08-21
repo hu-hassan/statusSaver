@@ -28,44 +28,43 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-
+    private var currentSelectedItemId: Int = R.id.menu_status // Default selected item
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-//        SharedPrefUtils.syncDeletionWithGallery(this)
         SharedPrefUtils.init(activity)
-        binding.apply{
+        binding.apply {
             splashLogic()
             val fragmentWhatsapp = FragmentStatus()
-            val  bundle = Bundle()
+            val bundle = Bundle()
             bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-            replaceFragment(fragmentWhatsapp,bundle)
+            replaceFragment(fragmentWhatsapp, bundle)
             bottomNavigationView.setOnItemSelectedListener {
-                when(it.itemId){
+                if (it.itemId == currentSelectedItemId) {
+                    // If the selected item is the same as the current item, do nothing
+                    return@setOnItemSelectedListener false
+                }
+                currentSelectedItemId = it.itemId // Update the current selected item
+                when (it.itemId) {
                     R.id.menu_status -> {
-                        // whatsapp status
                         val fragmentWhatsapp = FragmentStatus()
-                        val  bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-                        replaceFragment(fragmentWhatsapp,bundle)
+                        replaceFragment(fragmentWhatsapp, bundle)
                     }
                     R.id.menu_business_status -> {
-                        // whatsapp business status
                         val fragmentWhatsapp = FragmentStatus()
-                        val  bundle = Bundle()
+                        val bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_BUSINESS)
-                        replaceFragment(fragmentWhatsapp,bundle)
+                        replaceFragment(fragmentWhatsapp, bundle)
                     }
                     R.id.menu_settings -> {
-                        // whatsapp settings status
                         replaceFragment(FragmentSettings())
-
                     }
                 }
-                return@setOnItemSelectedListener true;
+                return@setOnItemSelectedListener true
             }
-
         }
     }
 
