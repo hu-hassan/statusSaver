@@ -49,6 +49,9 @@ object SharedPrefUtils {
         editor.apply()
         return true
     }
+    fun setPrefString(key: String, value: String) {
+        preferences.edit().putString(key, value).apply()
+    }
 }
 
 object SharedPrefKeys{

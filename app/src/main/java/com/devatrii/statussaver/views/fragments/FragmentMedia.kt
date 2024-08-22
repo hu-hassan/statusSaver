@@ -1,7 +1,6 @@
 package com.devatrii.statussaver.views.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,13 @@ import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.devatrii.statussaver.views.adapters.MediaAdapter
 
-
 class FragmentMedia : Fragment() {
     private val binding by lazy {
         FragmentMediaBinding.inflate(layoutInflater)
     }
     lateinit var viewModel: StatusViewModel
     lateinit var adapter: MediaAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
@@ -36,117 +35,52 @@ class FragmentMedia : Fragment() {
                 when (mediaType) {
                     Constants.MEDIA_TYPE_WHATSAPP_IMAGES -> {
                         viewModel.whatsAppImagesLiveData.observe(requireActivity()) { unFilteredList ->
-                            val fileNames = unFilteredList.map { it.fileName }
-                            val filteredList = unFilteredList.distinctBy { model ->
-                                model.fileName
-                            }
-
-                            val list = ArrayList<MediaModel>()
-                            filteredList.forEach { model ->
-                                if(isStatusExistInStatuses(model.fileName)){
-                                    list.add(model)
-                                }
-                                if(!isStatusExistInStatuses(model.fileName)){
-                                    list.remove(model)
-                                }
-
-                            }
-                            adapter = MediaAdapter(list, requireActivity())
-                            mediaRecyclerView.adapter = adapter
-                            if (list.size == 0) {
-                                tempMediaText.visibility = View.VISIBLE
-                            } else {
-                                tempMediaText.visibility = View.GONE
-                            }
-
+                            updateUI(unFilteredList)
                         }
                     }
-
                     Constants.MEDIA_TYPE_WHATSAPP_VIDEOS -> {
                         viewModel.whatsAppVideosLiveData.observe(requireActivity()) { unFilteredList ->
-                            val filteredList = unFilteredList.distinctBy { model ->
-                                model.fileName
-                            }
-
-                            val list = ArrayList<MediaModel>()
-                            filteredList.forEach { model ->
-                                if(isStatusExistInStatuses(model.fileName)){
-                                    list.add(model)
-                                }
-                                if(!isStatusExistInStatuses(model.fileName)){
-                                    list.remove(model)
-                                }                            }
-                            adapter = MediaAdapter(list, requireActivity())
-                            mediaRecyclerView.adapter = adapter
-                            if (list.size == 0) {
-                                tempMediaText.visibility = View.VISIBLE
-                            } else {
-                                tempMediaText.visibility = View.GONE
-                            }
+                            updateUI(unFilteredList)
                         }
                     }
-
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES -> {
                         viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { unFilteredList ->
-                            val filteredList = unFilteredList.distinctBy { model ->
-                                model.fileName
-                            }
-
-                            val list = ArrayList<MediaModel>()
-                            filteredList.forEach { model ->
-                                if(isStatusExistInStatuses(model.fileName)){
-                                    list.add(model)
-                                }
-                                if(!isStatusExistInStatuses(model.fileName)){
-                                    list.remove(model)
-                                }
-                            }
-                            adapter = MediaAdapter(list, requireActivity())
-                            mediaRecyclerView.adapter = adapter
-                            if (list.size == 0) {
-                                tempMediaText.visibility = View.VISIBLE
-                            } else {
-                                tempMediaText.visibility = View.GONE
-                            }
+                            updateUI(unFilteredList)
                         }
                     }
-
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS -> {
                         viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { unFilteredList ->
-                            val filteredList = unFilteredList.distinctBy { model ->
-                                model.fileName
-                            }
-
-                            val list = ArrayList<MediaModel>()
-                            filteredList.forEach { model ->
-                                if(isStatusExistInStatuses(model.fileName)){
-                                    list.add(model)
-                                }
-                                if(!isStatusExistInStatuses(model.fileName)){
-                                    list.remove(model)
-                                }
-                            }
-                            adapter = MediaAdapter(list, requireActivity())
-                            mediaRecyclerView.adapter = adapter
-                            if (list.size == 0) {
-                                tempMediaText.visibility = View.VISIBLE
-                            } else {
-                                tempMediaText.visibility = View.GONE
-                            }
+                            updateUI(unFilteredList)
                         }
                     }
                 }
-
-
             }
         }
+    }
+
+    private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
+        val filteredList = unFilteredList.distinctBy { model ->
+            model.fileName
+        }
+
+        val list = ArrayList<MediaModel>()
+        filteredList.forEach { model ->
+                            list.add(model)
+//            if (isStatusExistInStatuses(model.fileName)) {
+//                list.add(model)
+//            }
+//            if (!isStatusExistInStatuses(model.fileName)) {
+//                list.remove(model)
+//            }
+
+        }
+        adapter = MediaAdapter(list, requireActivity())
+        binding.mediaRecyclerView.adapter = adapter
+        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
-
-
-
 }
