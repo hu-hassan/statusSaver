@@ -2,7 +2,9 @@ package com.devatrii.statussaver.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Environment
 import com.devatrii.statussaver.R
+import java.io.File
 
 object SharedPrefUtils {
     private lateinit var preferences: SharedPreferences
@@ -59,4 +61,7 @@ object SharedPrefKeys{
     const val PREF_KEY_WP_TREE_URI = "PREF_KEY_TREE_URI"
     const val PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED = "PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED"
     const val PREF_KEY_WP_BUSINESS_TREE_URI = "PREF_KEY_WP_BUSINESS_TREE_URI"
+    val whatsappDirectoryAdress10p = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp/WhatsApp/Media/.Statuses")
+    val whatsappDirectoryAdress10m = File("${Environment.getExternalStorageDirectory()}/WhatsApp/Media/.Statuses")
+
 }

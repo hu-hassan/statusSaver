@@ -26,17 +26,26 @@ fun Context.isStatusSaved(fileName: String): Boolean {
     return file.exists()
 }
 fun isStatusExistInStatuses(fileName: String): Boolean {
-    val statusesDir = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp/WhatsApp/Media/.Statuses")
-    Log.d("FileUtils", "isStatusExistInStatuses: Path - ${statusesDir.absolutePath}")
+    var statusesDir = SharedPrefKeys.whatsappDirectoryAdress10p
 
-    if (statusesDir.exists() && statusesDir.isDirectory) {
-        Log.d("FileUtils", "isStatusExistInStatuses: Status directory exists")
-        val file = File(statusesDir, fileName)
-        return file.exists()
+    if (!statusesDir.exists()) {
+        statusesDir = SharedPrefKeys.whatsappDirectoryAdress10m
     } else {
         Log.d("FileUtils", "isStatusExistInStatuses: Status directory does not exist")
     }
-    return false
+    val file = File(statusesDir, fileName)
+    return file.exists()
+}
+fun isStatusExistInBStatuses(fileName: String): Boolean {
+    var statusesDir = SharedPrefKeys.whatsappDirectoryAdress10p
+
+    if (!statusesDir.exists()) {
+        statusesDir = SharedPrefKeys.whatsappDirectoryAdress10m
+    } else {
+        Log.d("FileUtils", "isStatusExistInStatuses: Status directory does not exist")
+    }
+    val file = File(statusesDir, fileName)
+    return file.exists()
 }
 
 
@@ -139,8 +148,8 @@ private fun saveStatusBeforeQ(context: Context, uri: Uri): Boolean {
         return false
     }
 
-}
 
+}
 
 
 

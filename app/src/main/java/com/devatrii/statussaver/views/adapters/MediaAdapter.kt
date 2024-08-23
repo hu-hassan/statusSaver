@@ -16,7 +16,6 @@ import com.devatrii.statussaver.models.MEDIA_TYPE_IMAGE
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
 import com.devatrii.statussaver.utils.isStatusExist
-import com.devatrii.statussaver.utils.isStatusExistInStatuses
 import com.devatrii.statussaver.utils.isStatusSaved
 import com.devatrii.statussaver.utils.saveStatus
 import com.devatrii.statussaver.views.activities.ImagesPreview

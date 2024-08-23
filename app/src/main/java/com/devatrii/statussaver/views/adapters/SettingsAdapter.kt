@@ -57,7 +57,7 @@ class SettingsAdapter(var list: ArrayList<SettingsModel>, var context: Context) 
                         }
 
                         3 -> {
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://atrii.dev")).apply {
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://gimmypieapps.blogspot.com/p/status-saver-privacy-policy.html?m=1")).apply {
                                 context.startActivity(this)
                             }
 

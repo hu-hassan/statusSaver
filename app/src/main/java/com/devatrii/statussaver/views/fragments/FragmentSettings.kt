@@ -2,6 +2,7 @@ package com.devatrii.statussaver.views.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -39,7 +40,8 @@ class FragmentSettings : Fragment() {
             list.add(
                 SettingsModel(
                     title = "Save in Folder",
-                    desc = "/internalstorage/Documents/${getString(R.string.app_name)}"
+                    desc = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString()+"/${getString(R.string.app_name)} & " +
+                            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).toString()+"/${getString(R.string.app_name)}"
                 )
             )
             list.add(
@@ -54,18 +56,18 @@ class FragmentSettings : Fragment() {
                     desc = "Read Our Terms & Conditions"
                 )
             )
-            list.add(
-                SettingsModel(
-                    title = "Share",
-                    desc = "Sharing is caring"
-                )
-            )
-            list.add(
-                SettingsModel(
-                    title = "Rate Us",
-                    desc = "Please support our work by rating on PlayStore"
-                )
-            )
+//            list.add(
+//                SettingsModel(
+//                    title = "Share",
+//                    desc = "Sharing is caring"
+//                )
+//            )
+//            list.add(
+//                SettingsModel(
+//                    title = "Rate Us",
+//                    desc = "Please support our work by rating on PlayStore"
+//                )
+//            )
         }
     }
 

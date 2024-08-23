@@ -10,6 +10,7 @@ import com.devatrii.statussaver.data.StatusRepo
 import com.devatrii.statussaver.databinding.FragmentMediaBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
+import com.devatrii.statussaver.utils.isStatusExistInBStatuses
 import com.devatrii.statussaver.utils.isStatusExistInStatuses
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
@@ -65,13 +66,12 @@ class FragmentMedia : Fragment() {
 
         val list = ArrayList<MediaModel>()
         filteredList.forEach { model ->
-                            list.add(model)
-//            if (isStatusExistInStatuses(model.fileName)) {
-//                list.add(model)
-//            }
-//            if (!isStatusExistInStatuses(model.fileName)) {
-//                list.remove(model)
-//            }
+            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+                list.add(model)
+            }
+            if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName))) {
+                list.remove(model)
+            }
 
         }
         adapter = MediaAdapter(list, requireActivity())
