@@ -61,7 +61,9 @@ object SharedPrefKeys{
     const val PREF_KEY_WP_TREE_URI = "PREF_KEY_TREE_URI"
     const val PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED = "PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED"
     const val PREF_KEY_WP_BUSINESS_TREE_URI = "PREF_KEY_WP_BUSINESS_TREE_URI"
+    @kotlin.jvm.JvmStatic
     val whatsappDirectoryAdress10p = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp/WhatsApp/Media/.Statuses")
+    @kotlin.jvm.JvmStatic
     val whatsappDirectoryAdress10m = File("${Environment.getExternalStorageDirectory()}/WhatsApp/Media/.Statuses")
 
 }
