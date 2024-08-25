@@ -23,12 +23,13 @@ public class FileObserverService extends Service {
     public void onCreate() {
         super.onCreate();
         createNotificationChannel();
-        startForeground(1, createNotification());
+        startForeground(1,createNotification());
 
         Log.d("FileObserverService", "Service started");
         fileObserver = new FolderFileObserver(this,SharedPrefKeys.getWhatsappDirectoryAdress10p().getAbsolutePath());
         fileObserver.startWatching();
     }
+
 
     private Notification createNotification() {
         return new NotificationCompat.Builder(this, CHANNEL_ID)

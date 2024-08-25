@@ -16,21 +16,24 @@ public class FolderFileObserver extends FileObserver {
     private Context context;
 
     public FolderFileObserver(Context context, String path) {
-        super(path, FileObserver.CREATE);
+        super(path, FileObserver.CREATE | FileObserver.MODIFY);
         this.context = context;
     }
 
     @Override
     public void onEvent(int event, String path) {
-        if (event == FileObserver.CREATE && path != null) {
-            Log.d("FolderFileObserver", "New file created: " + path);
-            sendNotification(
-                    this.context,
-                    "New Status Available",
-                    "Click here to download new status"
-            );
+        if (path != null) {
+            if (event == FileObserver.CREATE || event == FileObserver.MODIFY) {
+                Log.d("FolderFileObserver", "New file created or written: " + path);
+                sendNotification(
+                        this.context,
+                        "New Status Available",
+                        "Click here to download new status"
+                );
+            }
         }
     }
+
     public static void sendNotification(Context context, String title, String message) {
         Log.d("TAG", "sendNotification: " + title + " " + message);
 
@@ -72,5 +75,4 @@ public class FolderFileObserver extends FileObserver {
         // Show the notification
         notificationManager.notify(0, notificationBuilder.build());
     }
-
 }
