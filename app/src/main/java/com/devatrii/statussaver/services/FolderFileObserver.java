@@ -7,17 +7,34 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.FileObserver;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import com.devatrii.statussaver.R;
 import com.devatrii.statussaver.views.activities.MainActivity;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FolderFileObserver extends FileObserver {
     private Context context;
+    private String folderPath;
+    private Handler handler;
+    private long checkInterval = 0L; // Check every 5 seconds
+    private Map<String, Long> fileMap;
 
     public FolderFileObserver(Context context, String path) {
-        super(path, FileObserver.CREATE | FileObserver.MODIFY | FileObserver.DELETE);
+        super(path, FileObserver.ALL_EVENTS);
         this.context = context;
+        this.folderPath = path;
+        this.handler = new Handler(Looper.getMainLooper());
+        this.fileMap = new HashMap<>();
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            Log.d("Android 10 checker started", "Checking android 10 statuses" );
+            startWatching();
+            startPeriodicCheck();
+        }
     }
 
     @Override
@@ -30,6 +47,38 @@ public class FolderFileObserver extends FileObserver {
                         "New Status Available",
                         "Click here to download new status"
                 );
+            }
+        }
+    }
+
+    private void startPeriodicCheck() {
+        handler.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                Log.d("Android 10 checker started", "Checking android 10 statuses" );
+                checkForModifications();
+                handler.postDelayed(this, checkInterval);
+            }
+        }, checkInterval);
+    }
+
+    private void checkForModifications() {
+        File folder = new File(folderPath);
+        if (folder.exists() && folder.isDirectory()) {
+            File[] files = folder.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    long lastModified = file.lastModified();
+                    if (fileMap.containsKey(file.getName())) {
+                        if (!fileMap.get(file.getName()).equals(lastModified)) {
+                            fileMap.put(file.getName(), lastModified);
+                            sendNotification(context, "New Status Available", "Click here to download new status");
+                        }
+                    } else {
+                        fileMap.put(file.getName(), lastModified);
+                    }
+                }
             }
         }
     }

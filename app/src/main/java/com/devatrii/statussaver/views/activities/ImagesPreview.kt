@@ -2,10 +2,12 @@ package com.devatrii.statussaver.views.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.ActivityImagesPreviewBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
 import com.devatrii.statussaver.views.adapters.ImagePreviewAdapter
+import com.google.android.material.appbar.MaterialToolbar
 
 class ImagesPreview : AppCompatActivity() {
     private val activity = this
@@ -24,6 +26,12 @@ class ImagesPreview : AppCompatActivity() {
             imagesViewPager.adapter = adapter
             imagesViewPager.setCurrentItem(scrollTo, false)
         }
+
+        val toolbar = findViewById<MaterialToolbar>(R.id.tool_bar)
+        toolbar.setNavigationOnClickListener {
+            finish() // Finish the activity when the back button is pressed
+        }
+
 
     }
 }

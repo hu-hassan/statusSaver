@@ -2,6 +2,7 @@ package com.devatrii.statussaver.views.activities
 
 //import FileObserverService
 //import FolderFileObserver
+import android.Manifest
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         val text = findViewById<TextView>(R.id.toolbar_title)
         binding.apply {
             splashLogic()
+            requestPermission()
             val fragmentWhatsapp = FragmentStatus()
             val bundle = Bundle()
             bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
@@ -115,7 +117,23 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("isBusiness", isBusiness)
         startActivity(intent)
     }
-
+    private val PERMISSION_REQUEST_CODE = 50
+    private fun requestPermission() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            val isPermissionsGranted = SharedPrefUtils.getPrefBoolean(
+                SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
+                false
+            )
+            if (!isPermissionsGranted) {
+                ActivityCompat.requestPermissions(
+                    /* activity = */ activity,
+                    /* permissions = */ arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    /* requestCode = */ PERMISSION_REQUEST_CODE
+                )
+                Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -145,6 +163,18 @@ class MainActivity : AppCompatActivity() {
             } else {
                 // Permission was denied
                 Toast.makeText(this, "Notification permission denied!", Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+            if (isGranted) {
+                SharedPrefUtils.putPrefBoolean(SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED, true)
+            } else {
+                SharedPrefUtils.putPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
+                    false
+                )
+
             }
         }
     }

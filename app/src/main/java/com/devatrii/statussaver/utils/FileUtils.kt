@@ -3,6 +3,7 @@ package com.devatrii.statussaver.utils
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
@@ -69,35 +70,40 @@ fun Context.saveStatus(model: MediaModel): Boolean {
     val inputStream = contentResolver.openInputStream(model.pathUri.toUri())
 
     try {
-        val values = ContentValues()
-        values.apply {
-            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
-            put(MediaStore.MediaColumns.DISPLAY_NAME, model.fileName)
-
-            // Change RELATIVE_PATH based on media type
-            val relativePath = if (model.type == "image") {
-                Environment.DIRECTORY_PICTURES + "/" + getString(R.string.app_name)
-            } else { // Assuming video if not image
-                Environment.DIRECTORY_MOVIES + "/" + getString(R.string.app_name)
-            }
-            put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
-        }
-
-        val contentUri = if (model.type == "image") {
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            // Handle Android 10 and below
+            return saveStatusBeforeQ(this, model.pathUri.toUri(), model)
         } else {
-            MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-        }
+            // Handle Android 11 and above
+            val values = ContentValues().apply {
+                put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+                put(MediaStore.MediaColumns.DISPLAY_NAME, model.fileName)
 
-        val uri = contentResolver.insert(contentUri, values)
-        uri?.let {
-            val outputStream = contentResolver.openOutputStream(it)
-            if (inputStream != null) {
-                outputStream?.write(inputStream.readBytes())
+                // Change RELATIVE_PATH based on media type
+                val relativePath = if (model.type == "image") {
+                    Environment.DIRECTORY_PICTURES + "/" + getString(R.string.app_name)
+                } else { // Assuming video if not image
+                    Environment.DIRECTORY_MOVIES + "/" + getString(R.string.app_name)
+                }
+                put(MediaStore.MediaColumns.RELATIVE_PATH, relativePath)
             }
-            outputStream?.close()
-            inputStream?.close()
-            return true
+
+            val contentUri = if (model.type == "image") {
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            } else {
+                MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            }
+
+            val uri = contentResolver.insert(contentUri, values)
+            uri?.let {
+                val outputStream = contentResolver.openOutputStream(it)
+                if (inputStream != null) {
+                    outputStream?.write(inputStream.readBytes())
+                }
+                outputStream?.close()
+                inputStream?.close()
+                return true
+            }
         }
     } catch (e: Exception) {
         e.printStackTrace()
@@ -105,31 +111,43 @@ fun Context.saveStatus(model: MediaModel): Boolean {
     return false
 }
 
-private fun saveStatusBeforeQ(context: Context, uri: Uri): Boolean {
-    // converting doc file to file
+private fun saveStatusBeforeQ(context: Context, uri: Uri, model: MediaModel): Boolean {
     try {
+        Log.d("FileUtils", "Attempting to save status for URI: $uri")
         val documentFile = DocumentFile.fromTreeUri(context, uri)
         if (documentFile != null) {
+            Log.d("FileUtils", "Document file found: ${documentFile.uri}")
             val sourceFile = documentFile.toRawFile(context)?.takeIf { f2 ->
                 f2.canRead()
             }
-            val destinationFile = sourceFile?.let { sourceF ->
+            Log.d("FileUtils", "Source file found: ${sourceFile}")
+            if (sourceFile == null) {
+                Log.e("FileUtils", "Source file is null or cannot be read")
+                return false
+            }
+            Log.d("FileUtils", "Source file found: ${sourceFile.absolutePath}")
+            val destinationFile = sourceFile.let { sourceF ->
+                val directory = if (model.type == "image") {
+                    Environment.DIRECTORY_PICTURES
+                } else {
+                    Environment.DIRECTORY_MOVIES
+                }
                 File(
-                    "${Environment.getExternalStorageDirectory()}/Documents/${context.getString(R.string.app_name)}",
+                    "${Environment.getExternalStorageDirectory()}/$directory/${context.getString(R.string.app_name)}",
                     sourceF.name
                 )
             }
 
-            destinationFile?.let { destFile ->
+            destinationFile.let { destFile ->
                 // making dirs & file
                 if (!destFile.parentFile?.exists()!!) {
-                    destFile.mkdirs()
+                    destFile.parentFile.mkdirs()
                 }
                 if (!destFile.exists()) {
                     destFile.createNewFile()
                 }
 
-                // copying content from dest file to source file
+                // copying content from source file to destination file
                 val source = FileInputStream(sourceFile).channel
                 val destination = FileOutputStream(destFile).channel
 
@@ -137,31 +155,16 @@ private fun saveStatusBeforeQ(context: Context, uri: Uri): Boolean {
                 source.close()
                 destination.close()
 
-
+                Log.d("FileUtils", "File saved successfully: ${destFile.absolutePath}")
                 return true
-
             }
         }
+        Log.e("FileUtils", "Document file is null or cannot read source file")
         return false
     } catch (e: Exception) {
+        e.message?.let { Log.d("SaveStatusBeforeQ", it) }
         e.printStackTrace()
+        Log.e("FileUtils", "Error saving file: ${e.message}")
         return false
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

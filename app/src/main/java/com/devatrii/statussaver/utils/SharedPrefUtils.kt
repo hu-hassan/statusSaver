@@ -65,5 +65,6 @@ object SharedPrefKeys{
     val whatsappDirectoryAdress10p = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp/WhatsApp/Media/.Statuses")
     @kotlin.jvm.JvmStatic
     val whatsappDirectoryAdress10m = File("${Environment.getExternalStorageDirectory()}/WhatsApp/Media/.Statuses")
+    const val PREF_KEY_IS_PERMISSIONS_GRANTED= "PREF_KEY_IS_PERMISSIONS_GRANTED"
 
 }
