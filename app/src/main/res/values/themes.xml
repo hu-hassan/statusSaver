@@ -5,9 +5,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-
         <item name="fontFamily">@font/helvetice_regular</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="colorOnSurfaceInverse">@color/black</item>
     </style>
 
     <style name="Theme.StatusSaver" parent="Base.Theme.StatusSaver" />

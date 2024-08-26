@@ -10,9 +10,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        // Add JitPack repository
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "Status Saver"
 include(":app")
- 

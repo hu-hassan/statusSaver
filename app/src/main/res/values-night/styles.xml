@@ -4,5 +4,7 @@
     <style name="BottomNavStyle">
         <item name="colorSecondaryContainer">@color/colorPrimaryLight</item>
     </style>
-
+    <style name="CountryCodePickerDialogStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>

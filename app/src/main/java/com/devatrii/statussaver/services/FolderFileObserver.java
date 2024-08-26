@@ -16,7 +16,7 @@ public class FolderFileObserver extends FileObserver {
     private Context context;
 
     public FolderFileObserver(Context context, String path) {
-        super(path, FileObserver.CREATE | FileObserver.MODIFY);
+        super(path, FileObserver.CREATE | FileObserver.MODIFY | FileObserver.DELETE);
         this.context = context;
     }
 

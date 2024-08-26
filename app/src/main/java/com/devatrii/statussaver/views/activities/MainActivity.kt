@@ -13,10 +13,14 @@ import android.os.Bundle
 import android.os.FileObserver
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.PeriodicWorkRequestBuilder
@@ -44,6 +48,10 @@ class MainActivity : AppCompatActivity() {
     private var currentSelectedItemId: Int = R.id.menu_status // Default selected item
     private lateinit var statusRepo: StatusRepo
     private var fileObserver: FileObserver? = null
+    private var isBusiness: Boolean = false
+
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
             .build()
         WorkManager.getInstance(this).enqueue(workRequest)
+        val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
+        val text = findViewById<TextView>(R.id.toolbar_title)
         binding.apply {
             splashLogic()
             val fragmentWhatsapp = FragmentStatus()
@@ -67,24 +77,43 @@ class MainActivity : AppCompatActivity() {
                 currentSelectedItemId = it.itemId // Update the current selected item
                 when (it.itemId) {
                     R.id.menu_status -> {
+                        buttonIcon?.visibility = View.VISIBLE
+                        text?.visibility = View.VISIBLE
                         val fragmentWhatsapp = FragmentStatus()
                         val bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
                         replaceFragment(fragmentWhatsapp, bundle)
+                        isBusiness = false
                     }
                     R.id.menu_business_status -> {
+                        buttonIcon?.visibility = View.VISIBLE
+                        text?.visibility = View.VISIBLE
                         val fragmentWhatsapp = FragmentStatus()
                         val bundle = Bundle()
                         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_BUSINESS)
                         replaceFragment(fragmentWhatsapp, bundle)
+                        isBusiness = true
                     }
                     R.id.menu_settings -> {
+                        buttonIcon?.visibility = View.GONE
                         replaceFragment(FragmentSettings())
                     }
                 }
                 return@setOnItemSelectedListener true
             }
         }
+
+        // Find the ImageButton and set an OnClickListener
+        buttonIcon?.setOnClickListener {
+            openSendMessageActivity(isBusiness)
+
+        }
+    }
+
+    private fun openSendMessageActivity(isBusiness: Boolean) {
+        val intent = Intent(this, SendMessageActivity::class.java)
+        intent.putExtra("isBusiness", isBusiness)
+        startActivity(intent)
     }
 
 
