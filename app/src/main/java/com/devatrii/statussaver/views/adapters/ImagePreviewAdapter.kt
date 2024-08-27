@@ -1,20 +1,20 @@
 package com.devatrii.statussaver.views.adapters
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.ItemImagePreviewBinding
-import com.devatrii.statussaver.databinding.ItemMediaBinding
-import com.devatrii.statussaver.models.MEDIA_TYPE_IMAGE
 import com.devatrii.statussaver.models.MediaModel
-import com.devatrii.statussaver.utils.SharedPrefUtils
 import com.devatrii.statussaver.utils.isStatusExist
 import com.devatrii.statussaver.utils.saveStatus
 
@@ -56,6 +56,10 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                         Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
                     }
                 }
+                tools.repost.setOnClickListener {
+
+                }
+
             }
         }
     }
@@ -84,7 +88,6 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
     }
 
     override fun getItemCount() = list.size
-
 
 }
 

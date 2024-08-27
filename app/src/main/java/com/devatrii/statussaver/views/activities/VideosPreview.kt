@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.ActivityVideosPreviewBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
 import com.devatrii.statussaver.views.adapters.VideoPreviewAdapter
+import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,17 +43,6 @@ class VideosPreview : AppCompatActivity() {
             pageSnapHelper.attachToRecyclerView(videoRecyclerView)
             videoRecyclerView.scrollToPosition(scrollTo)
 
-//            videoRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-//                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-//                    super.onScrollStateChanged(recyclerView, newState)
-//                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-//                        Log.d(TAG, "onScrollStateChanged: Dragging")
-//                        stopAllPlayers()
-//                    }
-//                }
-//
-//
-//            })
             videoRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
@@ -72,19 +63,17 @@ class VideosPreview : AppCompatActivity() {
                             mostVisiblePosition = i
                         }
                     }
-
-//                    // If the most visible item is different from the currently playing video, pause the currently playing video and play the most visible one
-//                    if (mostVisiblePosition != -1 && mostVisiblePosition != currentPlayingVideo?.layoutPosition) {
-//                        currentPlayingVideo?.let { adapter.pausePlayer(it) }
-//                        currentPlayingVideo = recyclerView.findViewHolderForAdapterPosition(mostVisiblePosition) as VideoPreviewAdapter.ViewHolder
-//                        currentPlayingVideo?.let { adapter.playPlayer(it) }
-//                    }
                 }
             })
 
 
 
         }
+        val toolbar = findViewById<MaterialToolbar>(R.id.tool_bar)
+        toolbar.setNavigationOnClickListener {
+            finish() // Finish the activity when the back button is pressed
+        }
+
 
 
     }

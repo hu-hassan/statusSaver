@@ -6,6 +6,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -193,4 +194,5 @@ class MainActivity : AppCompatActivity() {
             }, 2000)
         }
     }
+
 }

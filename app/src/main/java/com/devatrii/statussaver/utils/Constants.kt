@@ -45,5 +45,8 @@ object Constants {
             WHATSAPP_BUSINESS_PATH_URI_ANDROID
         }
     }
-
+    object Constants {
+        const val WHATSAPP_PACKAGE = "com.whatsapp"
+        const val WHATSAPP_BUSINESS_PACKAGE = "com.whatsapp.w4b"
+    }
 }
