@@ -5,13 +5,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.FileObserver;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import androidx.core.app.NotificationCompat;
+import androidx.documentfile.provider.DocumentFile;
+
 import com.devatrii.statussaver.R;
+import com.devatrii.statussaver.utils.SharedPrefKeys;
+import com.devatrii.statussaver.utils.SharedPrefUtils;
 import com.devatrii.statussaver.views.activities.MainActivity;
 import java.io.File;
 import java.util.HashMap;
@@ -23,6 +28,8 @@ public class FolderFileObserver extends FileObserver {
     private Handler handler;
     private long checkInterval = 0L; // Check every 5 seconds
     private Map<String, Long> fileMap;
+    private boolean isInitialLoad = true;
+
 
     public FolderFileObserver(Context context, String path) {
         super(path, FileObserver.ALL_EVENTS);
@@ -64,19 +71,54 @@ public class FolderFileObserver extends FileObserver {
     }
 
     private void checkForModifications() {
-        File folder = new File(folderPath);
-        if (folder.exists() && folder.isDirectory()) {
-            File[] files = folder.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    long lastModified = file.lastModified();
-                    if (fileMap.containsKey(file.getName())) {
-                        if (!fileMap.get(file.getName()).equals(lastModified)) {
+        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.Q){
+            Uri folderUri = Uri.parse(SharedPrefUtils.INSTANCE.getPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, ""));
+//            Log.d("Uritest", "Checking for modifications in folder: " + folderUri);
+            try {
+                DocumentFile folder = DocumentFile.fromTreeUri(context, folderUri);
+                if (folder != null && folder.isDirectory()) {
+                    Log.d("Uritest", "Folder exists and is a directory");
+                    for (DocumentFile file : folder.listFiles()) {
+                        long lastModified = file.lastModified();
+                        if (fileMap.containsKey(file.getName())) {
+                            if (!fileMap.get(file.getName()).equals(lastModified)) {
+                                fileMap.put(file.getName(), lastModified);
+                                Log.d("New File", "New file created or written: " + file.getName());
+                                sendNotification(context, "New Status Available", "Click here to download new status");
+                            }
+                        } else {
                             fileMap.put(file.getName(), lastModified);
-                            sendNotification(context, "New Status Available", "Click here to download new status");
+                            if (!isInitialLoad) {
+                                Log.d("New File", "New file created or written: " + file.getName());
+                                sendNotification(context, "New Status Available", "Click here to download new status");
+                            }
                         }
-                    } else {
-                        fileMap.put(file.getName(), lastModified);
+                    }
+                    isInitialLoad = false;
+                }
+                else {
+                    Log.e("Folder not exist", "Folder does not exist or is not a directory");
+                }
+            }
+            catch (Exception e){
+                Log.d("Uritest", "Error: " + e.getMessage());
+            }
+        }
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
+            File folder = new File(folderPath);
+            if (folder.exists() && folder.isDirectory()) {
+                File[] files = folder.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        long lastModified = file.lastModified();
+                        if (fileMap.containsKey(file.getName())) {
+                            if (!fileMap.get(file.getName()).equals(lastModified)) {
+                                fileMap.put(file.getName(), lastModified);
+                                sendNotification(context, "New Status Available", "Click here to download new status");
+                            }
+                        } else {
+                            fileMap.put(file.getName(), lastModified);
+                        }
                     }
                 }
             }

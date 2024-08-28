@@ -70,7 +70,7 @@ fun Context.saveStatus(model: MediaModel): Boolean {
     val inputStream = contentResolver.openInputStream(model.pathUri.toUri())
 
     try {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             // Handle Android 10 and below
             return saveStatusBeforeQ(this, model.pathUri.toUri(), model)
         } else {
