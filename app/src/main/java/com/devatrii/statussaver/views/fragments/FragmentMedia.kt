@@ -10,6 +10,8 @@ import com.devatrii.statussaver.data.StatusRepo
 import com.devatrii.statussaver.databinding.FragmentMediaBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
+import com.devatrii.statussaver.utils.SharedPrefKeys
+import com.devatrii.statussaver.utils.SharedPrefUtils
 import com.devatrii.statussaver.utils.isStatusExistInBStatuses
 import com.devatrii.statussaver.utils.isStatusExistInStatuses
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
@@ -55,6 +57,13 @@ class FragmentMedia : Fragment() {
                         }
                     }
                 }
+                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+                    false
+                )
+                if (!isPermissionGranted){
+                    binding.tempMediaText.visibility = View.GONE
+                }
             }
         }
     }
@@ -77,6 +86,7 @@ class FragmentMedia : Fragment() {
         adapter = MediaAdapter(list, requireActivity())
         binding.mediaRecyclerView.adapter = adapter
         binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+
     }
 
     override fun onCreateView(
