@@ -1,6 +1,7 @@
 package com.devatrii.statussaver.views.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,16 @@ class FragmentMedia : Fragment() {
                             updateUI(unFilteredList)
                         }
                     }
+                    Constants.MEDIA_TYPE_WHATSAPP_SAVED-> {
+                        Log.d("FragmentMedia", "onCreate: Saved")
+                        viewModel.wpSavedStatusLiveData.observe(requireActivity()) { unFilteredList ->
+                            Log.d("FragmentMedia", "Saved list under observation")
+                            for (i in unFilteredList){
+                                Log.d("FragmentMedia", "Filea present: ${i.fileName}")
+                            }
+                            updateUIforSaved(unFilteredList)
+                        }
+                    }
                 }
                 val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
                     SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
@@ -81,6 +92,26 @@ class FragmentMedia : Fragment() {
             if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName))) {
                 list.remove(model)
             }
+
+        }
+        adapter = MediaAdapter(list, requireActivity())
+        binding.mediaRecyclerView.adapter = adapter
+        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+
+    }
+    private fun updateUIforSaved(unFilteredList: ArrayList<MediaModel>) {
+        val filteredList = unFilteredList.distinctBy { model ->
+            model.fileName
+        }
+
+        val list = ArrayList<MediaModel>()
+        filteredList.forEach { model ->
+//            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+                list.add(model)
+//            }
+//            if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName))) {
+//                list.remove(model)
+//            }
 
         }
         adapter = MediaAdapter(list, requireActivity())

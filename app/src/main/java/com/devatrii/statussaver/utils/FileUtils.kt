@@ -19,7 +19,8 @@ import java.io.FileOutputStream
 fun Context.isStatusExist(fileName: String): Boolean {
     val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val file = File("${downloadDir}/${getString(R.string.app_name)}", fileName)
-    return file.exists()
+    val tFile = File("${downloadDir}/${getString(R.string.app_name)}", ".trashed-$fileName")
+    return file.exists() || tFile.exists()
 }
 fun Context.isStatusSaved(fileName: String): Boolean {
     val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)

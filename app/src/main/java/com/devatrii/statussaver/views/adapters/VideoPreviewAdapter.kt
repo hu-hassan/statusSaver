@@ -54,6 +54,7 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
                             // Status is downloaded
                             Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
                             mediaModel.isDownloaded = true
+                            tools.text.text = "Saved"
                             tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
                         } else {
                             // Unable to download status

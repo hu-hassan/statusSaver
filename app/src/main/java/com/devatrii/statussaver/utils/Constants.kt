@@ -7,9 +7,11 @@ object Constants {
 
     const val TYPE_WHATSAPP_MAIN = "com.whatsapp"
     const val TYPE_WHATSAPP_BUSINESS = "com.whatsapp.w4b"
+    const val TYPE_STATUS_SAVED = "whatsapp_saved"
 
     const val MEDIA_TYPE_WHATSAPP_IMAGES = "com.whatsapp.images"
     const val MEDIA_TYPE_WHATSAPP_VIDEOS = "com.whatsapp.videos"
+    const val MEDIA_TYPE_WHATSAPP_SAVED = "whatsapp_saved"
 
     const val MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES = "com.whatsapp.w4b.images"
     const val MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS = "com.whatsapp.w4b.videos"

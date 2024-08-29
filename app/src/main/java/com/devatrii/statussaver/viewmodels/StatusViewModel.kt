@@ -1,5 +1,6 @@
 package com.devatrii.statussaver.viewmodels.factories
 
+import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -15,10 +16,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 
 class StatusViewModel(val repo: StatusRepo) : ViewModel() {
     private val wpStatusLiveData get() = repo.whatsAppStatusesLiveData
     private val wpBusinessStatusLiveData get() = repo.whatsAppBusinessStatusesLiveData
+     val wpSavedStatusLiveData get() = repo.whatsAppSavedStatusesLiveData
     private val TAG = "StatusViewModel"
 
     // wp main
@@ -28,6 +31,10 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
     // wp business
     val whatsAppBusinessImagesLiveData = MutableLiveData<ArrayList<MediaModel>>()
     val whatsAppBusinessVideosLiveData = MutableLiveData<ArrayList<MediaModel>>()
+
+    //saved statuses
+    val savedStatusesImagesLiveData = MutableLiveData<ArrayList<MediaModel>>()
+    val savedStatusesVideosLiveData = MutableLiveData<ArrayList<MediaModel>>()
 
     private var isPermissionsGranted = false
 
@@ -133,6 +140,59 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
             whatsAppBusinessVideosLiveData.postValue(tempList)
         }
     }
+    fun deleteTrashedItems(filename: String) {
+        val directories = listOf(
+            File(Environment.getExternalStorageDirectory(), "Pictures/Status Saver"),
+            File(Environment.getExternalStorageDirectory(), "Movies/Status Saver")
+        )
+        val filenamesToDelete = filename
+
+        directories.forEach { directory ->
+            if (directory.exists() && directory.isDirectory) {
+                directory.listFiles()?.forEach { file ->
+                    if (file.name.contains(".trashed-"+filename) || filenamesToDelete.contains(file.name)) {
+                        file.delete()
+                    }
+                }
+            }
+        }
+    }
+    fun getSavedStatuses() {
+        Log.d(TAG, "StatusViewModel: getSavedStatuses called")
+        CoroutineScope(Dispatchers.IO).launch {
+            repo.getSavedStatuses()
+            withContext(Dispatchers.Main){
+                getSavedStatusImages()
+                getSavedStatusVideos()
+            }
+            for (mediaModel in wpSavedStatusLiveData.value!!){
+                Log.d(TAG, "File found in viewmodel: ${mediaModel.fileName}")
+            }
+        }
+    }
+    fun getSavedStatusImages() {
+        wpSavedStatusLiveData.observe(repo.activity as LifecycleOwner) {
+            val tempList = ArrayList<MediaModel>()
+            it.forEach {mediaModel->
+                if (mediaModel.type == MEDIA_TYPE_IMAGE){
+                    tempList.add(mediaModel)
+                }
+            }
+            savedStatusesImagesLiveData.postValue(tempList)
+        }
+    }
+    fun getSavedStatusVideos() {
+        wpSavedStatusLiveData.observe(repo.activity as LifecycleOwner) {
+            val tempList = ArrayList<MediaModel>()
+            it.forEach {mediaModel->
+                if (mediaModel.type == MEDIA_TYPE_VIDEO){
+                    tempList.add(mediaModel)
+                }
+            }
+            savedStatusesVideosLiveData.postValue(tempList)
+        }
+    }
+
 
 
 }

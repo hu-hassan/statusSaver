@@ -60,9 +60,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         SharedPrefUtils.init(activity)
         statusRepo = StatusRepo(this)
-        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-            .build()
-        WorkManager.getInstance(this).enqueue(workRequest)
+//        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//            .build()
+//        WorkManager.getInstance(this).enqueue(workRequest)
         val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
         val text = findViewById<TextView>(R.id.toolbar_title)
         binding.apply {

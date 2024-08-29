@@ -81,10 +81,11 @@
             app:tint="@color/white" />
 
         <TextView
+            android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Save"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="14sp" />
     </LinearLayout>

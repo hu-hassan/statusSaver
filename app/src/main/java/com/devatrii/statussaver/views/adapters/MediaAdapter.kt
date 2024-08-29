@@ -33,6 +33,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                 if (mediaModel.type == MEDIA_TYPE_IMAGE) {
                     statusPlay.visibility = View.GONE
                 }
+//                statusDownload
                 val downloadImage = if (context.isStatusExist(mediaModel.fileName)|| context.isStatusSaved(mediaModel.fileName)) {
                     R.drawable.ic_downloaded
                 } else {

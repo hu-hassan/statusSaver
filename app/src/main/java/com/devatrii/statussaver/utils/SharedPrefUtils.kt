@@ -66,5 +66,8 @@ object SharedPrefKeys{
     @kotlin.jvm.JvmStatic
     val whatsappDirectoryAdress10m = File("${Environment.getExternalStorageDirectory()}/WhatsApp/Media/.Statuses")
     const val PREF_KEY_IS_PERMISSIONS_GRANTED= "PREF_KEY_IS_PERMISSIONS_GRANTED"
+    const val PREF_KEY_IMAGES_TREE_URI = "PREF_KEY_IMAGES_TREE_URI" // New key for images tree URI
+    const val PREF_KEY_VIDEOS_TREE_URI = "PREF_KEY_VIDEOS_TREE_URI" // New key for videos tree URI
+
 
 }

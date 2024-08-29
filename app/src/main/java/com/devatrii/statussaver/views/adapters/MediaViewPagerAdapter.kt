@@ -10,9 +10,11 @@ import com.devatrii.statussaver.views.fragments.FragmentMedia
 class MediaViewPagerAdapter(
     private val fragmentActivity: FragmentActivity,
     private val imagesType: String = Constants.MEDIA_TYPE_WHATSAPP_IMAGES,
-    private val videosType: String = Constants.MEDIA_TYPE_WHATSAPP_VIDEOS
+    private val videosType: String = Constants.MEDIA_TYPE_WHATSAPP_VIDEOS,
+    private val savedType: String = Constants.MEDIA_TYPE_WHATSAPP_SAVED
+
 ) : FragmentStateAdapter(fragmentActivity) {
-    override fun getItemCount() = 2
+    override fun getItemCount() = 3
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
@@ -24,11 +26,19 @@ class MediaViewPagerAdapter(
                 mediaFragment.arguments = bundle
                 mediaFragment
             }
-            else->{
+            1->{
                 // videos media fragment
                 val mediaFragment = FragmentMedia()
                 val bundle = Bundle()
                 bundle.putString(Constants.MEDIA_TYPE_KEY,videosType)
+                mediaFragment.arguments = bundle
+                mediaFragment
+            }
+            else ->{
+                // business media fragment
+                val mediaFragment = FragmentMedia()
+                val bundle = Bundle()
+                bundle.putString(Constants.MEDIA_TYPE_KEY,savedType)
                 mediaFragment.arguments = bundle
                 mediaFragment
             }

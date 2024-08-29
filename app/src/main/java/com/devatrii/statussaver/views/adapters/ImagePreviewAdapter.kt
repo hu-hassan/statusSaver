@@ -30,10 +30,11 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
 
                 // Retrieve the isDownloaded property from shared preferences
 //                mediaModel.isDownloaded = SharedPrefUtils.isStatusDownloaded(mediaModel.fileName)
-
                 val downloadImage = if (context.isStatusExist(mediaModel.fileName)) {
+                    tools.text.text = "Saved"
                     R.drawable.ic_downloaded
                 } else {
+                    tools.text.text = "Save"
                     R.drawable.ic_download
                 }
                 tools.statusDownload.setImageResource(downloadImage)
@@ -46,6 +47,7 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                             Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
                             mediaModel.isDownloaded = true
                             Log.d("ImagePreviewAdapter", "isDownloaded: ${mediaModel.isDownloaded}")
+                            tools.text.text = "Saved"
                             tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
                         } else {
                             // Unable to download status

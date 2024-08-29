@@ -21,6 +21,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager2.widget.ViewPager2
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.devatrii.statussaver.R
 import com.devatrii.statussaver.data.StatusRepo
 import com.devatrii.statussaver.databinding.FragmentStatusBinding
@@ -34,7 +37,9 @@ import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.devatrii.statussaver.views.activities.MainActivity
 import com.devatrii.statussaver.views.adapters.MediaAdapter
 import com.devatrii.statussaver.views.adapters.MediaViewPagerAdapter
+import com.devatrii.statussaver.workers.RestartServiceWorker
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.concurrent.TimeUnit
 
 class FragmentStatus : Fragment() {
     private val binding by lazy {
@@ -43,9 +48,9 @@ class FragmentStatus : Fragment() {
     private lateinit var type: String
     private val WHATSAPP_REQUEST_CODE = 101
     private val WHATSAPP_BUSINESS_REQUEST_CODE = 102
-    private val YOUR_REQUEST_CODE = 1002  // Define your request code here
-    private val viewPagerTitles = arrayListOf("Images", "Videos")
     lateinit var viewModel: StatusViewModel
+    var isPermissionGrantedS = false
+    var isPermissionGrantedSB = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,16 +81,20 @@ class FragmentStatus : Fragment() {
                         // granted then fetch statuses
                         // get permission
                         // fetch statuses
+                        Log.d("FragmentStatus", "WhatsApp Main Created")
                         val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
                             SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
                             false
                         )
+                        binding.swipeRefreshLayout.setOnRefreshListener {
+                            refreshStatuses()
+                        }
                         if (isPermissionGranted) {
                             getWhatsAppStatuses()
-
-                            binding.swipeRefreshLayout.setOnRefreshListener {
-                                refreshStatuses()
-                            }
+                            getSavedStatuses()
+                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+                                .build()
+                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
 
                         }
                         permissionLayout.btnPermission.setOnClickListener {
@@ -97,10 +106,22 @@ class FragmentStatus : Fragment() {
                         }
 
 
-                        val viewPagerAdapter = MediaViewPagerAdapter(requireActivity())
-                        statusViewPager.adapter = viewPagerAdapter
+                        val mediaAdapter = MediaViewPagerAdapter(
+                            requireActivity(),
+                            imagesType = Constants.MEDIA_TYPE_WHATSAPP_IMAGES,
+                            videosType = Constants.MEDIA_TYPE_WHATSAPP_VIDEOS,
+                            savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
+                        )
+
+                        statusViewPager.adapter = mediaAdapter
+                        setupViewPager()
                         TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
-                            tab.text = viewPagerTitles[pos]
+                            tab.text = when (pos) {
+                                0 -> "Images"
+                                1 -> "Videos"
+                                2 -> "Saved"
+                                else -> throw IllegalStateException("Unexpected position $pos")
+                            }
                         }.attach()
 
                     }
@@ -110,13 +131,15 @@ class FragmentStatus : Fragment() {
                             SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
                             false
                         )
+                        binding.swipeRefreshLayout.setOnRefreshListener {
+                            refreshStatuses()
+                        }
                         if (isPermissionGranted) {
                             getWhatsAppBusinessStatuses()
-
-                            binding.swipeRefreshLayout.setOnRefreshListener {
-                                refreshStatuses()
-                            }
-
+                            getSavedStatuses()
+                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+                                .build()
+                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                         }
                         permissionLayout.btnPermission.setOnClickListener {
                             getFolderPermissions(
@@ -125,23 +148,30 @@ class FragmentStatus : Fragment() {
                                 initialUri = Constants.getWhatsappBusinessUri()
                             )
                         }
-                        val viewPagerAdapter = MediaViewPagerAdapter(
+                        val mediaAdapter = MediaViewPagerAdapter(
                             requireActivity(),
                             imagesType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES,
-                            videosType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS
+                            videosType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS,
+                            savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
                         )
-                        statusViewPager.adapter = viewPagerAdapter
+
+                        statusViewPager.adapter = mediaAdapter
+                        setupViewPager()
                         TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
-                            tab.text = viewPagerTitles[pos]
+                            tab.text = when (pos) {
+                                0 -> "Images"
+                                1 -> "Videos"
+                                2 -> "Saved"
+                                else -> throw IllegalStateException("Unexpected position $pos")
+                            }
                         }.attach()
+
                     }
                 }
-
             }
         }
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -151,18 +181,30 @@ class FragmentStatus : Fragment() {
     fun refreshStatuses() {
         when (type) {
             Constants.TYPE_WHATSAPP_MAIN -> {
-                Toast.makeText(requireActivity(), "Refreshing WP Statuses", Toast.LENGTH_SHORT)
-                    .show()
-                getWhatsAppStatuses()
+                if(!SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)){
+                    Toast.makeText(requireActivity(), "Please grant permission to refresh statuses", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                else {
+                    Toast.makeText(requireActivity(), "Refreshing WP Statuses", Toast.LENGTH_SHORT)
+                        .show()
+                    getWhatsAppStatuses()
+                }
             }
 
-            else -> {
-                Toast.makeText(
-                    requireActivity(),
-                    "Refreshing WP Business Statuses",
-                    Toast.LENGTH_SHORT
-                ).show()
-                getWhatsAppBusinessStatuses()
+            Constants.TYPE_WHATSAPP_BUSINESS ->{
+                if(SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false) == false){
+                    Toast.makeText(requireActivity(), "Please grant permission to refresh statuses", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                else {
+                    Toast.makeText(
+                        requireActivity(),
+                        "Refreshing WP Business Statuses",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    getWhatsAppBusinessStatuses()
+                }
             }
         }
 
@@ -173,6 +215,7 @@ class FragmentStatus : Fragment() {
 
     fun getWhatsAppStatuses() {
         // function to get wp statuses
+        isPermissionGrantedS = true
         binding.permissionLayoutHolder.visibility = View.GONE
         Log.d(TAG, "getWhatsAppBusinessStatuses: Getting WP  Statuses")
         viewModel.getWhatsAppStatuses()
@@ -181,6 +224,7 @@ class FragmentStatus : Fragment() {
     private val TAG = "FragmentStatus"
     fun getWhatsAppBusinessStatuses() {
         // function to get wp statuses
+        isPermissionGrantedSB = true
         binding.permissionLayoutHolder.visibility = View.GONE
         Log.d(TAG, "getWhatsAppBusinessStatuses: Getting Wp Business Statuses")
         viewModel.getWhatsAppBusinessStatuses()
@@ -218,7 +262,13 @@ class FragmentStatus : Fragment() {
 }
 
 
+
 }
+    fun getSavedStatuses() {
+        // function to get saved statuses
+        Log.d(TAG, "getSavedStatuses: Getting Saved Statuses")
+        viewModel.getSavedStatuses()
+    }
 
     override fun onResume() {
         super.onResume()
@@ -229,11 +279,15 @@ class FragmentStatus : Fragment() {
                     false
                 )
                 if (isPermissionGranted) {
-//                    viewModel.clearWhatsAppStatuses()
                     getWhatsAppStatuses()
+                    viewModel.getSavedStatuses()
+                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+                        .build()
+                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }
+
 
                 }
 
@@ -245,7 +299,10 @@ class FragmentStatus : Fragment() {
                 )
                 if (isPermissionGranted) {
                     getWhatsAppBusinessStatuses()
-
+                    viewModel.getSavedStatuses()
+                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+                        .build()
+                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }
@@ -255,6 +312,42 @@ class FragmentStatus : Fragment() {
 
         }
 
+    }
+    private fun setupViewPager() {
+
+        TabLayoutMediator(binding.tabLayout, binding.statusViewPager) { tab, pos ->
+            tab.text = when (pos) {
+                0 -> "Images"
+                1 -> "Videos"
+                2 -> "Saved"
+                else -> throw IllegalStateException("Unexpected position $pos")
+            }
+        }.attach()
+
+        binding.statusViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == 2) { // "Saved" tab
+                    binding.permissionLayoutHolder.visibility = View.GONE
+                    viewModel.getSavedStatuses()
+                } else {
+                    when (type) {
+                        Constants.TYPE_WHATSAPP_MAIN -> {
+                            if (!isPermissionGrantedS) {
+                                Log.d(TAG, "onPageSelected: WhatsApp Main Permission Not Granted")
+                                binding.permissionLayoutHolder.visibility = View.VISIBLE
+                            }
+                        }
+                        Constants.TYPE_WHATSAPP_BUSINESS -> {
+                            if (!isPermissionGrantedSB) {
+                                Log.d(TAG, "onPageSelected: WhatsApp Business Permission Not Granted")
+                                binding.permissionLayoutHolder.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
     companion object{
         fun sendNotification(context: Context, title: String, message: String) {
