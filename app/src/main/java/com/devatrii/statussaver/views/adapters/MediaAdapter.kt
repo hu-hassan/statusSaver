@@ -2,6 +2,7 @@ package com.devatrii.statussaver.views.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Visibility
 import com.bumptech.glide.Glide
 import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.ItemMediaBinding
@@ -21,7 +23,7 @@ import com.devatrii.statussaver.utils.saveStatus
 import com.devatrii.statussaver.views.activities.ImagesPreview
 import com.devatrii.statussaver.views.activities.VideosPreview
 
-class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
+class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isSavedTab: Boolean) :
     RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -33,13 +35,15 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context) :
                 if (mediaModel.type == MEDIA_TYPE_IMAGE) {
                     statusPlay.visibility = View.GONE
                 }
-//                statusDownload
                 val downloadImage = if (context.isStatusExist(mediaModel.fileName)|| context.isStatusSaved(mediaModel.fileName)) {
                     R.drawable.ic_downloaded
                 } else {
                     R.drawable.ic_download
                 }
                 statusDownload.setImageResource(downloadImage)
+                if(isSavedTab){
+                    statusDownload.visibility = View.GONE
+                }
 
                 cardStatus.setOnClickListener {
                     if (mediaModel.type == MEDIA_TYPE_IMAGE) {

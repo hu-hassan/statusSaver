@@ -1,5 +1,7 @@
 package com.devatrii.statussaver.views.fragments
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,14 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.devatrii.statussaver.data.StatusRepo
 import com.devatrii.statussaver.databinding.FragmentMediaBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.Constants
 import com.devatrii.statussaver.utils.SharedPrefKeys
 import com.devatrii.statussaver.utils.SharedPrefUtils
+import com.devatrii.statussaver.utils.isStatusExist
 import com.devatrii.statussaver.utils.isStatusExistInBStatuses
 import com.devatrii.statussaver.utils.isStatusExistInStatuses
+import com.devatrii.statussaver.utils.isStatusSaved
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.devatrii.statussaver.views.adapters.MediaAdapter
@@ -66,6 +71,7 @@ class FragmentMedia : Fragment() {
                             }
                             updateUIforSaved(unFilteredList)
                         }
+//                        tempMediaText.text = "Work in progress............."
                     }
                 }
                 val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
@@ -94,30 +100,30 @@ class FragmentMedia : Fragment() {
             }
 
         }
-        adapter = MediaAdapter(list, requireActivity())
+        adapter = MediaAdapter(list, requireActivity(),false)
         binding.mediaRecyclerView.adapter = adapter
         binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
 
     }
+
     private fun updateUIforSaved(unFilteredList: ArrayList<MediaModel>) {
         val filteredList = unFilteredList.distinctBy { model ->
             model.fileName
         }
 
         val list = ArrayList<MediaModel>()
-        filteredList.forEach { model ->
-//            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+        val filteredListCopy = ArrayList(filteredList)
+        filteredListCopy.forEach { model ->
+            if(context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true) {
                 list.add(model)
-//            }
-//            if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName))) {
-//                list.remove(model)
-//            }
-
+            }
+            if(!(context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true)){
+                list.remove(model)
+            }
         }
-        adapter = MediaAdapter(list, requireActivity())
+        adapter = MediaAdapter(list, requireActivity(), true)
         binding.mediaRecyclerView.adapter = adapter
         binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-
     }
 
     override fun onCreateView(

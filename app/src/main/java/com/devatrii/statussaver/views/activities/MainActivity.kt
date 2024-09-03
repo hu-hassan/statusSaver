@@ -1,33 +1,29 @@
 package com.devatrii.statussaver.views.activities
 
-//import FileObserverService
-//import FolderFileObserver
+
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.FileObserver
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.devatrii.statussaver.services.FileObserverService
 import com.devatrii.statussaver.R
 import com.devatrii.statussaver.data.StatusRepo
 import com.devatrii.statussaver.databinding.ActivityMainBinding
@@ -40,6 +36,7 @@ import com.devatrii.statussaver.utils.slideToEndWithFadeOut
 import com.devatrii.statussaver.views.fragments.FragmentSettings
 import com.devatrii.statussaver.views.fragments.FragmentStatus
 import com.devatrii.statussaver.workers.RestartServiceWorker
+import com.google.android.material.appbar.AppBarLayout
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -51,21 +48,47 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusRepo: StatusRepo
     private var fileObserver: FileObserver? = null
     private var isBusiness: Boolean = false
+    private lateinit var bottomSheet: LinearLayout
 
 
 
+
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         SharedPrefUtils.init(activity)
         statusRepo = StatusRepo(this)
-//        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//            .build()
-//        WorkManager.getInstance(this).enqueue(workRequest)
+        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+            .build()
+        WorkManager.getInstance(this).enqueue(workRequest)
+        bottomSheet = findViewById(R.id.bottomSheet)
         val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
+        val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
+        val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
         val text = findViewById<TextView>(R.id.toolbar_title)
+        val header = findViewById<AppBarLayout>(R.id.appBarLayout)
+        binding.root.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                if (bottomSheet.visibility == View.VISIBLE) {
+                    val outRect = Rect()
+                    bottomSheet.getGlobalVisibleRect(outRect)
+                    if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                        bottomSheet.visibility = View.GONE
+                    }
+                }
+            }
+            false
+        }
         binding.apply {
+            buttonIcon2.setOnClickListener {
+                if (bottomSheet.visibility == View.GONE) {
+                    bottomSheet.visibility = View.VISIBLE
+                } else {
+                    bottomSheet.visibility = View.GONE
+                }
+            }
             splashLogic()
             requestPermission()
             val fragmentWhatsapp = FragmentStatus()
@@ -88,22 +111,45 @@ class MainActivity : AppCompatActivity() {
                         replaceFragment(fragmentWhatsapp, bundle)
                         isBusiness = false
                     }
+
                     R.id.menu_business_status -> {
                         buttonIcon?.visibility = View.VISIBLE
                         text?.visibility = View.VISIBLE
                         val fragmentWhatsapp = FragmentStatus()
                         val bundle = Bundle()
-                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_BUSINESS)
+                        bundle.putString(
+                            Constants.FRAGMENT_TYPE_KEY,
+                            Constants.TYPE_WHATSAPP_BUSINESS
+                        )
                         replaceFragment(fragmentWhatsapp, bundle)
                         isBusiness = true
-                    }
-                    R.id.menu_settings -> {
-                        buttonIcon?.visibility = View.GONE
-                        replaceFragment(FragmentSettings())
                     }
                 }
                 return@setOnItemSelectedListener true
             }
+//            findViewById<TextView>(R.id.item1).setOnClickListener {
+//                buttonIcon?.visibility = View.VISIBLE
+//                text?.visibility = View.VISIBLE
+//                val fragmentWhatsapp = FragmentStatus()
+//                val bundle = Bundle()
+//                bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+//                replaceFragment(fragmentWhatsapp, bundle)
+//                isBusiness = false
+//                bottomSheet.visibility = View.GONE
+//            }
+//            findViewById<TextView>(R.id.item2).setOnClickListener {
+//                buttonIcon?.visibility = View.VISIBLE
+//                text?.visibility = View.VISIBLE
+//                val fragmentWhatsapp = FragmentStatus()
+//                val bundle = Bundle()
+//                bundle.putString(
+//                    Constants.FRAGMENT_TYPE_KEY,
+//                    Constants.TYPE_WHATSAPP_BUSINESS
+//                )
+//                replaceFragment(fragmentWhatsapp, bundle)
+//                isBusiness = true
+//                bottomSheet.visibility = View.GONE
+//            }
         }
 
         // Find the ImageButton and set an OnClickListener
@@ -111,6 +157,11 @@ class MainActivity : AppCompatActivity() {
             openSendMessageActivity(isBusiness)
 
         }
+        settingIcon?.setOnClickListener {
+            header.visibility = View.GONE
+            replaceFragment(FragmentSettings())
+        }
+
     }
 
     private fun openSendMessageActivity(isBusiness: Boolean) {
@@ -118,6 +169,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra("isBusiness", isBusiness)
         startActivity(intent)
     }
+
     private val PERMISSION_REQUEST_CODE = 50
     private fun requestPermission() {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
@@ -155,7 +207,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 101) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -187,12 +243,19 @@ class MainActivity : AppCompatActivity() {
                 splashScreenHolder.slideToEndWithFadeOut()
                 splashScreenHolder.visibility = View.GONE
                 // Check if the permission is already granted
-                if (ContextCompat.checkSelfPermission(activity, "android.permission.POST_NOTIFICATIONS") != PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        activity,
+                        "android.permission.POST_NOTIFICATIONS"
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
                     // If not, request the permission
-                    ActivityCompat.requestPermissions(activity, arrayOf("android.permission.POST_NOTIFICATIONS"), 101)
+                    ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf("android.permission.POST_NOTIFICATIONS"),
+                        101
+                    )
                 }
             }, 2000)
         }
     }
-
 }

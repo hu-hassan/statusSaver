@@ -1,6 +1,7 @@
 package com.devatrii.statussaver.views.activities
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -73,7 +74,15 @@ class SendMessageActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         intent.setPackage(packageName)
-        startActivity(intent)
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            if(isBusiness) {
+                showToast("WhatsApp Business is not installed")
+            } else {
+                showToast("WhatsApp is not installed")
+            }
+        }
     }
 
     private fun showToast(message: String) {

@@ -13,10 +13,10 @@
         android:title="B Status"
         android:id="@+id/menu_business_status"
         android:icon="@drawable/ic_menu_wp_status"/>
-    <item
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title="Settings"
-        android:id="@+id/menu_settings"
-        android:icon="@drawable/ic_menu_settings"/>
+<!--    <item-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:title="Settings"-->
+<!--        android:id="@+id/menu_settings"-->
+<!--        android:icon="@drawable/ic_menu_settings"/>-->
 </menu>

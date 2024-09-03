@@ -41,8 +41,10 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
                 player.repeatMode = Player.REPEAT_MODE_ONE
 
                 val downloadImage = if (context.isStatusSaved(mediaModel.fileName)) {
+                    tools.text.text = "Saved"
                     R.drawable.ic_downloaded
                 } else {
+                    tools.text.text = "Save"
                     R.drawable.ic_download
                 }
                 tools.statusDownload.setImageResource(downloadImage)

@@ -32,9 +32,35 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button_icon"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+<!--                <ImageButton-->
+<!--                    android:id="@+id/button_icon2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="?attr/selectableItemBackgroundBorderless"-->
+<!--                    android:contentDescription="Settings Icon"-->
+<!--                    android:src="@drawable/ic_menu_settings"-->
+<!--                    app:layout_constraintEnd_toStartOf="@+id/settings_icon"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginBottom="8dp" />-->
+
+                <ImageButton
+                    android:id="@+id/settings_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Settings Icon"
+                    android:src="@drawable/ic_menu_settings"
+                    app:layout_constraintEnd_toStartOf="@+id/button_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
 
                 <ImageButton
                     android:id="@+id/button_icon"
@@ -51,7 +77,6 @@
                     android:layout_marginBottom="8dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -76,6 +101,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:menu="@menu/bottom_menu"
         tools:ignore="MissingConstraints" />
+
+<!--    <include layout="@layout/bottom_sheet" />-->
+
 
     <LinearLayout
         android:id="@+id/splash_screen_holder"

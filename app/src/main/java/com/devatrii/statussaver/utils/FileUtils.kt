@@ -19,8 +19,7 @@ import java.io.FileOutputStream
 fun Context.isStatusExist(fileName: String): Boolean {
     val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val file = File("${downloadDir}/${getString(R.string.app_name)}", fileName)
-    val tFile = File("${downloadDir}/${getString(R.string.app_name)}", ".trashed-$fileName")
-    return file.exists() || tFile.exists()
+    return file.exists()
 }
 fun Context.isStatusSaved(fileName: String): Boolean {
     val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
@@ -39,10 +38,10 @@ fun isStatusExistInStatuses(fileName: String): Boolean {
     return file.exists()
 }
 fun isStatusExistInBStatuses(fileName: String): Boolean {
-    var statusesDir = SharedPrefKeys.whatsappDirectoryAdress10p
+    var statusesDir = SharedPrefKeys.whatsappBusinessDirectoryAdress10p
 
     if (!statusesDir.exists()) {
-        statusesDir = SharedPrefKeys.whatsappDirectoryAdress10m
+        statusesDir = SharedPrefKeys.whatsappBusinessDirectoryAdress10m
     } else {
         Log.d("FileUtils", "isStatusExistInStatuses: Status directory does not exist")
     }

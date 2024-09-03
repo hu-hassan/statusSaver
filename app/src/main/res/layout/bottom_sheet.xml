@@ -1,0 +1,30 @@
+<!-- res/layout/bottom_sheet.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomSheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:padding="16dp"
+    android:visibility="gone"
+    android:elevation="8dp">
+
+    <TextView
+        android:id="@+id/item1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Whatsapp status"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/item2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Whatsapp business status"
+        android:textSize="18sp" />
+
+    <!-- Add more items as needed -->
+
+</LinearLayout>

@@ -32,6 +32,7 @@ import com.devatrii.statussaver.utils.SharedPrefKeys
 import com.devatrii.statussaver.utils.SharedPrefUtils
 import com.devatrii.statussaver.utils.getFolderPermissions
 import com.devatrii.statussaver.utils.isStatusExistInStatuses
+//import com.devatrii.statussaver.viewmodels.factories.SharedViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModel
 import com.devatrii.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.devatrii.statussaver.views.activities.MainActivity
@@ -45,12 +46,15 @@ class FragmentStatus : Fragment() {
     private val binding by lazy {
         FragmentStatusBinding.inflate(layoutInflater)
     }
-    private lateinit var type: String
+    private var type: String? = null
     private val WHATSAPP_REQUEST_CODE = 101
     private val WHATSAPP_BUSINESS_REQUEST_CODE = 102
     lateinit var viewModel: StatusViewModel
     var isPermissionGrantedS = false
     var isPermissionGrantedSB = false
+//    private val sharedViewModel: SharedViewModel by lazy {
+//        ViewModelProvider(this).get(SharedViewModel::class.java)
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,9 +96,9 @@ class FragmentStatus : Fragment() {
                         if (isPermissionGranted) {
                             getWhatsAppStatuses()
                             getSavedStatuses()
-                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-                                .build()
-                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
+//                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//                                .build()
+//                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
 
                         }
                         permissionLayout.btnPermission.setOnClickListener {
@@ -131,15 +135,16 @@ class FragmentStatus : Fragment() {
                             SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
                             false
                         )
+                        Log.d("FragmentStatus", "WhatsApp Business Permission "+ isPermissionGranted)
                         binding.swipeRefreshLayout.setOnRefreshListener {
                             refreshStatuses()
                         }
                         if (isPermissionGranted) {
                             getWhatsAppBusinessStatuses()
                             getSavedStatuses()
-                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-                                .build()
-                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
+//                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//                                .build()
+//                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                         }
                         permissionLayout.btnPermission.setOnClickListener {
                             getFolderPermissions(
@@ -193,7 +198,7 @@ class FragmentStatus : Fragment() {
             }
 
             Constants.TYPE_WHATSAPP_BUSINESS ->{
-                if(SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false) == false){
+                if(!SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)){
                     Toast.makeText(requireActivity(), "Please grant permission to refresh statuses", Toast.LENGTH_SHORT)
                         .show()
                 }
@@ -206,11 +211,13 @@ class FragmentStatus : Fragment() {
                     getWhatsAppBusinessStatuses()
                 }
             }
+
         }
 
         Handler(Looper.myLooper()!!).postDelayed({
             binding.swipeRefreshLayout.isRefreshing = false
         }, 2000)
+        getSavedStatuses()
     }
 
     fun getWhatsAppStatuses() {
@@ -281,14 +288,12 @@ class FragmentStatus : Fragment() {
                 if (isPermissionGranted) {
                     getWhatsAppStatuses()
                     viewModel.getSavedStatuses()
-                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-                        .build()
-                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
+//                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//                        .build()
+//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }
-
-
                 }
 
             }
@@ -300,17 +305,18 @@ class FragmentStatus : Fragment() {
                 if (isPermissionGranted) {
                     getWhatsAppBusinessStatuses()
                     viewModel.getSavedStatuses()
-                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-                        .build()
-                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
+//                    val workRequest =
+//                        PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//                            .build()
+//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }
-
                 }
             }
 
         }
+        getSavedStatuses()
 
     }
     private fun setupViewPager() {
@@ -396,20 +402,3 @@ class FragmentStatus : Fragment() {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

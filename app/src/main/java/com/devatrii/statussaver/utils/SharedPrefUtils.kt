@@ -65,9 +65,12 @@ object SharedPrefKeys{
     val whatsappDirectoryAdress10p = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp/WhatsApp/Media/.Statuses")
     @kotlin.jvm.JvmStatic
     val whatsappDirectoryAdress10m = File("${Environment.getExternalStorageDirectory()}/WhatsApp/Media/.Statuses")
+    @kotlin.jvm.JvmStatic
+    val whatsappBusinessDirectoryAdress10p = File("${Environment.getExternalStorageDirectory()}/Android/media/com.whatsapp.w4b/WhatsApp Business/Media/.Statuses")
+    @kotlin.jvm.JvmStatic
+    val whatsappBusinessDirectoryAdress10m = File("${Environment.getExternalStorageDirectory()}/WhatsApp Business/Media/.Statuses")
     const val PREF_KEY_IS_PERMISSIONS_GRANTED= "PREF_KEY_IS_PERMISSIONS_GRANTED"
-    const val PREF_KEY_IMAGES_TREE_URI = "PREF_KEY_IMAGES_TREE_URI" // New key for images tree URI
-    const val PREF_KEY_VIDEOS_TREE_URI = "PREF_KEY_VIDEOS_TREE_URI" // New key for videos tree URI
+
 
 
 }

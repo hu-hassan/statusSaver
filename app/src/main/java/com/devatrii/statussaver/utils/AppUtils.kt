@@ -9,12 +9,24 @@ import com.devatrii.statussaver.R
 
 fun Activity.replaceFragment(fragment: Fragment, args: Bundle? = null) {
     val fragmentActivity = this as FragmentActivity
-    fragmentActivity.supportFragmentManager.beginTransaction().apply {
+    val fragmentManager = fragmentActivity.supportFragmentManager
+
+    // Check if the fragment is already in the fragment manager
+    if (fragmentManager.findFragmentById(R.id.fragmentContainer) == fragment) {
+        return
+    }
+
+    // Disable navigation temporarily to prevent rapid clicks
+    val transaction = fragmentManager.beginTransaction().apply {
         setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         args?.let {
             fragment.arguments = it
         }
         replace(R.id.fragmentContainer, fragment)
-        addToBackStack(null)
-    }.commit()
+    }
+
+    // Commit the transaction immediately allowing state loss if needed
+    fragmentActivity.runOnUiThread {
+        transaction.commitNowAllowingStateLoss()
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.devatrii.statussaver.R
 import com.devatrii.statussaver.databinding.FragmentSettingsBinding
@@ -25,10 +26,12 @@ class FragmentSettings : Fragment() {
         SettingsAdapter(list, requireActivity())
     }
 
+
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
+
         settingsRecyclerView.adapter = adapter
 
             list.add(

@@ -71,7 +71,6 @@ class StatusRepo(val context: Context) {
             Log.d(TAG, "getAllStatuses: ${file.name}")
             if (file.name != ".nomedia" && file.isFile) {
                 val isDownloaded = context.isStatusExist(file.name!!) || context.isStatusSaved(file.name!!)
-                Log.d(TAG, "getAllStatusesExtension: Extension: ${getFileExtension(file.name!!)} ||${file.name}")
 
                 val type = if (getFileExtension(file.name!!) == "mp4") {
                     MEDIA_TYPE_VIDEO
@@ -125,38 +124,59 @@ class StatusRepo(val context: Context) {
     // In StatusRepo.kt
     fun getSavedStatuses() {
         Log.d(TAG, "getSavedStatuses: Getting Saved Statuses")
-        val downloadDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-        val savedStatuses = File("${downloadDir}/${context.getString(R.string.app_name)}").listFiles()
+        val downloadDirI = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val downloadDirV = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
+        val savedStatusesI = File("${downloadDirI}/${context.getString(R.string.app_name)}").listFiles()
+        val savedStatusesV = File("${downloadDirV}/${context.getString(R.string.app_name)}").listFiles()
         val uniqueFiles = mutableSetOf<String>()
 
-        savedStatuses?.forEach { file ->
-//            if (file.isFile && (file.name.startsWith(".trashed-") || !file.name.startsWith(".trashed-"))) {
-            if (file.isFile) {
-                if (uniqueFiles.add(file.name)) { // Add to set and check for duplicates
-                    val isDownloaded = context.isStatusSaved(file.name)
-                    val type = if (getFileExtension(file.name) == "mp4") {
-                        Log.d(TAG, "getSavedStatuses: Video: ${file.name}")
-                        MEDIA_TYPE_VIDEO
-                    } else {
-                        Log.d(TAG, "getSavedStatuses: Image: ${file.name}")
-                        MEDIA_TYPE_IMAGE
-                    }
+        savedStatusesI?.let { files ->
+            val filesCopy = files.toList() // Create a copy of the list
+            filesCopy.forEach { file ->
+                Log.d(TAG, "getSavedStatuses: File: " + getFileExtension(file.name))
+                if (file.isFile) {
+                    if (uniqueFiles.add(file.name)) { // Add to set and check for duplicates
+                        val isDownloaded = context.isStatusSaved(file.name)
+                        val type = MEDIA_TYPE_IMAGE
 
-                    val model = MediaModel(
-                        pathUri = file.toUri().toString(),
-                        fileName = file.name,
-                        type = type,
-                        isDownloaded = isDownloaded
-                    )
-                    if(!model.fileName.contains(".trashed-")){
-                    wpSavedStatusesList.add(model)
+                        val model = MediaModel(
+                            pathUri = file.toUri().toString(),
+                            fileName = file.name,
+                            type = type,
+                            isDownloaded = isDownloaded
+                        )
+                        if (!model.fileName.contains(".trashed-")) {
+                            wpSavedStatusesList.add(model)
+                        }
                     }
                 }
             }
         }
         whatsAppSavedStatusesLiveData.postValue(wpSavedStatusesList)
-        for (model in wpSavedStatusesList) {
-            Log.d(TAG, "File was added in live data as well idiot: ${model.fileName}")
+
+        savedStatusesV?.let { files ->
+            val filesCopy = files.toList() // Create a copy of the list
+            filesCopy.forEach { file ->
+                Log.d(TAG, "getSavedStatuses: File: " + getFileExtension(file.name))
+                if (file.isFile) {
+                    if (uniqueFiles.add(file.name)) { // Add to set and check for duplicates
+                        val isDownloaded = context.isStatusSaved(file.name)
+                        val type = MEDIA_TYPE_VIDEO
+
+                        val model = MediaModel(
+                            pathUri = file.toUri().toString(),
+                            fileName = file.name,
+                            type = type,
+                            isDownloaded = isDownloaded
+                        )
+                        if (!model.fileName.contains(".trashed-")) {
+                            wpSavedStatusesList.add(model)
+                        }
+                    }
+                }
+            }
         }
+        whatsAppSavedStatusesLiveData.postValue(wpSavedStatusesList)
+
     }
 }
