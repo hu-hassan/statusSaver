@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devatrii.statussaver"
+    namespace = "com.hassan.statussaver"
     compileSdk = 34
 
     defaultConfig {
