@@ -3,12 +3,14 @@ package com.devatrii.statussaver.views.adapters
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,6 +19,7 @@ import com.devatrii.statussaver.databinding.ItemImagePreviewBinding
 import com.devatrii.statussaver.models.MediaModel
 import com.devatrii.statussaver.utils.isStatusExist
 import com.devatrii.statussaver.utils.saveStatus
+import java.io.File
 
 class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context) :
     RecyclerView.Adapter<ImagePreviewAdapter.ViewHolder>() {
@@ -61,7 +64,9 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                 tools.repost.setOnClickListener {
 
                 }
-
+                tools.share.setOnClickListener {
+                    shareMedia(context, mediaModel)
+                }
             }
         }
     }
@@ -90,6 +95,17 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
     }
 
     override fun getItemCount() = list.size
+    private fun shareMedia(context: Context, media: MediaModel) {
+        val file = File(media.pathUri.toString())
+        val uri = Uri.fromFile(file)
+
+        val shareIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_STREAM, uri)
+            type = "image/" // or "video/" depending on the media type
+        }
+        context.startActivity(Intent.createChooser(shareIntent, "Share via"))
+    }
 
 }
 

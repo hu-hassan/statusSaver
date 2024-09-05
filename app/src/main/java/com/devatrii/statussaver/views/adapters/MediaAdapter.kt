@@ -2,6 +2,7 @@ package com.devatrii.statussaver.views.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.devatrii.statussaver.utils.isStatusSaved
 import com.devatrii.statussaver.utils.saveStatus
 import com.devatrii.statussaver.views.activities.ImagesPreview
 import com.devatrii.statussaver.views.activities.VideosPreview
+import java.io.File
 
 class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isSavedTab: Boolean) :
     RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
@@ -101,4 +103,5 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isS
         val model = list[position]
         holder.bind(model)
     }
+
 }

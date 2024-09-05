@@ -120,7 +120,8 @@ import java.util.concurrent.Executors;
 
 public class FileObserverService extends Service {
     private static final String CHANNEL_ID = "FileObserverServiceChannel";
-    private FolderFileObserver fileObserver;
+    private FolderFileObserver fileObserverm;
+    private FolderFileObserver fileObserverb;
     private ExecutorService executorService;
 
     @Override
@@ -153,7 +154,7 @@ public class FileObserverService extends Service {
                 Log.d("FileObserverService", "Path: " + localPath);
 
                 // Initialize and start the FileObserver
-                fileObserver = new FolderFileObserver(FileObserverService.this, localPath);
+                fileObserverm = new FolderFileObserver(FileObserverService.this, localPath);
             });
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)) {
@@ -171,7 +172,7 @@ public class FileObserverService extends Service {
                 Log.d("FileObserverService", "Path: " + localPath);
 
                 // Initialize and start the FileObserver
-                fileObserver = new FolderFileObserver(FileObserverService.this, localPath);
+                fileObserverb = new FolderFileObserver(FileObserverService.this, localPath);
             });
         } else {
             executorService.execute(() -> {
@@ -190,8 +191,8 @@ public class FileObserverService extends Service {
                 Log.d("FileObserverService", "Path: " + localPath);
 
                 // Initialize and start the FileObserver
-                fileObserver = new FolderFileObserver(FileObserverService.this, localPath);
-                fileObserver.startWatching();
+                fileObserverm = new FolderFileObserver(FileObserverService.this, localPath);
+                fileObserverm.startWatching();
             });
 
             executorService.execute(() -> {
@@ -210,8 +211,8 @@ public class FileObserverService extends Service {
                 Log.d("FileObserverService", "Path: " + localPath);
 
                 // Initialize and start the FileObserver
-                fileObserver = new FolderFileObserver(FileObserverService.this, localPath);
-                fileObserver.startWatching();
+                fileObserverb = new FolderFileObserver(FileObserverService.this, localPath);
+                fileObserverb.startWatching();
             });
         }
     }

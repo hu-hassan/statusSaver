@@ -80,23 +80,28 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
         }
     }
 
+    private val tempListMI = mutableListOf<MediaModel>()
+
     fun getWhatsAppImages() {
         wpStatusLiveData.observe(repo.activity as LifecycleOwner) { mediaList ->
             // Create a defensive copy of the mediaList to avoid ConcurrentModificationException
             val safeList = CopyOnWriteArrayList(mediaList)
 
-            val tempList = ArrayList<MediaModel>()
-
+            // Update tempList based on changes
+            tempListMI.clear()  // Clear the existing data
             for (mediaModel in safeList) {
                 if (mediaModel.type == MEDIA_TYPE_IMAGE) {
-                    tempList.add(mediaModel)
+                    Log.d(TAG, "getWhatsAppImages: ${mediaModel.fileName}")
+                    tempListMI.add(mediaModel)
                 }
             }
-            // Post the filtered list to LiveData
-            whatsAppImagesLiveData.postValue(tempList)
+            // Post the updated list to LiveData
+            whatsAppImagesLiveData.postValue(tempListMI as ArrayList<MediaModel>?)
         }
     }
 
+
+    private val tempListMV = mutableListOf<MediaModel>()
 
     fun getWhatsAppVideos() {
         wpStatusLiveData.observe(repo.activity as LifecycleOwner) { mediaList ->
@@ -110,14 +115,15 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
 //            }
             val safeList = CopyOnWriteArrayList(mediaList)
 
-            val tempList = ArrayList<MediaModel>()
+            // Update tempList based on changes
+            tempListMV.clear()  // Clear the existing data
 
             for (mediaModel in safeList) {
                 if (mediaModel.type == MEDIA_TYPE_VIDEO) {
-                    tempList.add(mediaModel)
+                    tempListMV.add(mediaModel)
                 }
             }
-            whatsAppVideosLiveData.postValue(tempList)
+            whatsAppVideosLiveData.postValue(tempListMV as ArrayList<MediaModel>?)
         }
     }
 
@@ -136,33 +142,32 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
 
         }
     }
+    private val tempListBI = mutableListOf<MediaModel>()
 
     fun getWhatsAppBusinessImages() {
         wpBusinessStatusLiveData.observe(repo.activity as LifecycleOwner) {mediaList ->
+
             val safeList = CopyOnWriteArrayList(mediaList)
-
-            val tempList = ArrayList<MediaModel>()
-
-            for (mediaModel in safeList) {
+            tempListBI.clear()
+            for (mediaModel in mediaList) {
                 if (mediaModel.type == MEDIA_TYPE_IMAGE) {
-                    tempList.add(mediaModel)
+                    tempListBI.add(mediaModel)
                 }
             }
-            whatsAppBusinessImagesLiveData.postValue(tempList)
+            whatsAppBusinessImagesLiveData.postValue(tempListBI as ArrayList<MediaModel>?)
         }
     }
+    private val tempListBV = mutableListOf<MediaModel>()
     fun getWhatsAppBusinessVideos() {
         wpBusinessStatusLiveData.observe(repo.activity as LifecycleOwner) {mediaList ->
             val safeList = CopyOnWriteArrayList(mediaList)
-
-            val tempList = ArrayList<MediaModel>()
-
+            tempListBV.clear()
             for (mediaModel in safeList) {
                 if (mediaModel.type == MEDIA_TYPE_VIDEO) {
-                    tempList.add(mediaModel)
+                    tempListBV.add(mediaModel)
                 }
             }
-            whatsAppBusinessVideosLiveData.postValue(tempList)
+            whatsAppBusinessVideosLiveData.postValue(tempListBV as ArrayList<MediaModel>?)
         }
     }
     fun deleteTrashedItems(filename: String) {
@@ -195,32 +200,30 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
             }
         }
     }
+    private val tempListSI = mutableListOf<MediaModel>()
     fun getSavedStatusImages() {
         wpSavedStatusLiveData.observe(repo.activity as LifecycleOwner) {mediaList ->
             val safeList = CopyOnWriteArrayList(mediaList)
-
-            val tempList = ArrayList<MediaModel>()
-
+            tempListSI.clear()
             for (mediaModel in safeList) {
                 if (mediaModel.type == MEDIA_TYPE_IMAGE) {
-                    tempList.add(mediaModel)
+                    tempListSI.add(mediaModel)
                 }
             }
-            savedStatusesImagesLiveData.postValue(tempList)
+            savedStatusesImagesLiveData.postValue(tempListSI as ArrayList<MediaModel>?)
         }
     }
+    private val tempListSV = mutableListOf<MediaModel>()
     fun getSavedStatusVideos() {
         wpSavedStatusLiveData.observe(repo.activity as LifecycleOwner) {mediaList ->
             val safeList = CopyOnWriteArrayList(mediaList)
-
-            val tempList = ArrayList<MediaModel>()
-
+            tempListSV.clear()
             for (mediaModel in safeList) {
                 if (mediaModel.type == MEDIA_TYPE_VIDEO) {
-                    tempList.add(mediaModel)
+                    tempListSV.add(mediaModel)
                 }
             }
-            savedStatusesVideosLiveData.postValue(tempList)
+            savedStatusesVideosLiveData.postValue(tempListSV as ArrayList<MediaModel>?)
         }
     }
 

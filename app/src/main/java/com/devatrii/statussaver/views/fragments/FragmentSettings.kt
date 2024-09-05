@@ -30,6 +30,7 @@ class FragmentSettings : Fragment() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding.apply {
 
         settingsRecyclerView.adapter = adapter

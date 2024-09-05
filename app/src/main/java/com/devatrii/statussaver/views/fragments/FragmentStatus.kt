@@ -61,12 +61,12 @@ class FragmentStatus : Fragment() {
 
         super.onCreate(savedInstanceState)
 
-        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().finish()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+//        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                requireActivity().finish()
+//            }
+//        }
+//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
         binding.apply {
 
 
@@ -279,6 +279,48 @@ class FragmentStatus : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        when (type) {
+            Constants.TYPE_WHATSAPP_MAIN -> {
+                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+                    false
+                )
+                if (isPermissionGranted) {
+                    getWhatsAppStatuses()
+                    viewModel.getSavedStatuses()
+//                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//                        .build()
+//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
+                    binding.swipeRefreshLayout.setOnRefreshListener {
+                        refreshStatuses()
+                    }
+                }
+
+            }
+            Constants.TYPE_WHATSAPP_BUSINESS -> {
+                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
+                    false
+                )
+                if (isPermissionGranted) {
+                    getWhatsAppBusinessStatuses()
+                    viewModel.getSavedStatuses()
+//                    val workRequest =
+//                        PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//                            .build()
+//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
+                    binding.swipeRefreshLayout.setOnRefreshListener {
+                        refreshStatuses()
+                    }
+                }
+            }
+
+        }
+        getSavedStatuses()
+
+    }
+    override fun onStart() {
+        super.onStart()
         when (type) {
             Constants.TYPE_WHATSAPP_MAIN -> {
                 val isPermissionGranted = SharedPrefUtils.getPrefBoolean(

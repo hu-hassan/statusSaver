@@ -37,6 +37,7 @@ import com.devatrii.statussaver.views.fragments.FragmentSettings
 import com.devatrii.statussaver.views.fragments.FragmentStatus
 import com.devatrii.statussaver.workers.RestartServiceWorker
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -51,8 +52,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomSheet: LinearLayout
 
 
-
-
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             .build()
         WorkManager.getInstance(this).enqueue(workRequest)
         bottomSheet = findViewById(R.id.bottomSheet)
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
         val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
         val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
@@ -89,67 +89,72 @@ class MainActivity : AppCompatActivity() {
                     bottomSheet.visibility = View.GONE
                 }
             }
-            splashLogic()
+                                ActivityCompat.requestPermissions(
+                        activity,
+                        arrayOf("android.permission.POST_NOTIFICATIONS"),
+                        101
+                    )
+//            splashLogic()
             requestPermission()
             val fragmentWhatsapp = FragmentStatus()
             val bundle = Bundle()
             bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
             replaceFragment(fragmentWhatsapp, bundle)
-            bottomNavigationView.setOnItemSelectedListener {
-                if (it.itemId == currentSelectedItemId) {
-                    // If the selected item is the same as the current item, do nothing
-                    return@setOnItemSelectedListener false
-                }
-                currentSelectedItemId = it.itemId // Update the current selected item
-                when (it.itemId) {
-                    R.id.menu_status -> {
-                        buttonIcon?.visibility = View.VISIBLE
-                        text?.visibility = View.VISIBLE
-                        val fragmentWhatsapp = FragmentStatus()
-                        val bundle = Bundle()
-                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-                        replaceFragment(fragmentWhatsapp, bundle)
-                        isBusiness = false
-                    }
-
-                    R.id.menu_business_status -> {
-                        buttonIcon?.visibility = View.VISIBLE
-                        text?.visibility = View.VISIBLE
-                        val fragmentWhatsapp = FragmentStatus()
-                        val bundle = Bundle()
-                        bundle.putString(
-                            Constants.FRAGMENT_TYPE_KEY,
-                            Constants.TYPE_WHATSAPP_BUSINESS
-                        )
-                        replaceFragment(fragmentWhatsapp, bundle)
-                        isBusiness = true
-                    }
-                }
-                return@setOnItemSelectedListener true
+//            bottomNavigationView.setOnItemSelectedListener {
+//                if (it.itemId == currentSelectedItemId) {
+//                    // If the selected item is the same as the current item, do nothing
+//                    return@setOnItemSelectedListener false
+//                }
+//                currentSelectedItemId = it.itemId // Update the current selected item
+//                when (it.itemId) {
+//                    R.id.menu_status -> {
+//                        buttonIcon?.visibility = View.VISIBLE
+//                        text?.visibility = View.VISIBLE
+//                        val fragmentWhatsapp = FragmentStatus()
+//                        val bundle = Bundle()
+//                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+//                        replaceFragment(fragmentWhatsapp, bundle)
+//                        isBusiness = false
+//                    }
+//
+//                    R.id.menu_business_status -> {
+//                        buttonIcon?.visibility = View.VISIBLE
+//                        text?.visibility = View.VISIBLE
+//                        val fragmentWhatsapp = FragmentStatus()
+//                        val bundle = Bundle()
+//                        bundle.putString(
+//                            Constants.FRAGMENT_TYPE_KEY,
+//                            Constants.TYPE_WHATSAPP_BUSINESS
+//                        )
+//                        replaceFragment(fragmentWhatsapp, bundle)
+//                        isBusiness = true
+//                    }
+//                }
+//                return@setOnItemSelectedListener true
+//            }
+            findViewById<TextView>(R.id.item1).setOnClickListener {
+                buttonIcon?.visibility = View.VISIBLE
+                text?.visibility = View.VISIBLE
+                val fragmentWhatsapp = FragmentStatus()
+                val bundle = Bundle()
+                bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+                replaceFragment(fragmentWhatsapp, bundle)
+                isBusiness = false
+                bottomSheet.visibility = View.GONE
             }
-//            findViewById<TextView>(R.id.item1).setOnClickListener {
-//                buttonIcon?.visibility = View.VISIBLE
-//                text?.visibility = View.VISIBLE
-//                val fragmentWhatsapp = FragmentStatus()
-//                val bundle = Bundle()
-//                bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-//                replaceFragment(fragmentWhatsapp, bundle)
-//                isBusiness = false
-//                bottomSheet.visibility = View.GONE
-//            }
-//            findViewById<TextView>(R.id.item2).setOnClickListener {
-//                buttonIcon?.visibility = View.VISIBLE
-//                text?.visibility = View.VISIBLE
-//                val fragmentWhatsapp = FragmentStatus()
-//                val bundle = Bundle()
-//                bundle.putString(
-//                    Constants.FRAGMENT_TYPE_KEY,
-//                    Constants.TYPE_WHATSAPP_BUSINESS
-//                )
-//                replaceFragment(fragmentWhatsapp, bundle)
-//                isBusiness = true
-//                bottomSheet.visibility = View.GONE
-//            }
+            findViewById<TextView>(R.id.item2).setOnClickListener {
+                buttonIcon?.visibility = View.VISIBLE
+                text?.visibility = View.VISIBLE
+                val fragmentWhatsapp = FragmentStatus()
+                val bundle = Bundle()
+                bundle.putString(
+                    Constants.FRAGMENT_TYPE_KEY,
+                    Constants.TYPE_WHATSAPP_BUSINESS
+                )
+                replaceFragment(fragmentWhatsapp, bundle)
+                isBusiness = true
+                bottomSheet.visibility = View.GONE
+            }
         }
 
         // Find the ImageButton and set an OnClickListener
@@ -236,26 +241,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun splashLogic() {
-        binding.apply {
-            splashScreen.cardView.slideFromStart()
-            Handler(Looper.myLooper()!!).postDelayed({
-                splashScreenHolder.slideToEndWithFadeOut()
-                splashScreenHolder.visibility = View.GONE
-                // Check if the permission is already granted
-                if (ContextCompat.checkSelfPermission(
-                        activity,
-                        "android.permission.POST_NOTIFICATIONS"
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    // If not, request the permission
-                    ActivityCompat.requestPermissions(
-                        activity,
-                        arrayOf("android.permission.POST_NOTIFICATIONS"),
-                        101
-                    )
-                }
-            }, 2000)
-        }
-    }
+//    private fun splashLogic() {
+//        binding.apply {
+//            splashScreen.cardView.slideFromStart()
+//            Handler(Looper.myLooper()!!).postDelayed({
+//                splashScreenHolder.slideToEndWithFadeOut()
+//                splashScreenHolder.visibility = View.GONE
+//                // Check if the permission is already granted
+//                if (ContextCompat.checkSelfPermission(
+//                        activity,
+//                        "android.permission.POST_NOTIFICATIONS"
+//                    ) != PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    // If not, request the permission
+//                    ActivityCompat.requestPermissions(
+//                        activity,
+//                        arrayOf("android.permission.POST_NOTIFICATIONS"),
+//                        101
+//                    )
+//                }
+//            }, 2000)
+//        }
+//    }
 }
