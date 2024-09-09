@@ -1,117 +1,272 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2" xmlns:ns2="http://schemas.android.com/tools">
-    <string-array name="exo_controls_playback_speeds">
-    <item>०.२५ गुणा</item>
-    <item>०.५ गुणा</item>
-    <item>०.७५ गुणा</item>
-    <item>सामान्य</item>
-    <item>१.२५ गुणा</item>
-    <item>१.५ गुणा</item>
-    <item>२ गुणा</item>
-  </string-array>
-    <plurals name="exo_controls_fastforward_by_amount_description">
-    <item quantity="one">%d सेकेन्ड फास्ट फर्वार्ड गर्नुहोस्</item>
-    <item quantity="other">%d सेकेन्ड फास्ट फर्वार्ड गर्नुहोस्</item>
-  </plurals>
-    <plurals name="exo_controls_rewind_by_amount_description">
-    <item quantity="one">%d सेकेन्ड रिवाइन्ड गर्नुहोस्</item>
-    <item quantity="other">%d सेकेन्ड रिवाइन्ड गर्नुहोस्</item>
-  </plurals>
-    <plurals name="mtrl_badge_content_description">
-    <item quantity="one">%d नयाँ सूचना</item>
-    <item quantity="other">%d नयाँ सूचनाहरू</item>
-  </plurals>
-    <string msgid="5976598919945601918" name="abc_action_bar_home_description">"होम पेजमा जानुहोस्"</string>
-    <string msgid="8388173803310557296" name="abc_action_bar_up_description">"माथि नेभिगेट गर्नुहोस्"</string>
-    <string msgid="3937310113216875497" name="abc_action_menu_overflow_description">"थप विकल्पहरू"</string>
-    <string msgid="4692188335987374352" name="abc_action_mode_done">"सम्पन्न भयो"</string>
-    <string msgid="1189761859438369441" name="abc_activity_chooser_view_see_all">"सबै हेर्नुहोस्"</string>
-    <string msgid="2165779757652331008" name="abc_activitychooserview_choose_application">"एउटा एप छान्नुहोस्"</string>
-    <string msgid="4215997306490295099" name="abc_capital_off">"निष्क्रिय"</string>
-    <string msgid="884982626291842264" name="abc_capital_on">"सक्रिय"</string>
-    <string msgid="8833365367933412986" name="abc_menu_alt_shortcut_label">"Alt+"</string>
-    <string msgid="2223301931652355242" name="abc_menu_ctrl_shortcut_label">"Ctrl+"</string>
-    <string msgid="838001238306846836" name="abc_menu_delete_shortcut_label">"delete"</string>
-    <string msgid="7986526966204849475" name="abc_menu_enter_shortcut_label">"enter"</string>
-    <string msgid="375214403600139847" name="abc_menu_function_shortcut_label">"Function+"</string>
-    <string msgid="4192209724446364286" name="abc_menu_meta_shortcut_label">"Meta+"</string>
-    <string msgid="4741552369836443843" name="abc_menu_shift_shortcut_label">"Shift+"</string>
-    <string msgid="5473865519181928982" name="abc_menu_space_shortcut_label">"space"</string>
-    <string msgid="6180552449598693998" name="abc_menu_sym_shortcut_label">"Sym+"</string>
-    <string msgid="5520303668377388990" name="abc_prepend_shortcut_label">"Menu+"</string>
-    <string msgid="7208076849092622260" name="abc_search_hint">"खोज्नुहोस्…"</string>
-    <string msgid="3741173234950517107" name="abc_searchview_description_clear">"क्वेरी खाली गर्नुहोस्"</string>
-    <string msgid="693312494995508443" name="abc_searchview_description_query">"खोज प्रश्न"</string>
-    <string msgid="3417662926640357176" name="abc_searchview_description_search">"खोज"</string>
-    <string msgid="1486535517437947103" name="abc_searchview_description_submit">"क्वेरी पेस गर्नुहोस्"</string>
-    <string msgid="2293578557972875415" name="abc_searchview_description_voice">"आवाजमा आधारित खोजी"</string>
-    <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"यसमार्फत सेयर गर्नुहोस्"</string>
-    <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"<ns1:g id="APPLICATION_NAME">%s</ns1:g> मार्फत सेयर गर्नुहोस्"</string>
-    <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"संक्षिप्त गर्नुहोस्"</string>
-    <string name="bottomsheet_action_collapse">पुछारको पाना कोल्याप्स गर्नुहोस्</string>
-    <string name="bottomsheet_action_expand">पुछारको पाना एक्स्पान्ड गर्नुहोस्</string>
-    <string name="bottomsheet_action_expand_halfway">आधा ठुलो पार्नुहोस्</string>
-    <string name="bottomsheet_drag_handle_clicked">ड्र्याग ह्यान्डलमा डबल ट्याप गरियो</string>
-    <string name="bottomsheet_drag_handle_content_description">ड्र्याग ह्यान्डल</string>
-    <string name="character_counter_content_description">%2$d मध्ये %1$d वर्ण प्रविष्ट गरियो</string>
-    <string name="character_counter_overflowed_content_description">%2$d मध्ये %1$d वर्ण सीमा नाघ्यो</string>
-    <string name="clear_text_end_icon_content_description">पाठ खाली गर्नुहोस्</string>
-    <string name="error_icon_content_description">त्रुटि</string>
-    <string name="exo_controls_cc_disabled_description">सबटाइटलहरू सक्षम पार्नुहोस्</string>
-    <string name="exo_controls_cc_enabled_description">सबटाइटलहरू असक्षम पार्नुहोस्</string>
-    <string name="exo_controls_fastforward_description">फास्ट फर्वार्ड गर्नुहोस्</string>
-    <string name="exo_controls_fullscreen_enter_description">पूर्ण स्क्रिन मोडमा खोल्नुहोस्</string>
-    <string name="exo_controls_fullscreen_exit_description">पूर्ण स्क्रिन मोडबाट बाहिरिनुहोस्</string>
-    <string name="exo_controls_hide">प्लेयरसम्बन्धी नियन्त्रणहरू लुकाउनुहोस्</string>
-    <string name="exo_controls_next_description">अर्को</string>
-    <string name="exo_controls_overflow_hide_description">अतिरिक्त सेटिङहरू लुकाउनुहोस्</string>
-    <string name="exo_controls_overflow_show_description">अतिरिक्त सेटिङहरू देखाउनुहोस्</string>
-    <string name="exo_controls_pause_description">पज गर्नुहोस्</string>
-    <string name="exo_controls_play_description">प्ले गर्नुहोस्</string>
-    <string name="exo_controls_playback_speed">गति</string>
-    <string name="exo_controls_previous_description">अघिल्लो</string>
-    <string name="exo_controls_repeat_all_description">हालको मोड: सबै दोहोरिने। दोहोरिने मोड टगल गर्नुहोस्।</string>
-    <string name="exo_controls_repeat_off_description">हालको मोड: नदोहोरिने। दोहोरिने मोड टगल गर्नुहोस्।</string>
-    <string name="exo_controls_repeat_one_description">हालको मोड: एक पटक दोहोरिने। दोहोरिने मोड टगल गर्नुहोस्।</string>
-    <string name="exo_controls_rewind_description">रिवाइन्ड गर्नुहोस्</string>
-    <string name="exo_controls_seek_bar_description">हालसम्म भिडियो प्ले भएको अवधि</string>
-    <string name="exo_controls_settings_description">सेटिङ</string>
-    <string name="exo_controls_show">प्लेयरसम्बन्धी नियन्त्रणहरू देखाउनुहोस्</string>
-    <string name="exo_controls_shuffle_off_description">सफल मोड अन गर्नुहोस्</string>
-    <string name="exo_controls_shuffle_on_description">सफल मोड अफ गर्नुहोस्</string>
-    <string name="exo_controls_stop_description">रोक्नुहोस्</string>
-    <string name="exo_controls_vr_description">VR मोड</string>
-    <string name="exo_download_completed">डाउनलोड सम्पन्न भयो</string>
-    <string name="exo_download_description">डाउनलोड गर्नुहोस्</string>
-    <string name="exo_download_downloading">डाउनलोड गरिँदै छ</string>
-    <string name="exo_download_failed">डाउनलोड गर्न सकिएन</string>
-    <string name="exo_download_notification_channel_name">डाउनलोडहरू</string>
-    <string name="exo_download_paused">डाउनलोड गर्ने कार्य पज गरियो</string>
-    <string name="exo_download_paused_for_network">इन्टरनेटमा कनेक्ट भएपछि डाउनलोड गरिने छ</string>
-    <string name="exo_download_paused_for_wifi">WiFi मा कनेक्ट भएपछि डाउनलोड गरिने छ</string>
-    <string name="exo_download_removing">डाउनलोडहरू हटाउँदै</string>
-    <string name="exo_item_list">%1$s, %2$s</string>
-    <string name="exo_track_bitrate">%1$.2f Mbps</string>
-    <string name="exo_track_mono">मोनो</string>
-    <string name="exo_track_resolution">%1$d × %2$d</string>
-    <string name="exo_track_role_alternate">वैकल्पिक</string>
-    <string name="exo_track_role_closed_captions">उपशीर्षकहरू</string>
-    <string name="exo_track_role_commentary">टिप्पणी</string>
-    <string name="exo_track_role_supplementary">पूरक</string>
-    <string name="exo_track_selection_auto">स्वतः</string>
-    <string name="exo_track_selection_none">कुनै पनि होइन</string>
-    <string name="exo_track_selection_title_audio">अडियो</string>
-    <string name="exo_track_stereo">स्टेरियो</string>
-    <string name="exo_track_surround">सराउन्ड साउन्ड</string>
-    <string name="exo_track_surround_5_point_1">5.1 सराउन्ड साउन्ड</string>
-    <string name="exo_track_surround_7_point_1">7.1 सराउन्ड साउन्ड</string>
-    <string name="exo_track_unknown">अज्ञात</string>
-    <string name="exo_track_unknown_name">अज्ञात (%1$s)</string>
-    <string name="exposed_dropdown_menu_content_description">ड्रपडाउन मेनु देखाउनुहोस्</string>
-    <string name="icon_content_description">संवादको आइकन</string>
-    <string name="item_view_role_description">ट्याब</string>
-    <string name="material_clock_toggle_content_description">पूर्वाह्न वा अपराह्न चयन गर्नुहोस्</string>
-    <string name="material_hour_24h_suffix">%1$s घण्टा</string>
-    <string name="material_hour_selection">घन्टा चयन गर्नुहोस्</string>
-    <string name="material_hour_suffix">%1$s बजे</string>
-    <string name="material_minute_selection">मिन�
+package com.hassan.statussaver.views.activities
+
+
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Rect
+import android.os.Build
+import android.os.Bundle
+import android.os.FileObserver
+import android.view.MotionEvent
+import android.view.View
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import com.hassan.statussaver.R
+import com.hassan.statussaver.data.StatusRepo
+import com.hassan.statussaver.databinding.ActivityMainBinding
+import com.hassan.statussaver.utils.Constants
+import com.hassan.statussaver.utils.SharedPrefKeys
+import com.hassan.statussaver.utils.SharedPrefUtils
+import com.hassan.statussaver.utils.replaceFragment
+import com.hassan.statussaver.views.fragments.FragmentSettings
+import com.hassan.statussaver.views.fragments.FragmentStatus
+import com.hassan.statussaver.workers.RestartServiceWorker
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.util.concurrent.TimeUnit
+
+class MainActivity : AppCompatActivity() {
+  private val activity = this
+  private val binding by lazy {
+    ActivityMainBinding.inflate(layoutInflater)
+  }
+  private var currentSelectedItemId: Int = R.id.menu_status // Default selected item
+  private lateinit var statusRepo: StatusRepo
+  private var fileObserver: FileObserver? = null
+  private var isBusiness: Boolean = false
+  private lateinit var bottomSheet: LinearLayout
+
+
+  @SuppressLint("ClickableViewAccessibility")
+  @RequiresApi(Build.VERSION_CODES.O)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(binding.root)
+    supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
+    SharedPrefUtils.init(activity)
+    statusRepo = StatusRepo(this)
+    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+      .build()
+    WorkManager.getInstance(this).enqueue(workRequest)
+    bottomSheet = findViewById(R.id.bottomSheet)
+    val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+    val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
+    val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
+    val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
+    val text = findViewById<TextView>(R.id.toolbar_title)
+    val header = findViewById<AppBarLayout>(R.id.appBarLayout)
+    binding.root.setOnTouchListener { _, event ->
+      if (event.action == MotionEvent.ACTION_DOWN) {
+        if (bottomSheet.visibility == View.VISIBLE) {
+          val outRect = Rect()
+          bottomSheet.getGlobalVisibleRect(outRect)
+          if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+            bottomSheet.visibility = View.GONE
+          }
+        }
+      }
+      false
+    }
+    binding.apply {
+      buttonIcon2.setOnClickListener {
+        if (bottomSheet.visibility == View.GONE) {
+          bottomSheet.visibility = View.VISIBLE
+        } else {
+          bottomSheet.visibility = View.GONE
+        }
+      }
+      ActivityCompat.requestPermissions(
+        activity,
+        arrayOf("android.permission.POST_NOTIFICATIONS"),
+        101
+      )
+//            splashLogic()
+      requestPermission()
+      val fragmentWhatsapp = FragmentStatus()
+      val bundle = Bundle()
+      bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+      replaceFragment(fragmentWhatsapp, bundle)
+//            bottomNavigationView.setOnItemSelectedListener {
+//                if (it.itemId == currentSelectedItemId) {
+//                    // If the selected item is the same as the current item, do nothing
+//                    return@setOnItemSelectedListener false
+//                }
+//                currentSelectedItemId = it.itemId // Update the current selected item
+//                when (it.itemId) {
+//                    R.id.menu_status -> {
+//                        buttonIcon?.visibility = View.VISIBLE
+//                        text?.visibility = View.VISIBLE
+//                        val fragmentWhatsapp = FragmentStatus()
+//                        val bundle = Bundle()
+//                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+//                        replaceFragment(fragmentWhatsapp, bundle)
+//                        isBusiness = false
+//                    }
+//
+//                    R.id.menu_business_status -> {
+//                        buttonIcon?.visibility = View.VISIBLE
+//                        text?.visibility = View.VISIBLE
+//                        val fragmentWhatsapp = FragmentStatus()
+//                        val bundle = Bundle()
+//                        bundle.putString(
+//                            Constants.FRAGMENT_TYPE_KEY,
+//                            Constants.TYPE_WHATSAPP_BUSINESS
+//                        )
+//                        replaceFragment(fragmentWhatsapp, bundle)
+//                        isBusiness = true
+//                    }
+//                }
+//                return@setOnItemSelectedListener true
+//            }
+      findViewById<TextView>(R.id.item1).setOnClickListener {
+        buttonIcon?.visibility = View.VISIBLE
+        text?.visibility = View.VISIBLE
+        val fragmentWhatsapp = FragmentStatus()
+        val bundle = Bundle()
+        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+        replaceFragment(fragmentWhatsapp, bundle)
+        isBusiness = false
+        bottomSheet.visibility = View.GONE
+      }
+      findViewById<TextView>(R.id.item2).setOnClickListener {
+        buttonIcon?.visibility = View.VISIBLE
+        text?.visibility = View.VISIBLE
+        val fragmentWhatsapp = FragmentStatus()
+        val bundle = Bundle()
+        bundle.putString(
+          Constants.FRAGMENT_TYPE_KEY,
+          Constants.TYPE_WHATSAPP_BUSINESS
+        )
+        replaceFragment(fragmentWhatsapp, bundle)
+        isBusiness = true
+        bottomSheet.visibility = View.GONE
+      }
+    }
+
+    // Find the ImageButton and set an OnClickListener
+    buttonIcon?.setOnClickListener {
+      openSendMessageActivity(isBusiness)
+
+    }
+    settingIcon?.setOnClickListener {
+      header.visibility = View.GONE
+      replaceFragment(FragmentSettings())
+    }
+
+  }
+
+  private fun openSendMessageActivity(isBusiness: Boolean) {
+    val intent = Intent(this, SendMessageActivity::class.java)
+    intent.putExtra("isBusiness", isBusiness)
+    startActivity(intent)
+  }
+
+  private val PERMISSION_REQUEST_CODE = 50
+  private fun requestPermission() {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+      val isPermissionsGranted = SharedPrefUtils.getPrefBoolean(
+        SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
+        false
+      )
+      if (!isPermissionsGranted) {
+        ActivityCompat.requestPermissions(
+          /* activity = */ activity,
+          /* permissions = */ arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+          /* requestCode = */ PERMISSION_REQUEST_CODE
+        )
+        Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
+      }
+    }
+  }
+
+
+  override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    super.onActivityResult(requestCode, resultCode, data)
+    if (requestCode == StatusRepo.REQUEST_CODE_URI_PERMISSION && resultCode == Activity.RESULT_OK) {
+      data?.data?.let { uri ->
+        contentResolver.takePersistableUriPermission(
+          uri,
+          Intent.FLAG_GRANT_READ_URI_PERMISSION
+        )
+        // Save the granted URI to SharedPreferences
+        SharedPrefUtils.setPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, uri.toString())
+        statusRepo.getAllStatuses()
+      }
+    } else {
+      val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
+      fragment?.onActivityResult(requestCode, resultCode, data)
+    }
+  }
+
+  override fun onRequestPermissionsResult(
+    requestCode: Int,
+    permissions: Array<out String>,
+    grantResults: IntArray
+  ) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == 101) {
+      if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        // Permission was granted
+        Toast.makeText(this, "Notification permission granted!", Toast.LENGTH_SHORT).show()
+      } else {
+        // Permission was denied
+        Toast.makeText(this, "Notification permission denied!", Toast.LENGTH_SHORT).show()
+      }
+    }
+    if (requestCode == PERMISSION_REQUEST_CODE) {
+      val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+      if (isGranted) {
+        SharedPrefUtils.putPrefBoolean(SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED, true)
+      } else {
+        SharedPrefUtils.putPrefBoolean(
+          SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED,
+          false
+        )
+
+      }
+    }
+  }
+  private val fragmentLifecycleCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
+    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+      super.onFragmentResumed(fm, f)
+      if (f is FragmentStatus) {
+        findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.VISIBLE
+      }
+    }
+  }
+
+//    private fun splashLogic() {
+//        binding.apply {
+//            splashScreen.cardView.slideFromStart()
+//            Handler(Looper.myLooper()!!).postDelayed({
+//                splashScreenHolder.slideToEndWithFadeOut()
+//                splashScreenHolder.visibility = View.GONE
+//                // Check if the permission is already granted
+//                if (ContextCompat.checkSelfPermission(
+//                        activity,
+//                        "android.permission.POST_NOTIFICATIONS"
+//                    ) != PackageManager.PERMISSION_GRANTED
+//                ) {
+//                    // If not, request the permission
+//                    ActivityCompat.requestPermissions(
+//                        activity,
+//                        arrayOf("android.permission.POST_NOTIFICATIONS"),
+//                        101
+//                    )
+//                }
+//            }, 2000)
+//        }
+//    }
+}
