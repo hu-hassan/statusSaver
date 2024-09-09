@@ -11,7 +11,7 @@ android {
         buildFeatures{
             viewBinding = true
         }
-        applicationId = "com.devatrii.statussaver"
+        applicationId = "com.hassan.statussaver"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 34

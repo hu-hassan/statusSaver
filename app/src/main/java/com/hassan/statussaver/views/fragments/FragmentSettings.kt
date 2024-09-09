@@ -4,11 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Environment
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import com.google.android.material.appbar.AppBarLayout
 import com.hassan.statussaver.R
 import com.hassan.statussaver.databinding.FragmentSettingsBinding
 import com.hassan.statussaver.models.SettingsModel
+import com.hassan.statussaver.utils.Constants
+import com.hassan.statussaver.utils.replaceFragment
 import com.hassan.statussaver.views.adapters.SettingsAdapter
 
 /**
@@ -29,6 +37,17 @@ class FragmentSettings : Fragment() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragmentWhatsapp = FragmentStatus()
+                val bundle = Bundle()
+                bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+                replaceFragment(fragmentWhatsapp, bundle)
+//                val header = findViewById<AppBarLayout>(R.id.appBarLayout)
+//                header.visibility = View.VISIBLE
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
 
         binding.apply {
 
@@ -78,4 +97,15 @@ class FragmentSettings : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
+    fun replaceFragment(fragment: Fragment, args: Bundle? = null) {
+        val fragmentActivity = requireActivity() as FragmentActivity
+        fragmentActivity.supportFragmentManager.beginTransaction().apply {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            args?.let {
+                fragment.arguments = it
+            }
+            replace(R.id.fragmentContainer, fragment)
+            addToBackStack(null)
+        }.commit()
+    }
 }

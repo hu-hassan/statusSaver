@@ -94,13 +94,18 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
     private fun shareMedia(context: Context, media: MediaModel) {
         val file = File(media.pathUri)
         val uri = Uri.fromFile(file)
-
-        val shareIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, uri)
-            type = "image/" // or "video/" depending on the media type
+        Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT,context.getString(R.string.app_name))
+            putExtra(Intent.EXTRA_STREAM,uri)
+            context.startActivity(this)
         }
-        context.startActivity(Intent.createChooser(shareIntent, "Share via"))
+
+//        val shareIntent = Intent().apply {
+//            action = Intent.ACTION_SEND
+//            putExtra(Intent.EXTRA_STREAM, uri)
+//            type = "image/" // or "video/" depending on the media type
+//        }
     }
 
 }

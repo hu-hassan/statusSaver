@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
@@ -26,7 +27,6 @@ import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.utils.SharedPrefKeys
 import com.hassan.statussaver.utils.SharedPrefUtils
 import com.hassan.statussaver.utils.getFolderPermissions
-//import com.devatrii.statussaver.viewmodels.factories.SharedViewModel
 import com.hassan.statussaver.viewmodels.factories.StatusViewModel
 import com.hassan.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.hassan.statussaver.views.activities.MainActivity
@@ -52,12 +52,12 @@ class FragmentStatus : Fragment() {
 
         super.onCreate(savedInstanceState)
 
-//        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                requireActivity().finish()
-//            }
-//        }
-//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
         binding.apply {
 
 
