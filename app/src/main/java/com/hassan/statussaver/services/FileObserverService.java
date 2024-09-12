@@ -118,6 +118,7 @@ public class FileObserverService extends Service {
     }
 
     private Notification createNotification() {
+        Log.d("FileObserverService", "createNotification");
         return new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Status Notification")
                 .setContentText("Once you give us folder permission, we will notify you for new statuses.")

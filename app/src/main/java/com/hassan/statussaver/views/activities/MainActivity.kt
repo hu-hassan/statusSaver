@@ -3,13 +3,17 @@ package com.hassan.statussaver.views.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.Activity
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.FileObserver
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
@@ -19,6 +23,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.work.PeriodicWorkRequestBuilder
@@ -35,6 +40,7 @@ import com.hassan.statussaver.views.fragments.FragmentStatus
 import com.hassan.statussaver.workers.RestartServiceWorker
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.hassan.statussaver.databinding.DialogGuideBinding
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -87,12 +93,9 @@ class MainActivity : AppCompatActivity() {
           bottomSheet.visibility = View.GONE
         }
       }
-      ActivityCompat.requestPermissions(
-        activity,
-        arrayOf("android.permission.POST_NOTIFICATIONS"),
-        101
-      )
-//            splashLogic()
+      if (isFirstRun()) {
+        dialogLogic()
+      }
       requestPermission()
       val fragmentWhatsapp = FragmentStatus()
       val bundle = Bundle()
@@ -139,6 +142,7 @@ class MainActivity : AppCompatActivity() {
         replaceFragment(fragmentWhatsapp, bundle)
         isBusiness = false
         bottomSheet.visibility = View.GONE
+
       }
       findViewById<TextView>(R.id.item2).setOnClickListener {
         buttonIcon?.visibility = View.VISIBLE
@@ -247,13 +251,22 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-//    private fun splashLogic() {
-//        binding.apply {
-//            splashScreen.cardView.slideFromStart()
-//            Handler(Looper.myLooper()!!).postDelayed({
-//                splashScreenHolder.slideToEndWithFadeOut()
-//                splashScreenHolder.visibility = View.GONE
-//                // Check if the permission is already granted
+
+  private fun isFirstRun(): Boolean {
+    val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    return sharedPreferences.getBoolean("is_first_run", true)
+  }
+
+  private fun setFirstRunCompleted() {
+    val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    with(sharedPreferences.edit()) {
+      putBoolean("is_first_run", false)
+      apply()
+    }
+  }
+
+  private fun dialogLogic() {
+    // Check if the permission is already granted
 //                if (ContextCompat.checkSelfPermission(
 //                        activity,
 //                        "android.permission.POST_NOTIFICATIONS"
@@ -266,7 +279,19 @@ class MainActivity : AppCompatActivity() {
 //                        101
 //                    )
 //                }
-//            }, 2000)
-//        }
-//    }
+    val dialog = Dialog(this)
+    val dialogBinding = DialogGuideBinding.inflate((this as Activity).layoutInflater)
+    dialogBinding.okayBtn.setOnClickListener {
+      dialog.dismiss()
+    }
+    dialog.setContentView(dialogBinding.root)
+
+    dialog.window?.setLayout(
+      ActionBar.LayoutParams.MATCH_PARENT,
+      ActionBar.LayoutParams.WRAP_CONTENT
+    )
+
+    dialog.show()
+    setFirstRunCompleted()
+  }
 }

@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.hassan.statussaver.R
 import com.hassan.statussaver.databinding.FragmentSettingsBinding
 import com.hassan.statussaver.models.SettingsModel
@@ -50,6 +51,13 @@ class FragmentSettings : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
 
         binding.apply {
+            val toolbar = binding.root.findViewById<MaterialToolbar>(R.id.tool_bar)
+            toolbar.setNavigationOnClickListener {
+                val fragmentWhatsapp = FragmentStatus()
+                val bundle = Bundle()
+                bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+                replaceFragment(fragmentWhatsapp, bundle)
+            }
 
         settingsRecyclerView.adapter = adapter
 

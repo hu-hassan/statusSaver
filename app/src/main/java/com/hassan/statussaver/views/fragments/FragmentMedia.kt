@@ -74,6 +74,9 @@ class FragmentMedia : Fragment() {
                 val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
                     SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
                     false
+                ) && SharedPrefUtils.getPrefBoolean(
+                    SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
+                    false
                 )
                 if (!isPermissionGranted){
                     binding.tempMediaText.visibility = View.GONE

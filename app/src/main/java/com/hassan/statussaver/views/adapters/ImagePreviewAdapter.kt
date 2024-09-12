@@ -60,9 +60,9 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                 tools.repost.setOnClickListener {
 
                 }
-                tools.share.setOnClickListener {
-                    shareMedia(context, mediaModel)
-                }
+//                tools.share.setOnClickListener {
+//                    shareMedia(context, mediaModel)
+//                }
             }
         }
     }

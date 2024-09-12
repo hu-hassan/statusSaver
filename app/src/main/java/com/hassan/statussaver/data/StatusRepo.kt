@@ -88,10 +88,14 @@ class StatusRepo(val context: Context) {
                 when (whatsAppType) {
                     Constants.TYPE_WHATSAPP_MAIN -> {
                         Log.d(TAG, "getAllStatuses: Adding to WhatsApp Statuses")
-                        wpStatusesList.add(model)
+                        if (!model.fileName.contains(".png")) {
+                            wpStatusesList.add(model)
+                        }
                     }
                     else -> {
-                        wpBusinessStatusesList.add(model)
+                        if (!model.fileName.contains(".png")) {
+                            wpBusinessStatusesList.add(model)
+                        }
                     }
                 }
             }
