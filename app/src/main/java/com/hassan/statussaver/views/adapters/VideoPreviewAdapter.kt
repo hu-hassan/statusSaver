@@ -93,16 +93,6 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
     override fun onBindViewHolder(holder: VideoPreviewAdapter.ViewHolder, position: Int) {
         val model = list[position]
         holder.bind(model)
-        holder.startPlayer()//        val fileInGallery = File(model.pathUri)
-//        if (fileInGallery.exists()) {
-//            // If the file exists in the gallery, show the double tick icon
-//            holder.binding.tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
-//        } else {
-//            // If the file does not exist in the gallery, show the download icon
-//            holder.binding.tools.statusDownload.setImageResource(R.drawable.ic_download)
-//        }
-//        SharedPrefUtils.syncDeletionWithGallery(context)
-
     }
 
     override fun getItemCount() = list.size
@@ -110,14 +100,3 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
 
 
 }
-
-
-
-
-
-
-
-
-
-
-

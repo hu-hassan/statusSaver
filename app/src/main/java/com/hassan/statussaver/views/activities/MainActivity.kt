@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
   private var fileObserver: FileObserver? = null
   private var isBusiness: Boolean = false
   private lateinit var bottomSheet: LinearLayout
+  private lateinit var grayShade: View
+
 
 
   @SuppressLint("ClickableViewAccessibility")
@@ -67,6 +69,12 @@ class MainActivity : AppCompatActivity() {
       .build()
     WorkManager.getInstance(this).enqueue(workRequest)
     bottomSheet = findViewById(R.id.bottomSheet)
+    grayShade = findViewById(R.id.gray_shade)
+    grayShade.setOnClickListener {
+      bottomSheet.visibility = View.GONE
+      grayShade.visibility = View.GONE
+    }
+
     val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
     val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
     val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
@@ -89,8 +97,10 @@ class MainActivity : AppCompatActivity() {
       buttonIcon2.setOnClickListener {
         if (bottomSheet.visibility == View.GONE) {
           bottomSheet.visibility = View.VISIBLE
+            grayShade.visibility = View.VISIBLE
         } else {
           bottomSheet.visibility = View.GONE
+            grayShade.visibility = View.GONE
         }
       }
       if (isFirstRun()) {
@@ -101,39 +111,8 @@ class MainActivity : AppCompatActivity() {
       val bundle = Bundle()
       bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
       replaceFragment(fragmentWhatsapp, bundle)
-//            bottomNavigationView.setOnItemSelectedListener {
-//                if (it.itemId == currentSelectedItemId) {
-//                    // If the selected item is the same as the current item, do nothing
-//                    return@setOnItemSelectedListener false
-//                }
-//                currentSelectedItemId = it.itemId // Update the current selected item
-//                when (it.itemId) {
-//                    R.id.menu_status -> {
-//                        buttonIcon?.visibility = View.VISIBLE
-//                        text?.visibility = View.VISIBLE
-//                        val fragmentWhatsapp = FragmentStatus()
-//                        val bundle = Bundle()
-//                        bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-//                        replaceFragment(fragmentWhatsapp, bundle)
-//                        isBusiness = false
-//                    }
-//
-//                    R.id.menu_business_status -> {
-//                        buttonIcon?.visibility = View.VISIBLE
-//                        text?.visibility = View.VISIBLE
-//                        val fragmentWhatsapp = FragmentStatus()
-//                        val bundle = Bundle()
-//                        bundle.putString(
-//                            Constants.FRAGMENT_TYPE_KEY,
-//                            Constants.TYPE_WHATSAPP_BUSINESS
-//                        )
-//                        replaceFragment(fragmentWhatsapp, bundle)
-//                        isBusiness = true
-//                    }
-//                }
-//                return@setOnItemSelectedListener true
-//            }
       findViewById<TextView>(R.id.item1).setOnClickListener {
+        grayShade.visibility = View.GONE
         buttonIcon?.visibility = View.VISIBLE
         text?.visibility = View.VISIBLE
         val fragmentWhatsapp = FragmentStatus()
@@ -145,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
       }
       findViewById<TextView>(R.id.item2).setOnClickListener {
+        grayShade.visibility = View.GONE
         buttonIcon?.visibility = View.VISIBLE
         text?.visibility = View.VISIBLE
         val fragmentWhatsapp = FragmentStatus()

@@ -101,6 +101,13 @@
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:menu="@menu/bottom_menu"-->
 <!--        tools:ignore="MissingConstraints" />-->
+    <View
+        android:id="@+id/gray_shade"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:visibility="gone" />
+
     <include layout="@layout/bottom_sheet" />
 
 
@@ -121,5 +128,6 @@
 <!--            layout="@layout/layout_splash" />-->
 
 <!--    </LinearLayout>-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ import com.hassan.statussaver.utils.isStatusSaved
 import com.hassan.statussaver.viewmodels.factories.StatusViewModel
 import com.hassan.statussaver.viewmodels.factories.StatusViewModelFactory
 import com.hassan.statussaver.views.adapters.MediaAdapter
+import java.util.concurrent.CopyOnWriteArrayList
 
 class FragmentMedia : Fragment() {
     private val binding by lazy {
@@ -60,12 +61,7 @@ class FragmentMedia : Fragment() {
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_SAVED-> {
-                        Log.d("FragmentMedia", "onCreate: Saved")
                         viewModel.wpSavedStatusLiveData.observe(requireActivity()) { unFilteredList ->
-                            Log.d("FragmentMedia", "Saved list under observation")
-                            for (i in unFilteredList){
-                                Log.d("FragmentMedia", "Filea present: ${i.fileName}")
-                            }
                             updateUIforSaved(unFilteredList)
                         }
 //                        tempMediaText.text = "Work in progress............."
@@ -111,20 +107,19 @@ class FragmentMedia : Fragment() {
             model.fileName
         }
 
-        val list = ArrayList<MediaModel>()
-        val filteredListCopy = ArrayList(filteredList)
-        filteredListCopy.forEach { model ->
-            if(context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true) {
-                list.add(model)
-            }
-            if(!(context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true)){
-                list.remove(model)
-            }
+        // Filter the list based on the conditions and assign it directly to the adapter
+        val finalList = filteredList.filter { model ->
+            context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true
         }
-        adapter = MediaAdapter(list, requireActivity(), true)
+
+        // Reassign adapter after modifications
+        adapter = MediaAdapter(ArrayList(finalList), requireActivity(), true)
         binding.mediaRecyclerView.adapter = adapter
-        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+
+        // Show or hide the tempMediaText based on whether the final list is empty
+        binding.tempMediaText.visibility = if (finalList.isEmpty()) View.VISIBLE else View.GONE
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

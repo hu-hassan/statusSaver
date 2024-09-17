@@ -18,6 +18,7 @@ import com.hassan.statussaver.utils.isStatusExist
 import com.hassan.statussaver.utils.isStatusSaved
 import com.hassan.statussaver.utils.saveStatus
 import com.hassan.statussaver.views.activities.ImagesPreview
+import com.hassan.statussaver.views.activities.SavedMediaPreview
 import com.hassan.statussaver.views.activities.VideosPreview
 
 class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isSavedTab: Boolean) :
@@ -40,27 +41,38 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isS
                 statusDownload.setImageResource(downloadImage)
                 if(isSavedTab){
                     statusDownload.visibility = View.GONE
-                }
-
-                cardStatus.setOnClickListener {
-                    if (mediaModel.type == MEDIA_TYPE_IMAGE) {
-                        // goto image preview activity
+                    cardStatus.setOnClickListener {
                         Intent().apply {
                             putExtra(Constants.MEDIA_LIST_KEY,list)
                             putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
-                            setClass(context,ImagesPreview::class.java)
-                            context.startActivity(this)
-                        }
-                    } else {
-                        // goto video preview activity
-                        Intent().apply {
-                            putExtra(Constants.MEDIA_LIST_KEY,list)
-                            putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
-                            setClass(context,VideosPreview::class.java)
+                            setClass(context, SavedMediaPreview::class.java)
                             context.startActivity(this)
                         }
                     }
                 }
+                else{
+                    cardStatus.setOnClickListener {
+                        if (mediaModel.type == MEDIA_TYPE_IMAGE) {
+                            // goto image preview activity
+                            Intent().apply {
+                                putExtra(Constants.MEDIA_LIST_KEY,list)
+                                putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
+                                setClass(context,ImagesPreview::class.java)
+                                context.startActivity(this)
+                            }
+                        } else {
+                            // goto video preview activity
+                            Intent().apply {
+                                putExtra(Constants.MEDIA_LIST_KEY,list)
+                                putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
+                                setClass(context,VideosPreview::class.java)
+                                context.startActivity(this)
+                            }
+                        }
+                    }
+                }
+
+
 
                 statusDownload.setOnClickListener {
                     // Check if the status is already downloaded

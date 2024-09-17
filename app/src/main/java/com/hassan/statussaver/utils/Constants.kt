@@ -16,6 +16,7 @@ object Constants {
     const val MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES = "com.whatsapp.w4b.images"
     const val MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS = "com.whatsapp.w4b.videos"
 
+    const val MEDIA_MODEL_KEY = "media_model_key"
     const val MEDIA_LIST_KEY = "MEDIA_LIST"
     const val MEDIA_SCROLL_KEY = "MEDIA_SCROLL"
     const val MEDIA_TYPE_KEY = "MEDIA_TYPE"

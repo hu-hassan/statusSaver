@@ -194,9 +194,6 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
                 getSavedStatusImages()
                 getSavedStatusVideos()
             }
-            for (mediaModel in wpSavedStatusLiveData.value!!){
-                Log.d(TAG, "File found in viewmodel: ${mediaModel.fileName}")
-            }
         }
     }
     private val tempListSI = mutableListOf<MediaModel>()
