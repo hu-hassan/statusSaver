@@ -148,5 +148,15 @@ public class FileObserverService extends Service {
         return START_STICKY;
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("FileObserverService", "onDestroy");
+        if (fileObserverm != null) {
+            fileObserverm.stopWatching();
+        }         
+        if (fileObserverb != null) {
+            fileObserverb.stopWatching();
+        }
+    }
 }

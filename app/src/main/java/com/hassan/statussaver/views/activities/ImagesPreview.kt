@@ -7,6 +7,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.appbar.AppBarLayout
 import com.hassan.statussaver.R
 import com.hassan.statussaver.databinding.ActivityImagesPreviewBinding
 import com.hassan.statussaver.models.MediaModel
@@ -24,6 +25,10 @@ class ImagesPreview : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        val header = findViewById<MaterialToolbar>(R.id.tool_bar)
+        header.setNavigationOnClickListener {
+            finish()
+        }
         binding.apply {
             val list = intent.getSerializableExtra(Constants.MEDIA_LIST_KEY) as ArrayList<MediaModel>
             val scrollTo = intent.getIntExtra(Constants.MEDIA_SCROLL_KEY, 0)

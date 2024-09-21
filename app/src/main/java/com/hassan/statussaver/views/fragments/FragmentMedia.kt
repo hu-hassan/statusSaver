@@ -103,22 +103,23 @@ class FragmentMedia : Fragment() {
     }
 
     private fun updateUIforSaved(unFilteredList: ArrayList<MediaModel>) {
+        // Create a distinct, filtered list using filter
         val filteredList = unFilteredList.distinctBy { model ->
             model.fileName
-        }
-
-        // Filter the list based on the conditions and assign it directly to the adapter
-        val finalList = filteredList.filter { model ->
+        }.filter { model ->
             context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true
         }
 
         // Reassign adapter after modifications
-        adapter = MediaAdapter(ArrayList(finalList), requireActivity(), true)
+        adapter = MediaAdapter(ArrayList(filteredList), requireActivity(), true)
         binding.mediaRecyclerView.adapter = adapter
 
         // Show or hide the tempMediaText based on whether the final list is empty
-        binding.tempMediaText.visibility = if (finalList.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaText.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
     }
+
+
+
 
 
     override fun onCreateView(

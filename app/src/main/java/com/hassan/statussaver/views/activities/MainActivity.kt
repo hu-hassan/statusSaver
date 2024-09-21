@@ -13,6 +13,7 @@ import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.FileObserver
+import android.os.StrictMode
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -28,6 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.afollestad.materialdialogs.BuildConfig
 import com.hassan.statussaver.R
 import com.hassan.statussaver.data.StatusRepo
 import com.hassan.statussaver.databinding.ActivityMainBinding
@@ -61,94 +63,101 @@ class MainActivity : AppCompatActivity() {
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(binding.root)
-    supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
-    SharedPrefUtils.init(activity)
-    statusRepo = StatusRepo(this)
+    clearSharedPreferences(this)
+    clearCacheOnFirstLaunch(this)
+    try {
+      setContentView(binding.root)
+      supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
+      SharedPrefUtils.init(activity)
+      statusRepo = StatusRepo(this)
     val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
       .build()
     WorkManager.getInstance(this).enqueue(workRequest)
-    bottomSheet = findViewById(R.id.bottomSheet)
-    grayShade = findViewById(R.id.gray_shade)
-    grayShade.setOnClickListener {
-      bottomSheet.visibility = View.GONE
-      grayShade.visibility = View.GONE
-    }
+      bottomSheet = findViewById(R.id.bottomSheet)
+      grayShade = findViewById(R.id.gray_shade)
+      grayShade.setOnClickListener {
+        bottomSheet.visibility = View.GONE
+        grayShade.visibility = View.GONE
+      }
 
-    val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
-    val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
-    val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
-    val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
-    val text = findViewById<TextView>(R.id.toolbar_title)
-    val header = findViewById<AppBarLayout>(R.id.appBarLayout)
-    binding.root.setOnTouchListener { _, event ->
-      if (event.action == MotionEvent.ACTION_DOWN) {
-        if (bottomSheet.visibility == View.VISIBLE) {
-          val outRect = Rect()
-          bottomSheet.getGlobalVisibleRect(outRect)
-          if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-            bottomSheet.visibility = View.GONE
+      val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+      val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
+      val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
+      val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
+      val text = findViewById<TextView>(R.id.toolbar_title)
+      val header = findViewById<AppBarLayout>(R.id.appBarLayout)
+      binding.root.setOnTouchListener { _, event ->
+        if (event.action == MotionEvent.ACTION_DOWN) {
+          if (bottomSheet.visibility == View.VISIBLE) {
+            val outRect = Rect()
+            bottomSheet.getGlobalVisibleRect(outRect)
+            if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+              bottomSheet.visibility = View.GONE
+            }
           }
         }
+        false
       }
-      false
-    }
-    binding.apply {
-      buttonIcon2.setOnClickListener {
-        if (bottomSheet.visibility == View.GONE) {
-          bottomSheet.visibility = View.VISIBLE
+      binding.apply {
+        buttonIcon2.setOnClickListener {
+          if (bottomSheet.visibility == View.GONE) {
+            bottomSheet.visibility = View.VISIBLE
             grayShade.visibility = View.VISIBLE
-        } else {
-          bottomSheet.visibility = View.GONE
+          } else {
+            bottomSheet.visibility = View.GONE
             grayShade.visibility = View.GONE
+          }
         }
-      }
-      if (isFirstRun()) {
-        dialogLogic()
-      }
-      requestPermission()
-      val fragmentWhatsapp = FragmentStatus()
-      val bundle = Bundle()
-      bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
-      replaceFragment(fragmentWhatsapp, bundle)
-      findViewById<TextView>(R.id.item1).setOnClickListener {
-        grayShade.visibility = View.GONE
-        buttonIcon?.visibility = View.VISIBLE
-        text?.visibility = View.VISIBLE
+        if (isFirstRun()) {
+          dialogLogic()
+        }
+        requestPermission()
         val fragmentWhatsapp = FragmentStatus()
         val bundle = Bundle()
         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
         replaceFragment(fragmentWhatsapp, bundle)
-        isBusiness = false
-        bottomSheet.visibility = View.GONE
+        findViewById<TextView>(R.id.item1).setOnClickListener {
+          grayShade.visibility = View.GONE
+          buttonIcon?.visibility = View.VISIBLE
+          text?.visibility = View.VISIBLE
+          val fragmentWhatsapp = FragmentStatus()
+          val bundle = Bundle()
+          bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
+          replaceFragment(fragmentWhatsapp, bundle)
+          isBusiness = false
+          bottomSheet.visibility = View.GONE
+
+        }
+        findViewById<TextView>(R.id.item2).setOnClickListener {
+          grayShade.visibility = View.GONE
+          buttonIcon?.visibility = View.VISIBLE
+          text?.visibility = View.VISIBLE
+          val fragmentWhatsapp = FragmentStatus()
+          val bundle = Bundle()
+          bundle.putString(
+            Constants.FRAGMENT_TYPE_KEY,
+            Constants.TYPE_WHATSAPP_BUSINESS
+          )
+          replaceFragment(fragmentWhatsapp, bundle)
+          isBusiness = true
+          bottomSheet.visibility = View.GONE
+        }
+      }
+
+      // Find the ImageButton and set an OnClickListener
+      buttonIcon?.setOnClickListener {
+        openSendMessageActivity(isBusiness)
 
       }
-      findViewById<TextView>(R.id.item2).setOnClickListener {
-        grayShade.visibility = View.GONE
-        buttonIcon?.visibility = View.VISIBLE
-        text?.visibility = View.VISIBLE
-        val fragmentWhatsapp = FragmentStatus()
-        val bundle = Bundle()
-        bundle.putString(
-          Constants.FRAGMENT_TYPE_KEY,
-          Constants.TYPE_WHATSAPP_BUSINESS
-        )
-        replaceFragment(fragmentWhatsapp, bundle)
-        isBusiness = true
-        bottomSheet.visibility = View.GONE
+      settingIcon?.setOnClickListener {
+        header.visibility = View.GONE
+        replaceFragment(FragmentSettings())
       }
     }
-
-    // Find the ImageButton and set an OnClickListener
-    buttonIcon?.setOnClickListener {
-      openSendMessageActivity(isBusiness)
-
+    catch (e: Exception) {
+      Log.e("TAG", "Exception in onCreate", e)
+      throw e
     }
-    settingIcon?.setOnClickListener {
-      header.visibility = View.GONE
-      replaceFragment(FragmentSettings())
-    }
-
   }
 
   private fun openSendMessageActivity(isBusiness: Boolean) {
@@ -274,4 +283,28 @@ class MainActivity : AppCompatActivity() {
     dialog.show()
     setFirstRunCompleted()
   }
+  fun clearSharedPreferences(context: Context) {
+    val prefs = context.getSharedPreferences("SharedPrefUtils", Context.MODE_PRIVATE)
+    prefs.edit().clear().apply()
+  }
+  fun clearCacheOnFirstLaunch(context: Context) {
+    val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    val isFirstLaunch = prefs.getBoolean("is_first_launch", true)
+
+    if (isFirstLaunch) {
+      clearAppCache(context) // Or clearSpecificFolder, etc.
+      prefs.edit().putBoolean("is_first_launch", false).apply()
+    }
+  }
+  fun clearAppCache(context: Context) {
+    try {
+      val cacheDir = context.cacheDir
+      cacheDir?.deleteRecursively()
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
+
+
+
 }

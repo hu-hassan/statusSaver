@@ -32,7 +32,10 @@ class VideosPreview : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        val header = findViewById<MaterialToolbar>(R.id.tool_bar)
+        header.setNavigationOnClickListener {
+            finish()
+        }
         binding.apply {
             val list = intent.getSerializableExtra(Constants.MEDIA_LIST_KEY) as ArrayList<MediaModel>
             val scrollTo = intent.getIntExtra(Constants.MEDIA_SCROLL_KEY, 0)
