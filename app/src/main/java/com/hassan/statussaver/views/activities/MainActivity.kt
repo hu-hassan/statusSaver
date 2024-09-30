@@ -9,6 +9,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +19,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -27,7 +29,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.afollestad.materialdialogs.BuildConfig
 import com.hassan.statussaver.R
@@ -44,6 +50,9 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.hassan.statussaver.databinding.DialogGuideBinding
 import java.util.concurrent.TimeUnit
+import androidx.work.*
+import com.google.common.util.concurrent.ListenableFuture
+
 
 class MainActivity : AppCompatActivity() {
   private val activity = this
@@ -59,7 +68,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-  @SuppressLint("ClickableViewAccessibility")
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -70,9 +78,7 @@ class MainActivity : AppCompatActivity() {
       supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
       SharedPrefUtils.init(activity)
       statusRepo = StatusRepo(this)
-    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-      .build()
-    WorkManager.getInstance(this).enqueue(workRequest)
+
       bottomSheet = findViewById(R.id.bottomSheet)
       grayShade = findViewById(R.id.gray_shade)
       grayShade.setOnClickListener {
@@ -80,24 +86,24 @@ class MainActivity : AppCompatActivity() {
         grayShade.visibility = View.GONE
       }
 
-      val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
       val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
       val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
       val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
       val text = findViewById<TextView>(R.id.toolbar_title)
       val header = findViewById<AppBarLayout>(R.id.appBarLayout)
-      binding.root.setOnTouchListener { _, event ->
-        if (event.action == MotionEvent.ACTION_DOWN) {
-          if (bottomSheet.visibility == View.VISIBLE) {
-            val outRect = Rect()
-            bottomSheet.getGlobalVisibleRect(outRect)
-            if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-              bottomSheet.visibility = View.GONE
-            }
-          }
+      val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
+      val cancelBtn = findViewById<ImageView>(R.id.cancel_btn)
+        cancelBtn.setOnClickListener {
+            bottomSheet.visibility = View.GONE
+            grayShade.visibility = View.GONE
         }
-        false
-      }
+        notification_btn.setOnClickListener {
+          getNotificationpermission()
+          val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+            .build()
+          WorkManager.getInstance(this).enqueue(workRequest)
+          notification_btn.visibility = View.GONE
+        }
       binding.apply {
         buttonIcon2.setOnClickListener {
           if (bottomSheet.visibility == View.GONE) {
@@ -253,21 +259,24 @@ class MainActivity : AppCompatActivity() {
       apply()
     }
   }
+  private fun getNotificationpermission(){
+    if (ContextCompat.checkSelfPermission(
+        activity,
+        "android.permission.POST_NOTIFICATIONS"
+      ) != PackageManager.PERMISSION_GRANTED
+    ) {
+      // If not, request the permission
+      ActivityCompat.requestPermissions(
+        activity,
+        arrayOf("android.permission.POST_NOTIFICATIONS"),
+        101
+      )
+    }
+//return true
+
+  }
 
   private fun dialogLogic() {
-    // Check if the permission is already granted
-//                if (ContextCompat.checkSelfPermission(
-//                        activity,
-//                        "android.permission.POST_NOTIFICATIONS"
-//                    ) != PackageManager.PERMISSION_GRANTED
-//                ) {
-//                    // If not, request the permission
-//                    ActivityCompat.requestPermissions(
-//                        activity,
-//                        arrayOf("android.permission.POST_NOTIFICATIONS"),
-//                        101
-//                    )
-//                }
     val dialog = Dialog(this)
     val dialogBinding = DialogGuideBinding.inflate((this as Activity).layoutInflater)
     dialogBinding.okayBtn.setOnClickListener {
@@ -282,6 +291,10 @@ class MainActivity : AppCompatActivity() {
 
     dialog.show()
     setFirstRunCompleted()
+    val cancelBtn = dialog.findViewById<ImageView>(R.id.cancel_btn)
+    cancelBtn.setOnClickListener {
+      dialog.dismiss()
+    }
   }
   fun clearSharedPreferences(context: Context) {
     val prefs = context.getSharedPreferences("SharedPrefUtils", Context.MODE_PRIVATE)
@@ -305,6 +318,25 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
+fun isRestartServiceWorkerActive() {
+  val UNIQUE_WORK_NAME = "RestartServiceWorker"
 
+// Check if the worker is already running or enqueued
+  WorkManager.getInstance(this)
+    .getWorkInfosForUniqueWorkLiveData(UNIQUE_WORK_NAME)
+    .observe(this) { workInfos ->
+      if (workInfos != null && workInfos.isNotEmpty()) {
+        // Check the state of the worker
+        val isWorkerRunning = workInfos.any {
+          it.state == WorkInfo.State.RUNNING || it.state == WorkInfo.State.ENQUEUED
+        }
+
+        if (isWorkerRunning) {
+          // A worker is already running or enqueued, do not enqueue a new one
+          Log.d("WorkerCheck", "Worker is already running or enqueued.")
+        }
+      }
+    }
+}
 
 }

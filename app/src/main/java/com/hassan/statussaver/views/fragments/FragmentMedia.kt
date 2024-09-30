@@ -28,7 +28,6 @@ class FragmentMedia : Fragment() {
     }
     lateinit var viewModel: StatusViewModel
     lateinit var adapter: MediaAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
@@ -64,6 +63,7 @@ class FragmentMedia : Fragment() {
                         viewModel.wpSavedStatusLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUIforSaved(unFilteredList)
                         }
+
 //                        tempMediaText.text = "Work in progress............."
                     }
                 }
@@ -81,46 +81,85 @@ class FragmentMedia : Fragment() {
         }
     }
 
-    private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
-        val filteredList = unFilteredList.distinctBy { model ->
-            model.fileName
+//    private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
+//        val filteredList = unFilteredList.distinctBy { model ->
+//            model.fileName
+//        }
+//
+//        val list = ArrayList<MediaModel>()
+//        filteredList.forEach { model ->
+//            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName) ||context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true) {
+//                list.add(model)
+//            }
+//            if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName) || context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true)) {
+//                list.remove(model)
+//            }
+//
+//        }
+//        if (saved){
+//            adapter = MediaAdapter(ArrayList(list), requireActivity(), true)
+//            binding.mediaRecyclerView.adapter = adapter
+//            binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+//        }
+//        else {
+//            adapter = MediaAdapter(list, requireActivity(), false)
+//            binding.mediaRecyclerView.adapter = adapter
+//            binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+//        }
+//
+//
+//
+//    }
+private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
+    // Create a copy of the unfiltered list to avoid concurrent modification issues
+    val filteredList = ArrayList(unFilteredList).distinctBy { model -> model.fileName }
+
+    // Use a thread-safe collection for modifications
+    val list = CopyOnWriteArrayList<MediaModel>()
+
+    // Iterate over the filtered list and add/remove elements based on conditions
+    filteredList.forEach { model ->
+        if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+            list.add(model)
+        } else {
+            list.remove(model)
         }
-
-        val list = ArrayList<MediaModel>()
-        filteredList.forEach { model ->
-            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
-                list.add(model)
-            }
-            if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName))) {
-                list.remove(model)
-            }
-
-        }
-        adapter = MediaAdapter(list, requireActivity(),false)
-        binding.mediaRecyclerView.adapter = adapter
-        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-
     }
+
+    // Update the adapter with the final list
+    adapter = MediaAdapter(ArrayList(list), requireActivity(), false)
+    binding.mediaRecyclerView.adapter = adapter
+
+    // Show or hide the temporary text based on whether the final list is empty
+    binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+}
+
+
+
 
     private fun updateUIforSaved(unFilteredList: ArrayList<MediaModel>) {
-        // Create a distinct, filtered list using filter
-        val filteredList = unFilteredList.distinctBy { model ->
-            model.fileName
-        }.filter { model ->
-            context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true
+        // Create a copy of the unfiltered list to avoid concurrent modification issues
+        val filteredList = ArrayList(unFilteredList).distinctBy { model -> model.fileName }
+
+        // Use a thread-safe collection for modifications
+        val list = CopyOnWriteArrayList<MediaModel>()
+
+        // Iterate over the filtered list and add/remove elements based on conditions
+        filteredList.forEach { model ->
+            if (context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true) {
+                list.add(model)
+            } else {
+                list.remove(model)
+            }
         }
 
-        // Reassign adapter after modifications
-        adapter = MediaAdapter(ArrayList(filteredList), requireActivity(), true)
+        // Update the adapter with the final list
+        adapter = MediaAdapter(ArrayList(list), requireActivity(), true)
         binding.mediaRecyclerView.adapter = adapter
 
-        // Show or hide the tempMediaText based on whether the final list is empty
-        binding.tempMediaText.visibility = if (filteredList.isEmpty()) View.VISIBLE else View.GONE
+        // Show or hide the temporary text based on whether the final list is empty
+        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
     }
-
-
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

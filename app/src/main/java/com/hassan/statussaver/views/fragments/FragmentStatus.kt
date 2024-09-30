@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.fragments
 
+import android.app.Dialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -13,6 +14,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -43,9 +47,6 @@ class FragmentStatus : Fragment() {
     lateinit var viewModel: StatusViewModel
     var isPermissionGrantedS = false
     var isPermissionGrantedSB = false
-//    private val sharedViewModel: SharedViewModel by lazy {
-//        ViewModelProvider(this).get(SharedViewModel::class.java)
-//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,17 +88,33 @@ class FragmentStatus : Fragment() {
                         if (isPermissionGranted) {
                             getWhatsAppStatuses()
                             getSavedStatuses()
-//                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//                                .build()
-//                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
 
                         }
+
                         permissionLayout.btnPermission.setOnClickListener {
-                            getFolderPermissions(
-                                context = requireActivity(),
-                                REQUEST_CODE = WHATSAPP_REQUEST_CODE,
-                                initialUri = Constants.getWhatsappUri()
+                            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+                            val dialog = Dialog(requireContext())
+                            dialog.setContentView(dialogView)
+                            dialog.window?.setLayout(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
                             )
+                            dialog.show()
+                            val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
+                            dialogButton.setOnClickListener {
+                                // Perform the desired task here
+                                getFolderPermissions(
+                                    context = requireActivity(),
+                                    REQUEST_CODE = WHATSAPP_REQUEST_CODE,
+                                    initialUri = Constants.getWhatsappUri()
+                                )
+                                dialog.dismiss()
+                            }
+                            val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+                            cancelButton.setOnClickListener {
+                                dialog.dismiss()
+                            }
+
                         }
 
 
@@ -279,9 +296,6 @@ class FragmentStatus : Fragment() {
                 if (isPermissionGranted) {
                     getWhatsAppStatuses()
                     viewModel.getSavedStatuses()
-//                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//                        .build()
-//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }
@@ -296,10 +310,6 @@ class FragmentStatus : Fragment() {
                 if (isPermissionGranted) {
                     getWhatsAppBusinessStatuses()
                     viewModel.getSavedStatuses()
-//                    val workRequest =
-//                        PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//                            .build()
-//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                     binding.swipeRefreshLayout.setOnRefreshListener {
                         refreshStatuses()
                     }
@@ -310,48 +320,8 @@ class FragmentStatus : Fragment() {
         getSavedStatuses()
 
     }
-    override fun onStart() {
-        super.onStart()
-        when (type) {
-            Constants.TYPE_WHATSAPP_MAIN -> {
-                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
-                    SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
-                    false
-                )
-                if (isPermissionGranted) {
-                    getWhatsAppStatuses()
-                    viewModel.getSavedStatuses()
-//                    val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//                        .build()
-//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
-                    binding.swipeRefreshLayout.setOnRefreshListener {
-                        refreshStatuses()
-                    }
-                }
 
-            }
-            Constants.TYPE_WHATSAPP_BUSINESS -> {
-                val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
-                    SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
-                    false
-                )
-                if (isPermissionGranted) {
-                    getWhatsAppBusinessStatuses()
-                    viewModel.getSavedStatuses()
-//                    val workRequest =
-//                        PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//                            .build()
-//                    WorkManager.getInstance(requireActivity()).enqueue(workRequest)
-                    binding.swipeRefreshLayout.setOnRefreshListener {
-                        refreshStatuses()
-                    }
-                }
-            }
 
-        }
-        getSavedStatuses()
-
-    }
     private fun setupViewPager() {
 
         TabLayoutMediator(binding.tabLayout, binding.statusViewPager) { tab, pos ->

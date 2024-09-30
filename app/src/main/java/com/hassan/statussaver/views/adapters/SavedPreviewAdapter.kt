@@ -117,103 +117,149 @@ class SavedPreviewAdapter(
 
     override fun getItemCount() = mediaList.size
 
-    inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        @OptIn(UnstableApi::class)
-        fun bind(mediaModel: MediaModel, position: Int) {
-            Log.d("SavedPreviewAdapter", "bind: $mediaModel")
-            if (mediaModel.type == "video") {
-                binding.imageStub.visibility = View.GONE
-                if (binding.videoStub.parent != null) {
-                    val videoView = binding.videoStub.inflate()
-                    val player = ExoPlayer.Builder(context).setSeekBackIncrementMs(5000)
-                        .setSeekForwardIncrementMs(5000).build()
-                    videoView.findViewById<PlayerView>(R.id.player_view).player = player
-                    val mediaItem = MediaItem.fromUri(mediaModel.pathUri)
-                    player.setMediaItem(mediaItem)
-                    player.prepare()
-                    player.repeatMode = Player.REPEAT_MODE_ONE
-                    players[position] = player
-                    val downloadImage = if (context.isStatusSaved(mediaModel.fileName)) {
-                        binding.tools.text.text = "Saved"
-                        R.drawable.ic_downloaded
-                    } else {
-                        binding.tools.text.text = "Save"
-                        R.drawable.ic_download
-                    }
-                    binding.tools.statusDownload.setImageResource(downloadImage)
-
-                    binding.tools.download.setOnClickListener {
-                        if (!context.isStatusSaved(mediaModel.fileName)) {
-                            val isDownloaded = context.saveStatus(mediaModel)
-                            if (isDownloaded) {
-                                // Status is downloaded
-                                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-                                mediaModel.isDownloaded = true
-                                binding.tools.text.text = "Saved"
-                                binding.tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
-                            } else {
-                                // Unable to download status
-                                Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            // Status is already downloaded
-                            Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-
-                }
-            }
-            else {
-                binding.videoStub.visibility = View.GONE
-                if (binding.imageStub.parent != null) {
-                    val imageView = binding.imageStub.inflate()
-
-                    Glide.with(context)
-                        .load(mediaModel.pathUri)
-                        .into(imageView.findViewById(R.id.zoomable_image_view))
-                    val downloadImage = if (context.isStatusExist(mediaModel.fileName)) {
-                        binding.tools.text.text = "Saved"
-                        R.drawable.ic_downloaded
-                    } else {
-                        binding.tools.text.text = "Save"
-                        R.drawable.ic_download
-                    }
-                    binding.tools.statusDownload.setImageResource(downloadImage)
-
-                    binding.tools.download.setOnClickListener {
-                        if (!context.isStatusExist(mediaModel.fileName)) {
-                            val isDownloaded = context.saveStatus(mediaModel)
-                            if (isDownloaded) {
-                                // Status is downloaded
-                                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-                                mediaModel.isDownloaded = true
-                                Log.d(
-                                    "ImagePreviewAdapter",
-                                    "isDownloaded: ${mediaModel.isDownloaded}"
-                                )
-                                binding.tools.text.text = "Saved"
-                                binding.tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
-                            } else {
-                                // Unable to download status
-                                Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()
-                            }
-                        } else {
-                            // Status is already downloaded
-                            Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                    binding.tools.repost.setOnClickListener {
-
-                    }
-//                binding.tools.share.setOnClickListener {
-//                    shareMedia(context, mediaModel)
+//    inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
+//        RecyclerView.ViewHolder(binding.root) {
+//        @OptIn(UnstableApi::class)
+//        fun bind(mediaModel: MediaModel, position: Int) {
+//            Log.d("SavedPreviewAdapter", "bind: $mediaModel")
+//            if (mediaModel.type == "video") {
+//                binding.imageStub.visibility = View.GONE
+//                if (binding.videoStub.parent != null) {
+//                    val videoView = binding.videoStub.inflate()
+//                    val player = ExoPlayer.Builder(context).setSeekBackIncrementMs(5000)
+//                        .setSeekForwardIncrementMs(5000).build()
+//                    videoView.findViewById<PlayerView>(R.id.player_view).player = player
+//                    val mediaItem = MediaItem.fromUri(mediaModel.pathUri)
+//                    player.setMediaItem(mediaItem)
+//                    player.prepare()
+//                    player.repeatMode = Player.REPEAT_MODE_ONE
+//                    players[position] = player
+//                    val downloadImage = if (context.isStatusSaved(mediaModel.fileName)) {
+//                        binding.tools.text.text = "Saved"
+//                        R.drawable.ic_downloaded
+//                    } else {
+//                        binding.tools.text.text = "Save"
+//                        R.drawable.ic_download
+//                    }
+//                    binding.tools.statusDownload.setImageResource(downloadImage)
+//
+//                    binding.tools.download.setOnClickListener {
+//                        if (!context.isStatusSaved(mediaModel.fileName)) {
+//                            val isDownloaded = context.saveStatus(mediaModel)
+//                            if (isDownloaded) {
+//                                // Status is downloaded
+//                                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+//                                mediaModel.isDownloaded = true
+//                                binding.tools.text.text = "Saved"
+//                                binding.tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
+//                            } else {
+//                                // Unable to download status
+//                                Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()
+//                            }
+//                        } else {
+//                            // Status is already downloaded
+//                            Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//
 //                }
-                }
-            }
-            binding.root.findViewById<View>(R.id.tools_holder)?.visibility = View.GONE
+//            }
+//            else {
+//                binding.videoStub.visibility = View.GONE
+//                if (binding.imageStub.parent != null) {
+//                    val imageView = binding.imageStub.inflate()
+//
+//                    Glide.with(context)
+//                        .load(mediaModel.pathUri)
+//                        .into(imageView.findViewById(R.id.zoomable_image_view))
+//                    val downloadImage = if (context.isStatusExist(mediaModel.fileName)) {
+//                        binding.tools.text.text = "Saved"
+//                        R.drawable.ic_downloaded
+//                    } else {
+//                        binding.tools.text.text = "Save"
+//                        R.drawable.ic_download
+//                    }
+//                    binding.tools.statusDownload.setImageResource(downloadImage)
+//
+//                    binding.tools.download.setOnClickListener {
+//                        if (!context.isStatusExist(mediaModel.fileName)) {
+//                            val isDownloaded = context.saveStatus(mediaModel)
+//                            if (isDownloaded) {
+//                                // Status is downloaded
+//                                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+//                                mediaModel.isDownloaded = true
+//                                Log.d(
+//                                    "ImagePreviewAdapter",
+//                                    "isDownloaded: ${mediaModel.isDownloaded}"
+//                                )
+//                                binding.tools.text.text = "Saved"
+//                                binding.tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
+//                            } else {
+//                                // Unable to download status
+//                                Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()
+//                            }
+//                        } else {
+//                            // Status is already downloaded
+//                            Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+//                    binding.tools.repost.setOnClickListener {
+//
+//                    }
+////                binding.tools.share.setOnClickListener {
+////                    shareMedia(context, mediaModel)
+////                }
+//                }
+//            }
+//            binding.root.findViewById<View>(R.id.tools_holder)?.visibility = View.GONE
+//        }
+//    }
+inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    @OptIn(UnstableApi::class)
+    fun bind(mediaModel: MediaModel, position: Int) {
+        binding.mediaContainer.removeAllViews()
+
+        if (mediaModel.type == "video") {
+            val videoView = LayoutInflater.from(context).inflate(R.layout.item_video_preview, binding.mediaContainer, false)
+            val player = ExoPlayer.Builder(context).build()
+            videoView.findViewById<PlayerView>(R.id.player_view).player = player
+            val mediaItem = MediaItem.fromUri(mediaModel.pathUri)
+            player.setMediaItem(mediaItem)
+            player.prepare()
+            player.repeatMode = Player.REPEAT_MODE_ONE
+            players[position] = player
+            binding.mediaContainer.addView(videoView)
+        } else {
+            val imageView = LayoutInflater.from(context).inflate(R.layout.item_image_preview, binding.mediaContainer, false)
+            Glide.with(context)
+                .load(mediaModel.pathUri)
+                .into(imageView.findViewById(R.id.zoomable_image_view))
+            binding.mediaContainer.addView(imageView)
         }
+
+        setupDownloadButton(mediaModel)
     }
+
+    private fun setupDownloadButton(mediaModel: MediaModel) {
+        val downloadImage = if (context.isStatusSaved(mediaModel.fileName)||context.isStatusExist(mediaModel.fileName)) {
+            binding.tools.text.text = "Saved"
+            R.drawable.ic_downloaded
+        } else {
+            binding.tools.text.text = "Save"
+            R.drawable.ic_download
+        }
+        binding.tools.statusDownload.setImageResource(downloadImage)
+
+        binding.tools.download.setOnClickListener {
+                Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
+        }
+        binding.root.findViewById<View>(R.id.tools_holder)?.visibility = View.GONE
+
+    }
+}
+
     fun pauseAllVideosOnDestroy() {
         players.forEach { (_, player) ->
             player.playWhenReady = false

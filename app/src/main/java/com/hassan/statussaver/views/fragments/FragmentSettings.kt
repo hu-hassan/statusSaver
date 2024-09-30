@@ -44,8 +44,6 @@ class FragmentSettings : Fragment() {
                 val bundle = Bundle()
                 bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
                 replaceFragment(fragmentWhatsapp, bundle)
-//                val header = findViewById<AppBarLayout>(R.id.appBarLayout)
-//                header.visibility = View.VISIBLE
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)

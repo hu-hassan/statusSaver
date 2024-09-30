@@ -2,6 +2,7 @@ package com.hassan.statussaver.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Environment
 import com.hassan.statussaver.R
 import java.io.File
@@ -54,6 +55,7 @@ object SharedPrefUtils {
     fun setPrefString(key: String, value: String) {
         preferences.edit().putString(key, value).apply()
     }
+
 }
 
 object SharedPrefKeys{

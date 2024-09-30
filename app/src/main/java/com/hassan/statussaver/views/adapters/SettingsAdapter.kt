@@ -8,6 +8,7 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.hassan.statussaver.R
 import com.hassan.statussaver.databinding.DialogGuideBinding
@@ -43,6 +44,10 @@ class SettingsAdapter(var list: ArrayList<SettingsModel>, var context: Context) 
                             )
 
                             dialog.show()
+                            val cancelBtn = dialog.findViewById<ImageView>(R.id.cancel_btn)
+                            cancelBtn.setOnClickListener {
+                                dialog.dismiss()
+                            }
 
 
                         }
