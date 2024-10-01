@@ -28,7 +28,6 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
                     .into(zoomableImageView)
 
                 // Retrieve the isDownloaded property from shared preferences
-//                mediaModel.isDownloaded = SharedPrefUtils.isStatusDownloaded(mediaModel.fileName)
                 val downloadImage = if (context.isStatusExist(mediaModel.fileName)) {
                     tools.text.text = "Saved"
                     R.drawable.ic_downloaded
@@ -74,20 +73,8 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
     }
 
     override fun onBindViewHolder(holder: ImagePreviewAdapter.ViewHolder, position: Int) {
-//        Log.d("ImagePreviewAdapter", "onBindViewHolder called for position $position")
         val model = list[position]
         holder.bind(model)
-//        // Sync the app with the gallery
-//                SharedPrefUtils.syncDeletionWithGallery(context)
-//
-//        // Check if the status is downloaded
-//        if (SharedPrefUtils.isStatusDownloaded(model.fileName)) {
-//            // If the status is downloaded, show the double tick icon
-//            holder.binding.tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
-//        } else {
-//            // If the status is not downloaded, show the download icon
-//            holder.binding.tools.statusDownload.setImageResource(R.drawable.ic_download)
-//        }
     }
 
     override fun getItemCount() = list.size
@@ -101,11 +88,6 @@ class ImagePreviewAdapter (val list: ArrayList<MediaModel>, val context: Context
             context.startActivity(this)
         }
 
-//        val shareIntent = Intent().apply {
-//            action = Intent.ACTION_SEND
-//            putExtra(Intent.EXTRA_STREAM, uri)
-//            type = "image/" // or "video/" depending on the media type
-//        }
     }
 
 }

@@ -1,5 +1,8 @@
 package com.hassan.statussaver.views.fragments
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.hassan.statussaver.R
 import com.hassan.statussaver.data.StatusRepo
 import com.hassan.statussaver.databinding.FragmentMediaBinding
 import com.hassan.statussaver.models.MediaModel
@@ -28,6 +32,7 @@ class FragmentMedia : Fragment() {
     }
     lateinit var viewModel: StatusViewModel
     lateinit var adapter: MediaAdapter
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.apply {
@@ -43,20 +48,68 @@ class FragmentMedia : Fragment() {
                         viewModel.whatsAppImagesLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
+                        binding.tempMediaBtn.setOnClickListener{
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse("https://api.whatsapp.com/chat")
+                            intent.setPackage("com.whatsapp")
+                            try {
+                                startActivity(intent)
+                            } catch (e: Exception) {
+                                val intent = Intent(Intent.ACTION_VIEW)
+                                intent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")
+                                startActivity(intent)
+                            }
+                        }
+
+
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_VIDEOS -> {
                         viewModel.whatsAppVideosLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
+                        }
+                        binding.tempMediaBtn.setOnClickListener{
+                            val intent =
+                                requireActivity().packageManager.getLaunchIntentForPackage("com.whatsapp")
+                            if (intent != null) {
+                                startActivity(intent) // WhatsApp is installed, open it
+                            }
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES -> {
                         viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
+                        binding.tempMediaBtn.icon = resources.getDrawable(R.drawable.whatsapp_business)
+                        binding.tempMediaBtn.setOnClickListener {
+                            val intent = context?.packageManager?.getLaunchIntentForPackage("com.whatsapp.w4b")
+                            if (intent != null) {
+                                startActivity(intent) // Opens WhatsApp Business if installed
+                            } else {
+                                // Fallback to WhatsApp if Business isn't available
+                                val fallbackIntent = context?.packageManager?.getLaunchIntentForPackage("com.whatsapp")
+                                if (fallbackIntent != null) {
+                                    startActivity(fallbackIntent) // Opens regular WhatsApp
+                                } else {
+                                    // Redirect to Play Store if neither is installed
+                                    val playStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp"))
+                                    startActivity(playStoreIntent)
+                                }
+                            }
+
+                        }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS -> {
                         viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
+                        }
+                        binding.tempMediaBtn.icon = resources.getDrawable(R.drawable.whatsapp_business)
+                        binding.tempMediaBtn.setOnClickListener{
+                            val intent =
+                                requireActivity().packageManager.getLaunchIntentForPackage("com.whatsapp.w4b")
+                            if (intent != null) {
+                                Log.d("FragmentMedia", "Opening whatsapp for view status ")
+                                startActivity(intent) // WhatsApp is installed, open it
+                            }
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_SAVED-> {
@@ -64,7 +117,9 @@ class FragmentMedia : Fragment() {
                             updateUIforSaved(unFilteredList)
                         }
 
-//                        tempMediaText.text = "Work in progress............."
+                        tempMediaText.text = "No Media Saved"
+                        binding.tempMediaText2.visibility = View.GONE
+                        binding.tempMediaBtn.visibility = View.GONE
                     }
                 }
                 val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
@@ -76,6 +131,8 @@ class FragmentMedia : Fragment() {
                 )
                 if (!isPermissionGranted){
                     binding.tempMediaText.visibility = View.GONE
+                    binding.tempMediaText2.visibility = View.GONE
+                    binding.tempMediaBtn.visibility = View.GONE
                 }
             }
         }
@@ -120,6 +177,7 @@ private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
     // Iterate over the filtered list and add/remove elements based on conditions
     filteredList.forEach { model ->
         if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+            Log.d("FragmentMedia", "updateUI: ${model.fileName}")
             list.add(model)
         } else {
             list.remove(model)
@@ -132,6 +190,8 @@ private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
 
     // Show or hide the temporary text based on whether the final list is empty
     binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+    binding.tempMediaText2.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+    binding.tempMediaBtn.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
 }
 
 

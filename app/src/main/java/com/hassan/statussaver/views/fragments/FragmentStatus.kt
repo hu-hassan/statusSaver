@@ -155,11 +155,29 @@ class FragmentStatus : Fragment() {
 //                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                         }
                         permissionLayout.btnPermission.setOnClickListener {
-                            getFolderPermissions(
-                                context = requireActivity(),
-                                REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
-                                initialUri = Constants.getWhatsappBusinessUri()
+                            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+                            val dialog = Dialog(requireContext())
+                            dialog.setContentView(dialogView)
+                            dialog.window?.setLayout(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
                             )
+                            dialog.show()
+                            val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
+                            dialogButton.setOnClickListener {
+                                // Perform the desired task here
+                                getFolderPermissions(
+                                    context = requireActivity(),
+                                    REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
+                                    initialUri = Constants.getWhatsappBusinessUri()
+                                )
+                                dialog.dismiss()
+                            }
+                            val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+                            cancelButton.setOnClickListener {
+                                dialog.dismiss()
+                            }
+
                         }
                         val mediaAdapter = MediaViewPagerAdapter(
                             requireActivity(),

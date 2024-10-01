@@ -17,8 +17,6 @@ import com.hassan.statussaver.views.adapters.VideoPreviewAdapter
 class SavedMediaPreview : AppCompatActivity() {
     private lateinit var binding: ActivitySavedPreviewBinding
     private lateinit var adapter: SavedPreviewAdapter
-    private var currentPlayingVideo: VideoPreviewAdapter.ViewHolder? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

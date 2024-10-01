@@ -65,27 +65,20 @@ class MainActivity : AppCompatActivity() {
   private var isBusiness: Boolean = false
   private lateinit var bottomSheet: LinearLayout
   private lateinit var grayShade: View
-
-
-
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    clearSharedPreferences(this)
-    clearCacheOnFirstLaunch(this)
     try {
       setContentView(binding.root)
       supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
       SharedPrefUtils.init(activity)
       statusRepo = StatusRepo(this)
-
       bottomSheet = findViewById(R.id.bottomSheet)
       grayShade = findViewById(R.id.gray_shade)
       grayShade.setOnClickListener {
         bottomSheet.visibility = View.GONE
         grayShade.visibility = View.GONE
       }
-
       val buttonIcon = findViewById<ImageButton>(R.id.button_icon)
       val buttonIcon2 = findViewById<ImageButton>(R.id.button_icon2)
       val settingIcon = findViewById<ImageButton>(R.id.settings_icon)
@@ -93,17 +86,17 @@ class MainActivity : AppCompatActivity() {
       val header = findViewById<AppBarLayout>(R.id.appBarLayout)
       val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
       val cancelBtn = findViewById<ImageView>(R.id.cancel_btn)
-        cancelBtn.setOnClickListener {
-            bottomSheet.visibility = View.GONE
-            grayShade.visibility = View.GONE
-        }
-        notification_btn.setOnClickListener {
-          getNotificationpermission()
-          val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-            .build()
-          WorkManager.getInstance(this).enqueue(workRequest)
-          notification_btn.visibility = View.GONE
-        }
+      cancelBtn.setOnClickListener {
+          bottomSheet.visibility = View.GONE
+          grayShade.visibility = View.GONE
+      }
+      notification_btn.setOnClickListener {
+        getNotificationpermission()
+        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+          .build()
+        WorkManager.getInstance(this).enqueue(workRequest)
+        notification_btn.visibility = View.GONE
+      }
       binding.apply {
         buttonIcon2.setOnClickListener {
           if (bottomSheet.visibility == View.GONE) {
@@ -296,28 +289,6 @@ class MainActivity : AppCompatActivity() {
       dialog.dismiss()
     }
   }
-  fun clearSharedPreferences(context: Context) {
-    val prefs = context.getSharedPreferences("SharedPrefUtils", Context.MODE_PRIVATE)
-    prefs.edit().clear().apply()
-  }
-  fun clearCacheOnFirstLaunch(context: Context) {
-    val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-    val isFirstLaunch = prefs.getBoolean("is_first_launch", true)
-
-    if (isFirstLaunch) {
-      clearAppCache(context) // Or clearSpecificFolder, etc.
-      prefs.edit().putBoolean("is_first_launch", false).apply()
-    }
-  }
-  fun clearAppCache(context: Context) {
-    try {
-      val cacheDir = context.cacheDir
-      cacheDir?.deleteRecursively()
-    } catch (e: Exception) {
-      e.printStackTrace()
-    }
-  }
-
 fun isRestartServiceWorkerActive() {
   val UNIQUE_WORK_NAME = "RestartServiceWorker"
 
