@@ -24,7 +24,7 @@ public class FileObserverService extends Service {
     private FolderFileObserver fileObserverb;
     private ExecutorService executorService;
 
-    @Override
+      @Override
     public void onCreate() {
         super.onCreate();
         Log.d("FileObserverService", "onCreate");
@@ -116,6 +116,7 @@ public class FileObserverService extends Service {
             });
         }
     }
+
 
     private Notification createNotification() {
         Log.d("FileObserverService", "createNotification");

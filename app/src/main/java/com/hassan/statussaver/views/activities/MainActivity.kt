@@ -67,6 +67,18 @@ class MainActivity : AppCompatActivity() {
   private lateinit var grayShade: View
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
+    SharedPrefUtils.init(activity) // Ensure this is called early
+    val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+      SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+      false
+    ) || SharedPrefUtils.getPrefBoolean(
+      SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
+      false
+    )
+    if (!isPermissionGranted){
+      Log.d("MainActivity", "Permissions not granted")
+      WorkManager.getInstance(this).cancelAllWork()
+    }
     super.onCreate(savedInstanceState)
     try {
       setContentView(binding.root)
@@ -90,11 +102,18 @@ class MainActivity : AppCompatActivity() {
           bottomSheet.visibility = View.GONE
           grayShade.visibility = View.GONE
       }
+      if (isRestartServiceWorkerActive() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
+        Log.d("MainActivity", "Permission granted for service")
+        // Your code here
+        notification_btn.visibility = View.GONE
+      }
       notification_btn.setOnClickListener {
         getNotificationpermission()
-        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-          .build()
-        WorkManager.getInstance(this).enqueue(workRequest)
+        if(!isRestartServiceWorkerActive()) {
+          val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+            .build()
+          WorkManager.getInstance(this).enqueue(workRequest)
+        }
         notification_btn.visibility = View.GONE
       }
       binding.apply {
@@ -289,8 +308,9 @@ class MainActivity : AppCompatActivity() {
       dialog.dismiss()
     }
   }
-fun isRestartServiceWorkerActive() {
+fun isRestartServiceWorkerActive():Boolean {
   val UNIQUE_WORK_NAME = "RestartServiceWorker"
+    var isStarted = false
 
 // Check if the worker is already running or enqueued
   WorkManager.getInstance(this)
@@ -305,9 +325,25 @@ fun isRestartServiceWorkerActive() {
         if (isWorkerRunning) {
           // A worker is already running or enqueued, do not enqueue a new one
           Log.d("WorkerCheck", "Worker is already running or enqueued.")
+          isStarted = true
+        }
+        else {
+          // No worker is running or enqueued, enqueue a new one
+          Log.d("WorkerCheck", "Worker is not running or enqueued.")
+            isStarted = false
         }
       }
     }
+    return isStarted
 }
+
+  override fun onStart() {
+    super.onStart()
+    val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
+    if (isRestartServiceWorkerActive() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
+      Log.d("MainActivity", "onStart for notification button")
+      notification_btn.visibility = View.GONE
+    }
+  }
 
 }

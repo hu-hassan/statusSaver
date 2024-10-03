@@ -45,78 +45,69 @@ class FragmentMedia : Fragment() {
                 val mediaType = it.getString(Constants.MEDIA_TYPE_KEY, "")
                 when (mediaType) {
                     Constants.MEDIA_TYPE_WHATSAPP_IMAGES -> {
+                        binding.tempMediaText.visibility = View.GONE
+                        binding.tempMediaText2.visibility = View.GONE
+                        binding.tempMediaBtn.visibility = View.GONE
                         viewModel.whatsAppImagesLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
-                        binding.tempMediaBtn.setOnClickListener{
-                            val intent = Intent(Intent.ACTION_VIEW)
-                            intent.data = Uri.parse("https://api.whatsapp.com/chat")
-                            intent.setPackage("com.whatsapp")
-                            try {
-                                startActivity(intent)
-                            } catch (e: Exception) {
-                                val intent = Intent(Intent.ACTION_VIEW)
-                                intent.data = Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp")
-                                startActivity(intent)
-                            }
+                        binding.tempMediaBtn.setOnClickListener {
+                            val packageName = "com.whatsapp.w4b"
+                            var intent =
+                                requireActivity().packageManager.getLaunchIntentForPackage(packageName)
+                            startActivity(intent)
                         }
-
-
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_VIDEOS -> {
+                        binding.tempMediaText.visibility = View.GONE
+                        binding.tempMediaText2.visibility = View.GONE
+                        binding.tempMediaBtn.visibility = View.GONE
                         viewModel.whatsAppVideosLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
-                        binding.tempMediaBtn.setOnClickListener{
-                            val intent =
-                                requireActivity().packageManager.getLaunchIntentForPackage("com.whatsapp")
-                            if (intent != null) {
-                                startActivity(intent) // WhatsApp is installed, open it
-                            }
+                        binding.tempMediaBtn.setOnClickListener {
+                            val packageName = "com.whatsapp"
+                            var intent =
+                                requireActivity().packageManager.getLaunchIntentForPackage(packageName)
+                            startActivity(intent)
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES -> {
+                        binding.tempMediaText.visibility = View.GONE
+                        binding.tempMediaText2.visibility = View.GONE
+                        binding.tempMediaBtn.visibility = View.GONE
                         viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
+
                         binding.tempMediaBtn.icon = resources.getDrawable(R.drawable.whatsapp_business)
                         binding.tempMediaBtn.setOnClickListener {
-                            val intent = context?.packageManager?.getLaunchIntentForPackage("com.whatsapp.w4b")
-                            if (intent != null) {
-                                startActivity(intent) // Opens WhatsApp Business if installed
-                            } else {
-                                // Fallback to WhatsApp if Business isn't available
-                                val fallbackIntent = context?.packageManager?.getLaunchIntentForPackage("com.whatsapp")
-                                if (fallbackIntent != null) {
-                                    startActivity(fallbackIntent) // Opens regular WhatsApp
-                                } else {
-                                    // Redirect to Play Store if neither is installed
-                                    val playStoreIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.whatsapp"))
-                                    startActivity(playStoreIntent)
-                                }
-                            }
-
+                            val packageName = "com.whatsapp.w4b"
+                            var intent =
+                                requireActivity().packageManager.getLaunchIntentForPackage(packageName)
+                            startActivity(intent)
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS -> {
+                        binding.tempMediaText.visibility = View.GONE
+                        binding.tempMediaText2.visibility = View.GONE
+                        binding.tempMediaBtn.visibility = View.GONE
                         viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
+
                         binding.tempMediaBtn.icon = resources.getDrawable(R.drawable.whatsapp_business)
-                        binding.tempMediaBtn.setOnClickListener{
-                            val intent =
-                                requireActivity().packageManager.getLaunchIntentForPackage("com.whatsapp.w4b")
-                            if (intent != null) {
-                                Log.d("FragmentMedia", "Opening whatsapp for view status ")
-                                startActivity(intent) // WhatsApp is installed, open it
-                            }
+                        binding.tempMediaBtn.setOnClickListener {
+                            val packageName = "com.whatsapp.w4b"
+                            var intent =
+                                requireActivity().packageManager.getLaunchIntentForPackage(packageName)
+                            startActivity(intent)
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_SAVED-> {
                         viewModel.wpSavedStatusLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUIforSaved(unFilteredList)
                         }
-
                         tempMediaText.text = "No Media Saved"
                         binding.tempMediaText2.visibility = View.GONE
                         binding.tempMediaBtn.visibility = View.GONE
