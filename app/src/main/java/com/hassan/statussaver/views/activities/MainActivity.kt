@@ -5,6 +5,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -52,6 +53,7 @@ import com.hassan.statussaver.databinding.DialogGuideBinding
 import java.util.concurrent.TimeUnit
 import androidx.work.*
 import com.google.common.util.concurrent.ListenableFuture
+import com.hassan.statussaver.services.FileObserverService
 
 
 class MainActivity : AppCompatActivity() {
@@ -102,14 +104,14 @@ class MainActivity : AppCompatActivity() {
           bottomSheet.visibility = View.GONE
           grayShade.visibility = View.GONE
       }
-      if (isRestartServiceWorkerActive() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
+      if (isFileObserverServiceRunning() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
         Log.d("MainActivity", "Permission granted for service")
         // Your code here
         notification_btn.visibility = View.GONE
       }
       notification_btn.setOnClickListener {
         getNotificationpermission()
-        if(!isRestartServiceWorkerActive()) {
+        if(!isFileObserverServiceRunning()) {
           val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
             .build()
           WorkManager.getInstance(this).enqueue(workRequest)
@@ -308,39 +310,23 @@ class MainActivity : AppCompatActivity() {
       dialog.dismiss()
     }
   }
-fun isRestartServiceWorkerActive():Boolean {
-  val UNIQUE_WORK_NAME = "RestartServiceWorker"
-    var isStarted = false
-
-// Check if the worker is already running or enqueued
-  WorkManager.getInstance(this)
-    .getWorkInfosForUniqueWorkLiveData(UNIQUE_WORK_NAME)
-    .observe(this) { workInfos ->
-      if (workInfos != null && workInfos.isNotEmpty()) {
-        // Check the state of the worker
-        val isWorkerRunning = workInfos.any {
-          it.state == WorkInfo.State.RUNNING || it.state == WorkInfo.State.ENQUEUED
-        }
-
-        if (isWorkerRunning) {
-          // A worker is already running or enqueued, do not enqueue a new one
-          Log.d("WorkerCheck", "Worker is already running or enqueued.")
-          isStarted = true
-        }
-        else {
-          // No worker is running or enqueued, enqueue a new one
-          Log.d("WorkerCheck", "Worker is not running or enqueued.")
-            isStarted = false
-        }
+  private fun isFileObserverServiceRunning(): Boolean {
+    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
+      if (FileObserverService::class.java.name == service.service.className) {
+        return true
       }
     }
-    return isStarted
-}
+    return false
+  }
 
   override fun onStart() {
     super.onStart()
+    Log.d("MainActivity", "onStart called")
+    Log.d("MainActivity", "Worker status: ${isFileObserverServiceRunning()}")
+    Log.d("MainActivity", "Permission status: ${ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS")}")
     val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
-    if (isRestartServiceWorkerActive() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
+    if (isFileObserverServiceRunning() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
       Log.d("MainActivity", "onStart for notification button")
       notification_btn.visibility = View.GONE
     }

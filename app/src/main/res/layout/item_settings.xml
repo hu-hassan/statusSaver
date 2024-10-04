@@ -21,6 +21,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Switch
+        android:id="@+id/switch_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/settings_Desc"
+        app:layout_constraintEnd_toEndOf="@+id/settings_title"
+        app:layout_constraintTop_toTopOf="@+id/settings_title"
+        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+
     <TextView
         android:id="@+id/settings_Desc"
         android:layout_width="0dp"
