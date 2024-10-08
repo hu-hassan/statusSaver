@@ -15,5 +15,6 @@
 
     <color name="colorInactiveItemNight">#BABABA</color>
     <color name="colorActiveItemNight">#fff</color>
+    <color name="red">#FF0000</color>
 
 </resources>

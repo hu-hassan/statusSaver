@@ -53,7 +53,9 @@ import com.hassan.statussaver.databinding.DialogGuideBinding
 import java.util.concurrent.TimeUnit
 import androidx.work.*
 import com.google.common.util.concurrent.ListenableFuture
+import com.hassan.statussaver.databinding.ItemSettingsBinding
 import com.hassan.statussaver.services.FileObserverService
+import com.hassan.statussaver.views.adapters.SettingsAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,8 +69,12 @@ class MainActivity : AppCompatActivity() {
   private var isBusiness: Boolean = false
   private lateinit var bottomSheet: LinearLayout
   private lateinit var grayShade: View
+  private lateinit var settingsAdapter: SettingsAdapter
+
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
+    settingsAdapter = SettingsAdapter(arrayListOf(), this)
+
     SharedPrefUtils.init(activity) // Ensure this is called early
     val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
       SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
@@ -76,7 +82,11 @@ class MainActivity : AppCompatActivity() {
     ) || SharedPrefUtils.getPrefBoolean(
       SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
       false
+    )|| SharedPrefUtils.getPrefBoolean(
+      SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED_OLD,
+      false
     )
+
     if (!isPermissionGranted){
       Log.d("MainActivity", "Permissions not granted")
       WorkManager.getInstance(this).cancelAllWork()
@@ -104,6 +114,10 @@ class MainActivity : AppCompatActivity() {
           bottomSheet.visibility = View.GONE
           grayShade.visibility = View.GONE
       }
+      if(isPermissionGranted== false){
+        Log.d("MainActivity", "Permission not granted")
+        notification_btn.visibility = View.GONE
+      }
       if (isFileObserverServiceRunning() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
         Log.d("MainActivity", "Permission granted for service")
         // Your code here
@@ -111,12 +125,16 @@ class MainActivity : AppCompatActivity() {
       }
       notification_btn.setOnClickListener {
         getNotificationpermission()
-        if(!isFileObserverServiceRunning()) {
+        if(!(isFileObserverServiceRunning())&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+          WorkManager.getInstance(this).cancelAllWork()
           val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
             .build()
           WorkManager.getInstance(this).enqueue(workRequest)
         }
         notification_btn.visibility = View.GONE
+        if (isFileObserverServiceRunning() == false|| ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_DENIED) {
+          notification_btn.visibility = View.VISIBLE
+        }
       }
       binding.apply {
         buttonIcon2.setOnClickListener {
@@ -207,7 +225,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
-    if (requestCode == StatusRepo.REQUEST_CODE_URI_PERMISSION && resultCode == Activity.RESULT_OK) {
+    if (requestCode == StatusRepo.REQUEST_CODE_URI_PERMISSION && resultCode == RESULT_OK) {
       data?.data?.let { uri ->
         contentResolver.takePersistableUriPermission(
           uri,
@@ -262,12 +280,12 @@ class MainActivity : AppCompatActivity() {
 
 
   private fun isFirstRun(): Boolean {
-    val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
     return sharedPreferences.getBoolean("is_first_run", true)
   }
 
   private fun setFirstRunCompleted() {
-    val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
     with(sharedPreferences.edit()) {
       putBoolean("is_first_run", false)
       apply()
@@ -286,8 +304,6 @@ class MainActivity : AppCompatActivity() {
         101
       )
     }
-//return true
-
   }
 
   private fun dialogLogic() {
@@ -311,7 +327,7 @@ class MainActivity : AppCompatActivity() {
     }
   }
   private fun isFileObserverServiceRunning(): Boolean {
-    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
     for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
       if (FileObserverService::class.java.name == service.service.className) {
         return true
@@ -320,16 +336,31 @@ class MainActivity : AppCompatActivity() {
     return false
   }
 
-  override fun onStart() {
-    super.onStart()
-    Log.d("MainActivity", "onStart called")
-    Log.d("MainActivity", "Worker status: ${isFileObserverServiceRunning()}")
-    Log.d("MainActivity", "Permission status: ${ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS")}")
+  override fun onResume() {
+    super.onResume()
+    val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+      SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+      false
+    ) || SharedPrefUtils.getPrefBoolean(
+      SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
+      false
+    )
+
     val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
-    if (isFileObserverServiceRunning() && ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
-      Log.d("MainActivity", "onStart for notification button")
+    if (!isFileObserverServiceRunning() || ContextCompat.checkSelfPermission(
+        this,
+        "android.permission.POST_NOTIFICATIONS"
+      ) == PackageManager.PERMISSION_DENIED
+    ) {
+      Log.d("MainActivity", "Permission granted for service")
+      notification_btn.visibility = View.VISIBLE
+    }
+
+    if (!isPermissionGranted) {
+      Log.d("MainActivity onResume", "Permission not granted")
       notification_btn.visibility = View.GONE
     }
   }
+
 
 }

@@ -58,7 +58,12 @@ class FragmentSettings : Fragment() {
             }
 
         settingsRecyclerView.adapter = adapter
-
+            list.add(
+                SettingsModel(
+                    title = "Notifications",
+                    desc = "Know how to download statuses"
+                )
+            )
             list.add(
                 SettingsModel(
                     title = "How to use",
@@ -82,6 +87,12 @@ class FragmentSettings : Fragment() {
                 SettingsModel(
                     title = "Privacy Policy",
                     desc = "Read Our Terms & Conditions"
+                )
+            )
+            list.add(
+                SettingsModel(
+                    title = "Rate our app",
+                    desc = "Please support our work by your rating"
                 )
             )
 //            list.add(
@@ -113,5 +124,10 @@ class FragmentSettings : Fragment() {
             replace(R.id.fragmentContainer, fragment)
             addToBackStack(null)
         }.commit()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
     }
 }

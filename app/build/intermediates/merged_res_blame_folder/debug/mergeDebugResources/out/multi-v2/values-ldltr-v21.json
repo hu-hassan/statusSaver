@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.hassan.statussaver.app-mergeDebugResources-48:/values-ldltr-v21/values-ldltr-v21.xml",
+            "map": [
+                {
+                    "source": "/Users/intoxicated/.gradle/caches/8.9/transforms/e204ee51dd82059c098138e7fef35c8e/transformed/appcompat-1.6.1/res/values-ldltr-v21/values-ldltr-v21.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "112",
+                        "endOffsets": "163"
+                    }
+                }
+            ]
+        }
+    ]
+}

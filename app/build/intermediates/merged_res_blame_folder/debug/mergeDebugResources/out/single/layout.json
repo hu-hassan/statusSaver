@@ -1,0 +1,90 @@
+[
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/activity_images_preview.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_images_preview.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/saved_media_preview.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/saved_media_preview.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/item_video_preview.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_video_preview.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/fragment_status.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/fragment_status.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/activity_main.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/layout_permissions.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_permissions.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/layout_splash.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_splash.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/fragment_media.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/fragment_media.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_guide.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/dialog_guide.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/layout_tools.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_tools.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/bottom_sheet.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/bottom_sheet.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/item_media.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_media.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/fragment_settings.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/item_image_preview.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_image_preview.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/item_settings.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_settings.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/activity_saved_preview.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_saved_preview.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/activity_send_message.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_send_message.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_feedback.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/dialog_feedback.xml"
+    },
+    {
+        "merged": "com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_feedback.xml",
+        "source": "com.hassan.statussaver.app-main-52:/layout/dialog_feedback.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_permission.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/dialog_permission.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/activity_videos_preview.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_videos_preview.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/layout_header.xml",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_header.xml"
+    }
+]
