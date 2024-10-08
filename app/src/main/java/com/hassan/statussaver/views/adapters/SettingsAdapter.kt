@@ -27,6 +27,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.utils.getFolderPermissions
 import android.provider.Settings
+import com.google.android.material.button.MaterialButton
 
 
 class SettingsAdapter(
@@ -62,14 +63,110 @@ class SettingsAdapter(
 
                 root.setOnClickListener {
                     when (position) {
-                        // Handle other items
+                        0 -> {
+                            // Handle Notifications click
+                        }
+                        1 -> {
+                            // how to use 1st item
+                            val dialog = Dialog(context)
+                            val dialogBinding =
+                                DialogGuideBinding.inflate((context as Activity).layoutInflater)
+                            dialogBinding.okayBtn.setOnClickListener {
+                                dialog.dismiss()
+                            }
+                            dialog.setContentView(dialogBinding.root)
+
+                            dialog.window?.setLayout(
+                                ActionBar.LayoutParams.MATCH_PARENT,
+                                ActionBar.LayoutParams.WRAP_CONTENT
+                            )
+
+                            dialog.show()
+                            val cancelBtn = dialog.findViewById<ImageView>(R.id.cancel_btn)
+                            cancelBtn.setOnClickListener {
+                                dialog.dismiss()
+                            }
+                        }
+                        2 -> {
+                            // Handle Save in Folder click
+                        }
+                        3 -> {
+                            MaterialAlertDialogBuilder(context).apply {
+                                setTitle("Disclaimer")
+                                setMessage("Disclaimer Here")
+                                setPositiveButton("Okay", null)
+                                show()
+                            }
+                        }
+                        4 -> {
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://gimmypieapps.blogspot.com/p/status-saver-privacy-policy.html?m=1")).apply {
+                                context.startActivity(this)
+                            }
+                        }
+                        5 -> {
+                            val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_feedback, null)
+                            val dialog = Dialog(context)
+                            dialog.setContentView(dialogView)
+                            dialog.window?.setLayout(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT
+                            )
+                            dialog.show()
+                            val dialogButton = dialogView.findViewById<MaterialButton>(R.id.okay_btn)
+                            dialogButton.text = "Rate Us"
+                            dialogButton.icon = null
+                            dialogButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.buttonshade)
+                            val ratingStars = dialogView.findViewById<RatingBar>(R.id.ratingBar)
+                            ratingStars.setOnRatingBarChangeListener(object : RatingBar.OnRatingBarChangeListener {
+                                override fun onRatingChanged(ratingBar: RatingBar?, rating: Float, fromUser: Boolean) {
+                                    if (rating >= 4) {
+                                        dialogButton.text = "Rate Us on Google Play store"
+                                        dialogButton.icon = ContextCompat.getDrawable(context, R.drawable.playstore_svgrepo_com)
+                                        dialogButton.iconTint = null
+                                        dialogButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
+                                        dialogButton.setOnClickListener {
+                                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${context.packageName}"))
+                                            context.startActivity(intent)
+                                            dialog.dismiss()
+                                        }
+                                    }
+                                    else{
+                                        dialogButton.icon = null
+                                        dialogButton.text = "Feedback"
+                                        dialogButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
+                                        dialogButton.setOnClickListener {
+                                            val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                                                data = Uri.parse("mailto:hassan.hu.usman@gmail.com?subject=" + Uri.encode("Feedback of Status Saver App"))
+                                            }
+                                            context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
+                                            dialog.dismiss()
+                                        }
+
+
+
+                                    }
+                                    if(rating < 1){
+                                        dialogButton.text = "Rate Us"
+                                        dialogButton.icon = null
+                                        dialogButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.buttonshade)
+                                        dialogButton.setOnClickListener{
+
+                                        }
+                                    }
+                                }
+                            })
+                            val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+                            cancelButton.setOnClickListener {
+                                dialog.dismiss()
+                            }
+
+                        }
                     }
                 }
             }
         }
 
         private fun checkNotificationPermission() {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                     binding.switchNotifications.isChecked = true
                     binding.switchNotifications.trackTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
@@ -79,11 +176,6 @@ class SettingsAdapter(
                     binding.switchNotifications.trackTintList = ContextCompat.getColorStateList(context, R.color.red)
                     binding.switchNotifications.isEnabled = true
                 }
-//            } else {
-//                binding.switchNotifications.isChecked = true
-//                binding.switchNotifications.trackTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
-//                binding.switchNotifications.isEnabled = false
-//            }
         }
 
         private fun isNotificationPermissionGranted(): Boolean {
@@ -142,65 +234,3 @@ class SettingsAdapter(
         holder.bind(model = list[position], position)
     }
 }
-//when (position) {
-//    0 -> {
-//        // Handle Notifications click
-//    }
-//    1 -> {
-//        // how to use 1st item
-//        val dialog = Dialog(context)
-//        val dialogBinding =
-//            DialogGuideBinding.inflate((context as Activity).layoutInflater)
-//        dialogBinding.okayBtn.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//        dialog.setContentView(dialogBinding.root)
-//
-//        dialog.window?.setLayout(
-//            ActionBar.LayoutParams.MATCH_PARENT,
-//            ActionBar.LayoutParams.WRAP_CONTENT
-//        )
-//
-//        dialog.show()
-//        val cancelBtn = dialog.findViewById<ImageView>(R.id.cancel_btn)
-//        cancelBtn.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//    }
-//    2 -> {
-//        // Handle Save in Folder click
-//    }
-//    3 -> {
-//        MaterialAlertDialogBuilder(context).apply {
-//            setTitle("Disclaimer")
-//            setMessage("Disclaimer Here")
-//            setPositiveButton("Okay", null)
-//            show()
-//        }
-//    }
-//    4 -> {
-//        Intent(Intent.ACTION_VIEW, Uri.parse("https://gimmypieapps.blogspot.com/p/status-saver-privacy-policy.html?m=1")).apply {
-//            context.startActivity(this)
-//        }
-//    }
-//    5 -> {
-//        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_feedback, null)
-//        val dialog = Dialog(context)
-//        dialog.setContentView(dialogView)
-//        dialog.window?.setLayout(
-//            ViewGroup.LayoutParams.MATCH_PARENT,
-//            ViewGroup.LayoutParams.WRAP_CONTENT
-//        )
-//        dialog.show()
-//        val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
-//        dialogButton.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//        val ratingStars = dialogView.findViewById<RatingBar>(R.id.ratingBar)
-//        val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
-//        cancelButton.setOnClickListener {
-//            dialog.dismiss()
-//        }
-//
-//    }
-//}

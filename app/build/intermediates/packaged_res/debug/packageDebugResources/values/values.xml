@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="buttonshade">#69827f</color>
     <color name="colorActiveItemDay">#000000</color>
     <color name="colorActiveItemNight">#fff</color>
     <color name="colorBottomNav">#CCFFDF</color>

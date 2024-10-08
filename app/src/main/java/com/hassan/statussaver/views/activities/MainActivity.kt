@@ -82,9 +82,6 @@ class MainActivity : AppCompatActivity() {
     ) || SharedPrefUtils.getPrefBoolean(
       SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
       false
-    )|| SharedPrefUtils.getPrefBoolean(
-      SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED_OLD,
-      false
     )
 
     if (!isPermissionGranted){

@@ -1,6 +1,7 @@
 R_DEF: Internal format may change without notice
 local
 color black
+color buttonshade
 color colorActiveItemDay
 color colorActiveItemNight
 color colorBottomNav
@@ -33,6 +34,7 @@ drawable ic_menu_settings
 drawable ic_menu_wp_downloads
 drawable ic_menu_wp_status
 drawable ic_play
+drawable ic_play_store
 drawable ic_repost
 drawable ic_share
 drawable icon_app
@@ -40,6 +42,7 @@ drawable icons8_whatsapp
 drawable menu_60
 drawable paper_plane_svgrepo_com
 drawable permission
+drawable playstore_svgrepo_com
 drawable round_gradient
 drawable settings_minimalistic_svgrepo_com
 drawable spinner_background

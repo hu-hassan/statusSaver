@@ -91,6 +91,8 @@ class FragmentStatus : Fragment() {
 
                         }
 
+                        permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.icons8_whatsapp)
+                        permissionLayout.btnPermission.text = "Allow Permission for WhatsApp"
                         permissionLayout.btnPermission.setOnClickListener {
                             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
                             val dialog = Dialog(requireContext())
@@ -150,10 +152,9 @@ class FragmentStatus : Fragment() {
                         if (isPermissionGranted) {
                             getWhatsAppBusinessStatuses()
                             getSavedStatuses()
-//                            val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//                                .build()
-//                            WorkManager.getInstance(requireActivity()).enqueue(workRequest)
                         }
+                        permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
+                        permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
                         permissionLayout.btnPermission.setOnClickListener {
                             val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
                             val dialog = Dialog(requireContext())

@@ -1492,6 +1492,7 @@ int color bright_foreground_material_dark 0x7f060026
 int color bright_foreground_material_light 0x7f060027
 int color button_material_dark 0x7f060028
 int color button_material_light 0x7f060029
+int color buttonshade 0x7f060305
 int color cardview_dark_background 0x7f06002a
 int color cardview_light_background 0x7f06002b
 int color cardview_shadow_end_color 0x7f06002c
@@ -3539,6 +3540,7 @@ int drawable ic_mtrl_chip_checked_black 0x7f080200
 int drawable ic_mtrl_chip_checked_circle 0x7f080201
 int drawable ic_mtrl_chip_close_circle 0x7f080202
 int drawable ic_play 0x7f080203
+int drawable ic_play_store 0x7f080270
 int drawable ic_repost 0x7f080204
 int drawable ic_search_black_24 0x7f080205
 int drawable ic_share 0x7f080206
@@ -3638,6 +3640,7 @@ int drawable notification_tile_bg 0x7f080263
 int drawable notify_panel_notification_icon_bg 0x7f080264
 int drawable paper_plane_svgrepo_com 0x7f080265
 int drawable permission 0x7f080266
+int drawable playstore_svgrepo_com 0x7f080271
 int drawable round_gradient 0x7f080267
 int drawable settings_minimalistic_svgrepo_com 0x7f080268
 int drawable spinner_background 0x7f080269
