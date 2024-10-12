@@ -122,16 +122,14 @@ class MainActivity : AppCompatActivity() {
       }
       notification_btn.setOnClickListener {
         getNotificationpermission()
-        if(!(isFileObserverServiceRunning())&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+
+        if(!isFileObserverServiceRunning()&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
           WorkManager.getInstance(this).cancelAllWork()
           val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
             .build()
           WorkManager.getInstance(this).enqueue(workRequest)
         }
         notification_btn.visibility = View.GONE
-        if (isFileObserverServiceRunning() == false|| ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_DENIED) {
-          notification_btn.visibility = View.VISIBLE
-        }
       }
       binding.apply {
         buttonIcon2.setOnClickListener {
@@ -344,19 +342,40 @@ class MainActivity : AppCompatActivity() {
     )
 
     val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
-    if (!isFileObserverServiceRunning() || ContextCompat.checkSelfPermission(
+    if(!isFileObserverServiceRunning()&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+      WorkManager.getInstance(this).cancelAllWork()
+      val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+        .build()
+      WorkManager.getInstance(this).enqueue(workRequest)
+    }
+//    if (!isFileObserverServiceRunning() || ContextCompat.checkSelfPermission(
+//        this,
+//        "android.permission.POST_NOTIFICATIONS"
+//      ) == PackageManager.PERMISSION_DENIED
+//    ) {
+//
+//      Log.d("MainActivity", "Permission not granted for service")
+//      if(isFileObserverServiceRunning()){
+//        Log.d("MainActivity", "Service is running")
+//        notification_btn.visibility = View.GONE
+//
+//      }
+//      notification_btn.visibility = View.VISIBLE
+//    }
+    if(ContextCompat.checkSelfPermission(
         this,
         "android.permission.POST_NOTIFICATIONS"
-      ) == PackageManager.PERMISSION_DENIED
-    ) {
-      Log.d("MainActivity", "Permission granted for service")
-      notification_btn.visibility = View.VISIBLE
+      ) == PackageManager.PERMISSION_DENIED)
+    {
+      Log.d("MainActivity", "Notification permission not granted")
+            notification_btn.visibility = View.VISIBLE
     }
-
-    if (!isPermissionGranted) {
+    if(!isPermissionGranted || (isFileObserverServiceRunning())){
       Log.d("MainActivity onResume", "Permission not granted")
       notification_btn.visibility = View.GONE
     }
+
+
   }
 
 

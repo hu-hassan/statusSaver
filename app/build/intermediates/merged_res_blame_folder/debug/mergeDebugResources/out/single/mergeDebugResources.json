@@ -68,6 +68,10 @@
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_settings.xml"
     },
     {
+        "merged": "com.hassan.statussaver.app-debug-50:/layout_fragment_media.xml.flat",
+        "source": "com.hassan.statussaver.app-main-52:/layout/fragment_media.xml"
+    },
+    {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/drawable_button_background.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/drawable/button_background.xml"
     },
@@ -148,18 +152,6 @@
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/drawable/cancel.xml"
     },
     {
-        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/drawable_ic_play_store.xml.flat",
-        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/drawable/ic_play_store.xml"
-    },
-    {
-        "merged": "com.hassan.statussaver.app-debug-50:/layout_dialog_feedback.xml.flat",
-        "source": "com.hassan.statussaver.app-main-52:/layout/dialog_feedback.xml"
-    },
-    {
-        "merged": "com.hassan.statussaver.app-debug-50:/layout_dialog_permission.xml.flat",
-        "source": "com.hassan.statussaver.app-main-52:/layout/dialog_permission.xml"
-    },
-    {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/layout_dialog_permission.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/dialog_permission.xml"
     },
@@ -198,10 +190,6 @@
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/layout_activity_main.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_main.xml"
-    },
-    {
-        "merged": "com.hassan.statussaver.app-debug-50:/drawable_cancel.xml.flat",
-        "source": "com.hassan.statussaver.app-main-52:/drawable/cancel.xml"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/mipmap-hdpi_ic_launcher_foreground.webp.flat",
@@ -284,12 +272,12 @@
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/activity_images_preview.xml"
     },
     {
-        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/drawable_playstore_svgrepo_com.png.flat",
-        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/drawable/playstore_svgrepo_com.png"
-    },
-    {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/layout_layout_permissions.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_permissions.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/drawable_playstore_svgrepo_com.png.flat",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/drawable/playstore_svgrepo_com.png"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/font_helvetice_bold.ttf.flat",

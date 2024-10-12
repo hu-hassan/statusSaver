@@ -68,7 +68,7 @@ class StatusViewModel(val repo: StatusRepo) : ViewModel() {
             if (!isPermissionsGranted) {
                 Log.d(TAG, "getWhatsAppStatuses: Requesting WP Statuses")
 
-                repo.getAllStatuses()
+                repo.getAllStatuses(Constants.TYPE_WHATSAPP_MAIN)
             }
 
             withContext(Dispatchers.Main){

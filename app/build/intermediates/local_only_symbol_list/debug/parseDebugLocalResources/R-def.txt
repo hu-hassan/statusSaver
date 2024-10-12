@@ -34,7 +34,6 @@ drawable ic_menu_settings
 drawable ic_menu_wp_downloads
 drawable ic_menu_wp_status
 drawable ic_play
-drawable ic_play_store
 drawable ic_repost
 drawable ic_share
 drawable icon_app

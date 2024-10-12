@@ -77,7 +77,9 @@ class FragmentMedia : Fragment() {
                         binding.tempMediaText2.visibility = View.GONE
                         binding.tempMediaBtn.visibility = View.GONE
                         viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { unFilteredList ->
-                            updateUI(unFilteredList)
+                            Log.d("FragmentMedia", "Whatsapp Business update ui calling")
+                            Log.d("FragmentMedia", "Whatsapp Business size given to update ui ${unFilteredList.size}")
+                            updateUIB(unFilteredList)
                         }
 
                         binding.tempMediaBtn.icon = resources.getDrawable(R.drawable.whatsapp_business)
@@ -93,7 +95,9 @@ class FragmentMedia : Fragment() {
                         binding.tempMediaText2.visibility = View.GONE
                         binding.tempMediaBtn.visibility = View.GONE
                         viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { unFilteredList ->
-                            updateUI(unFilteredList)
+                            Log.d("FragmentMedia", "Whatsapp Business update ui calling")
+                            Log.d("FragmentMedia", "Whatsapp Business size given to update ui ${unFilteredList.size}")
+                            updateUIB(unFilteredList)
                         }
 
                         binding.tempMediaBtn.icon = resources.getDrawable(R.drawable.whatsapp_business)
@@ -129,64 +133,58 @@ class FragmentMedia : Fragment() {
         }
     }
 
-//    private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
-//        val filteredList = unFilteredList.distinctBy { model ->
-//            model.fileName
-//        }
-//
-//        val list = ArrayList<MediaModel>()
-//        filteredList.forEach { model ->
-//            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName) ||context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true) {
-//                list.add(model)
-//            }
-//            if (!(isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName) || context?.isStatusExist(model.fileName) == true || context?.isStatusSaved(model.fileName) == true)) {
-//                list.remove(model)
-//            }
-//
-//        }
-//        if (saved){
-//            adapter = MediaAdapter(ArrayList(list), requireActivity(), true)
-//            binding.mediaRecyclerView.adapter = adapter
-//            binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-//        }
-//        else {
-//            adapter = MediaAdapter(list, requireActivity(), false)
-//            binding.mediaRecyclerView.adapter = adapter
-//            binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-//        }
-//
-//
-//
-//    }
-private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
-    // Create a copy of the unfiltered list to avoid concurrent modification issues
-    val filteredList = ArrayList(unFilteredList).distinctBy { model -> model.fileName }
+    private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
+        // Create a copy of the unfiltered list to avoid concurrent modification issues
+        val filteredList = ArrayList(unFilteredList).distinctBy { model -> model.fileName }
 
-    // Use a thread-safe collection for modifications
-    val list = CopyOnWriteArrayList<MediaModel>()
+        // Use a thread-safe collection for modifications
+        val list = CopyOnWriteArrayList<MediaModel>()
 
-    // Iterate over the filtered list and add/remove elements based on conditions
-    filteredList.forEach { model ->
-        if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
-            Log.d("FragmentMedia", "updateUI: ${model.fileName}")
-            list.add(model)
-        } else {
-            list.remove(model)
+        // Iterate over the filtered list and add/remove elements based on conditions
+        filteredList.forEach { model ->
+            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+                Log.d("FragmentMedia", "updateUI: ${model.fileName}")
+                list.add(model)
+            } else {
+                list.remove(model)
+            }
         }
+
+        // Update the adapter with the final list
+        adapter = MediaAdapter(ArrayList(list), requireActivity(), false)
+        binding.mediaRecyclerView.adapter = adapter
+
+        // Show or hide the temporary text based on whether the final list is empty
+        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaText2.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaBtn.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
     }
+    private fun updateUIB(unFilteredList: ArrayList<MediaModel>) {
+        // Create a copy of the unfiltered list to avoid concurrent modification issues
+        val filteredList = ArrayList(unFilteredList).distinctBy { model -> model.fileName }
 
-    // Update the adapter with the final list
-    adapter = MediaAdapter(ArrayList(list), requireActivity(), false)
-    binding.mediaRecyclerView.adapter = adapter
+        // Use a thread-safe collection for modifications
+        val list = CopyOnWriteArrayList<MediaModel>()
 
-    // Show or hide the temporary text based on whether the final list is empty
-    binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-    binding.tempMediaText2.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-    binding.tempMediaBtn.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-}
+        // Iterate over the filtered list and add/remove elements based on conditions
+        filteredList.forEach { model ->
+            if (isStatusExistInBStatuses(model.fileName)) {
+                Log.d("FragmentMedia", "updateUI: ${model.fileName}")
+                list.add(model)
+            } else {
+                list.remove(model)
+            }
+        }
 
+        // Update the adapter with the final list
+        adapter = MediaAdapter(ArrayList(list), requireActivity(), false)
+        binding.mediaRecyclerView.adapter = adapter
 
-
+        // Show or hide the temporary text based on whether the final list is empty
+        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaText2.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaBtn.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+    }
 
     private fun updateUIforSaved(unFilteredList: ArrayList<MediaModel>) {
         // Create a copy of the unfiltered list to avoid concurrent modification issues
@@ -216,4 +214,53 @@ private fun updateUI(unFilteredList: ArrayList<MediaModel>) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
+    override fun onResume() {
+        super.onResume()
+        binding.tempMediaText.visibility = View.GONE
+        binding.tempMediaText2.visibility = View.GONE
+        binding.tempMediaBtn.visibility = View.GONE
+
+        binding.apply {
+            arguments?.let {
+                val repo = StatusRepo(requireActivity())
+                viewModel = ViewModelProvider(
+                    requireActivity(),
+                    StatusViewModelFactory(repo)
+                )[StatusViewModel::class.java]
+                val mediaType = it.getString(Constants.MEDIA_TYPE_KEY, "")
+                when (mediaType) {
+                    Constants.MEDIA_TYPE_WHATSAPP_IMAGES -> {
+                        viewModel.whatsAppImagesLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                            updateUI(unFilteredList)
+                        }
+                    }
+                    Constants.MEDIA_TYPE_WHATSAPP_VIDEOS -> {
+                        viewModel.whatsAppVideosLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                            updateUI(unFilteredList)
+                        }
+                    }
+                    Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES -> {
+
+                        viewModel.whatsAppBusinessImagesLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                            Log.d("FragmentMedia", "Whatsapp Business update ui calling")
+                            Log.d("FragmentMedia", "Whatsapp Business size given to update ui ${unFilteredList.size}")
+                            updateUIB(unFilteredList)
+                        }
+                    }
+                    Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS -> {
+                        viewModel.whatsAppBusinessVideosLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                            Log.d("FragmentMedia", "Whatsapp Business update ui calling")
+                            Log.d("FragmentMedia", "Whatsapp Business size given to update ui ${unFilteredList.size}")
+                            updateUIB(unFilteredList)
+                        }
+                    }
+                        Constants.MEDIA_TYPE_WHATSAPP_SAVED -> {
+                        viewModel.wpSavedStatusLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                            updateUIforSaved(unFilteredList)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

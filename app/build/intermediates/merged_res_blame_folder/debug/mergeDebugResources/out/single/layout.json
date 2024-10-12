@@ -28,6 +28,10 @@
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_splash.xml"
     },
     {
+        "merged": "com.hassan.statussaver.app-mergeDebugResources-49:/layout/fragment_media.xml",
+        "source": "com.hassan.statussaver.app-main-52:/layout/fragment_media.xml"
+    },
+    {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/fragment_media.xml",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/fragment_media.xml"
     },
@@ -42,10 +46,6 @@
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/bottom_sheet.xml",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/bottom_sheet.xml"
-    },
-    {
-        "merged": "com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_permission.xml",
-        "source": "com.hassan.statussaver.app-main-52:/layout/dialog_permission.xml"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/item_media.xml",
@@ -74,10 +74,6 @@
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_feedback.xml",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/dialog_feedback.xml"
-    },
-    {
-        "merged": "com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_feedback.xml",
-        "source": "com.hassan.statussaver.app-main-52:/layout/dialog_feedback.xml"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-mergeDebugResources-49:/layout/dialog_permission.xml",
