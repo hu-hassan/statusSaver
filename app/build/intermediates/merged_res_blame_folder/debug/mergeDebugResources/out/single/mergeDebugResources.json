@@ -20,12 +20,12 @@
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_media.xml"
     },
     {
-        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/mipmap-xxhdpi/ic_launcher.webp"
-    },
-    {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/layout_layout_tools.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/layout_tools.xml"
+    },
+    {
+        "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/mipmap-xxhdpi/ic_launcher.webp"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/mipmap-mdpi_ic_launcher.webp.flat",
@@ -66,10 +66,6 @@
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/layout_item_settings.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/item_settings.xml"
-    },
-    {
-        "merged": "com.hassan.statussaver.app-debug-50:/layout_fragment_media.xml.flat",
-        "source": "com.hassan.statussaver.app-main-52:/layout/fragment_media.xml"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/drawable_button_background.xml.flat",
@@ -142,6 +138,10 @@
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/layout_fragment_status.xml.flat",
         "source": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-main-52:/layout/fragment_status.xml"
+    },
+    {
+        "merged": "com.hassan.statussaver.app-debug-50:/drawable_delete.xml.flat",
+        "source": "com.hassan.statussaver.app-main-52:/drawable/delete.xml"
     },
     {
         "merged": "/Users/intoxicated/.gradle/daemon/8.9/com.hassan.statussaver.app-debug-50:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",

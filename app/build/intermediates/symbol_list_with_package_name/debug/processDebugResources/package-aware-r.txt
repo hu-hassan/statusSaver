@@ -3178,6 +3178,7 @@ drawable btn_radio_on_to_off_mtrl_animation
 drawable button_background
 drawable cancel
 drawable ccp_ic_arrow_drop_down
+drawable delete
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off

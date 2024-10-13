@@ -1,8 +1,10 @@
 package com.hassan.statussaver.views.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,7 @@ import com.hassan.statussaver.R
 import com.hassan.statussaver.utils.isStatusExist
 import com.hassan.statussaver.utils.isStatusSaved
 import com.hassan.statussaver.utils.saveStatus
+import java.io.File
 
 class SavedPreviewAdapter(
     private val context: Context,
@@ -72,17 +75,32 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
     }
 
     private fun setupDownloadButton(mediaModel: MediaModel) {
-        val downloadImage = if (context.isStatusSaved(mediaModel.fileName)||context.isStatusExist(mediaModel.fileName)) {
-            binding.tools.text.text = "Saved"
-            R.drawable.ic_downloaded
-        } else {
-            binding.tools.text.text = "Save"
-            R.drawable.ic_download
-        }
-        binding.tools.statusDownload.setImageResource(downloadImage)
+        binding.tools.text.text = "Delete"
+
+        binding.tools.statusDownload.setImageResource(R.drawable.delete)
 
         binding.tools.download.setOnClickListener {
-                Toast.makeText(context, "Already Saved", Toast.LENGTH_SHORT).show()
+            val directories = listOf(
+                File(Environment.getExternalStorageDirectory(), "Pictures/Status Saver"),
+                File(Environment.getExternalStorageDirectory(), "Movies/Status Saver")
+            )
+            val filenamesToDelete = mediaModel.fileName
+
+            directories.forEach { directory ->
+                if (directory.exists() && directory.isDirectory) {
+                    directory.listFiles()?.forEach { file ->
+                        if (filenamesToDelete.contains(file.name)) {
+                            Log.d("SavedPreviewAdapter", "Deleting file: ${file.name}")
+                            file.delete()
+                        }
+                    }
+                }
+            }
+            Toast.makeText(context, "This item has been deleted", Toast.LENGTH_SHORT).show()
+            if (context is Activity) {
+                context.finish()
+            }
+
         }
         binding.tools.repost.setOnClickListener {
             // Create the intent for sharing the media

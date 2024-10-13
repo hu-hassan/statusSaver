@@ -9,38 +9,38 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-11-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:4:5-119
-11-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:4:22-74
+11-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:5:5-119
+11-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:5:22-74
 12    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-12-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:5:5-77
-12-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:5:22-74
+12-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:6:5-77
+12-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:6:22-74
 13    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-13-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:6:5-77
-13-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:6:22-74
+13-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:7:5-77
+13-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:7:22-74
 14    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-14-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:7:5-87
-14-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:7:22-84
+14-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:8:5-87
+14-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:8:22-84
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:8:5-66
-15-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:8:22-64
+15-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:9:5-66
+15-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:9:22-64
 16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-16-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:9:5-78
-16-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:9:22-76
+16-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:10:5-78
+16-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:10:22-76
 17    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-17-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:10:5-81
-17-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:10:22-78
+17-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:11:5-81
+17-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:11:22-78
 18    <uses-permission
-18-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:11:5-12:37
+18-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:12:5-13:37
 19        android:name="android.permission.READ_EXTERNAL_STORAGE"
-19-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:11:22-77
+19-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:12:22-77
 20        android:maxSdkVersion="29" />
-20-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:12:9-35
+20-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:13:9-35
 21    <uses-permission
-21-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:13:5-15:40
+21-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:14:5-16:40
 22        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-22-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:13:22-78
+22-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:14:22-78
 23        android:maxSdkVersion="29" />
-23-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:14:9-35
+23-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:15:9-35
 24    <uses-permission android:name="android.permission.WAKE_LOCK" />
 24-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:23:5-68
 24-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:23:22-65
@@ -57,336 +57,338 @@
 30-->[androidx.core:core:1.9.0] /Users/intoxicated/.gradle/caches/8.9/transforms/70eee6174465d56b197186057904c935/transformed/core-1.9.0/AndroidManifest.xml:26:22-94
 31
 32    <application
-32-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:18:5-52:19
-33        android:allowBackup="true"
-33-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:19:9-35
-34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-34-->[androidx.core:core:1.9.0] /Users/intoxicated/.gradle/caches/8.9/transforms/70eee6174465d56b197186057904c935/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
-35        android:dataExtractionRules="@xml/data_extraction_rules"
-35-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:20:9-65
-36        android:debuggable="true"
-37        android:enableOnBackInvokedCallback="true"
-37-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:28:9-51
-38        android:extractNativeLibs="false"
-39        android:fullBackupContent="@xml/backup_rules"
-39-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:21:9-54
-40        android:icon="@mipmap/ic_launcher"
-40-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:22:9-43
-41        android:label="@string/app_name"
-41-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:23:9-41
-42        android:roundIcon="@mipmap/ic_launcher_round"
-42-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:24:9-54
-43        android:supportsRtl="true"
-43-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:25:9-35
-44        android:testOnly="true"
-45        android:theme="@style/Theme.StatusSaver" >
-45-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:26:9-49
-46        <activity android:name="com.hassan.statussaver.views.activities.SendMessageActivity" />
-46-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:30:9-74
-46-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:30:19-71
-47        <activity
-47-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:31:9-33:40
-48            android:name="com.hassan.statussaver.views.activities.ImagesPreview"
-48-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:32:13-59
-49            android:exported="false" />
-49-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:33:13-37
-50        <activity
-50-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:34:9-36:40
-51            android:name="com.hassan.statussaver.views.activities.VideosPreview"
-51-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:35:13-59
-52            android:exported="false" />
-52-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:36:13-37
-53        <activity
-53-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:37:9-45:20
-54            android:name="com.hassan.statussaver.views.activities.MainActivity"
-54-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:38:13-58
-55            android:exported="true" >
-55-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:39:13-36
-56            <intent-filter>
-56-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:41:13-44:29
-57                <action android:name="android.intent.action.MAIN" />
-57-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:42:17-69
-57-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:42:25-66
-58
-59                <category android:name="android.intent.category.LAUNCHER" />
-59-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:43:17-77
-59-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:43:27-74
-60            </intent-filter>
-61        </activity>
-62        <activity
-62-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:46:9-48:40
-63            android:name="com.hassan.statussaver.views.activities.SavedMediaPreview"
-63-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:47:13-63
-64            android:exported="false" />
-64-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:48:13-37
-65
-66        <service
-66-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:50:9-51:55
-67            android:name="com.hassan.statussaver.services.FileObserverService"
-67-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:50:18-62
-68            android:foregroundServiceType="dataSync" />
-68-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:51:13-53
-69
-70        <provider
-70-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:29:9-37:20
-71            android:name="androidx.startup.InitializationProvider"
-71-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:30:13-67
-72            android:authorities="com.hassan.statussaver.androidx-startup"
-72-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:31:13-68
-73            android:exported="false" >
-73-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:32:13-37
-74            <meta-data
-74-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:34:13-36:52
-75                android:name="androidx.work.WorkManagerInitializer"
-75-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:35:17-68
-76                android:value="androidx.startup" />
-76-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:36:17-49
-77            <meta-data
-77-->[androidx.emoji2:emoji2:1.2.0] /Users/intoxicated/.gradle/caches/8.9/transforms/ac54c8610adf527a3dac4826ffa23f6a/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-78                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-78-->[androidx.emoji2:emoji2:1.2.0] /Users/intoxicated/.gradle/caches/8.9/transforms/ac54c8610adf527a3dac4826ffa23f6a/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
-79                android:value="androidx.startup" />
-79-->[androidx.emoji2:emoji2:1.2.0] /Users/intoxicated/.gradle/caches/8.9/transforms/ac54c8610adf527a3dac4826ffa23f6a/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
-80            <meta-data
-80-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/intoxicated/.gradle/caches/8.9/transforms/cf1e428ec3565989d3cf908fff949542/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
-81                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-81-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/intoxicated/.gradle/caches/8.9/transforms/cf1e428ec3565989d3cf908fff949542/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
-82                android:value="androidx.startup" />
-82-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/intoxicated/.gradle/caches/8.9/transforms/cf1e428ec3565989d3cf908fff949542/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
-83            <meta-data
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-84                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-85                android:value="androidx.startup" />
-85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-86        </provider>
-87
-88        <service
-88-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:39:9-45:35
-89            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
-89-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:40:13-88
-90            android:directBootAware="false"
-90-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:41:13-44
-91            android:enabled="@bool/enable_system_alarm_service_default"
-91-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:42:13-72
-92            android:exported="false" />
-92-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:43:13-37
-93        <service
-93-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:46:9-52:35
-94            android:name="androidx.work.impl.background.systemjob.SystemJobService"
-94-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:47:13-84
-95            android:directBootAware="false"
-95-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:48:13-44
-96            android:enabled="@bool/enable_system_job_service_default"
-96-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:49:13-70
-97            android:exported="true"
-97-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:50:13-36
-98            android:permission="android.permission.BIND_JOB_SERVICE" />
-98-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:51:13-69
-99        <service
-99-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:53:9-59:35
-100            android:name="androidx.work.impl.foreground.SystemForegroundService"
-100-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:54:13-81
-101            android:directBootAware="false"
-101-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:55:13-44
-102            android:enabled="@bool/enable_system_foreground_service_default"
-102-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:56:13-77
-103            android:exported="false" />
-103-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:57:13-37
-104
-105        <receiver
-105-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:61:9-66:35
-106            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
-106-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:62:13-88
-107            android:directBootAware="false"
-107-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:63:13-44
-108            android:enabled="true"
-108-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:64:13-35
-109            android:exported="false" />
-109-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:65:13-37
-110        <receiver
-110-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:67:9-77:20
-111            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
-111-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:68:13-106
-112            android:directBootAware="false"
-112-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:69:13-44
-113            android:enabled="false"
-113-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:70:13-36
-114            android:exported="false" >
-114-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:71:13-37
-115            <intent-filter>
-115-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:73:13-76:29
-116                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-116-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:74:17-87
-116-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:74:25-84
-117                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-117-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:75:17-90
-117-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:75:25-87
-118            </intent-filter>
-119        </receiver>
-120        <receiver
-120-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:78:9-88:20
-121            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
-121-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:79:13-104
-122            android:directBootAware="false"
-122-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:80:13-44
-123            android:enabled="false"
-123-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:81:13-36
-124            android:exported="false" >
-124-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:82:13-37
-125            <intent-filter>
-125-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:84:13-87:29
-126                <action android:name="android.intent.action.BATTERY_OKAY" />
-126-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:85:17-77
-126-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:85:25-74
-127                <action android:name="android.intent.action.BATTERY_LOW" />
-127-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:86:17-76
-127-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:86:25-73
-128            </intent-filter>
-129        </receiver>
-130        <receiver
-130-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:89:9-99:20
-131            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
-131-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:90:13-104
-132            android:directBootAware="false"
-132-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:91:13-44
-133            android:enabled="false"
-133-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:92:13-36
-134            android:exported="false" >
-134-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:93:13-37
-135            <intent-filter>
-135-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:95:13-98:29
-136                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
-136-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:96:17-83
-136-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:96:25-80
-137                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
-137-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:97:17-82
-137-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:97:25-79
-138            </intent-filter>
-139        </receiver>
-140        <receiver
-140-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:100:9-109:20
-141            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
-141-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:101:13-103
-142            android:directBootAware="false"
-142-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:102:13-44
-143            android:enabled="false"
-143-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:103:13-36
-144            android:exported="false" >
-144-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:104:13-37
-145            <intent-filter>
-145-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:106:13-108:29
-146                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-146-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:107:17-79
-146-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:107:25-76
-147            </intent-filter>
-148        </receiver>
-149        <receiver
-149-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:110:9-121:20
-150            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
-150-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:111:13-88
-151            android:directBootAware="false"
-151-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:112:13-44
-152            android:enabled="false"
-152-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:113:13-36
-153            android:exported="false" >
-153-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:114:13-37
-154            <intent-filter>
-154-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:116:13-120:29
-155                <action android:name="android.intent.action.BOOT_COMPLETED" />
-155-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:117:17-79
-155-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:117:25-76
-156                <action android:name="android.intent.action.TIME_SET" />
-156-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:118:17-73
-156-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:118:25-70
-157                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
-157-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:119:17-81
-157-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:119:25-78
-158            </intent-filter>
-159        </receiver>
-160        <receiver
-160-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:122:9-131:20
-161            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
-161-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:123:13-99
-162            android:directBootAware="false"
-162-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:124:13-44
-163            android:enabled="@bool/enable_system_alarm_service_default"
-163-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:125:13-72
-164            android:exported="false" >
-164-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:126:13-37
-165            <intent-filter>
-165-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:128:13-130:29
-166                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
-166-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:129:17-98
-166-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:129:25-95
-167            </intent-filter>
-168        </receiver>
-169        <receiver
-169-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:132:9-142:20
-170            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
-170-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:133:13-78
-171            android:directBootAware="false"
-171-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:134:13-44
-172            android:enabled="true"
-172-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:135:13-35
-173            android:exported="true"
-173-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:136:13-36
-174            android:permission="android.permission.DUMP" >
-174-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:137:13-57
-175            <intent-filter>
-175-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:139:13-141:29
-176                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
-176-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:140:17-88
-176-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:140:25-85
-177            </intent-filter>
-178        </receiver>
-179
-180        <service
-180-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:24:9-28:63
-181            android:name="androidx.room.MultiInstanceInvalidationService"
-181-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:25:13-74
-182            android:directBootAware="true"
-182-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:26:13-43
-183            android:exported="false" />
-183-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:27:13-37
-184
-185        <receiver
-185-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-186            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-186-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-187            android:directBootAware="false"
-187-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-188            android:enabled="true"
-188-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-189            android:exported="true"
-189-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-190            android:permission="android.permission.DUMP" >
-190-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-191            <intent-filter>
-191-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-192                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-192-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-192-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-193            </intent-filter>
-194            <intent-filter>
-194-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-195                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-195-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-195-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-196            </intent-filter>
-197            <intent-filter>
-197-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-198                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-198-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-198-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-199            </intent-filter>
-200            <intent-filter>
-200-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-201                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-201-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-201-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-202            </intent-filter>
-203        </receiver>
-204    </application>
-205
-206</manifest>
+32-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:19:5-54:19
+33        android:name="com.hassan.statussaver.application.MyApp"
+33-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:30:9-42
+34        android:allowBackup="true"
+34-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:20:9-35
+35        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+35-->[androidx.core:core:1.9.0] /Users/intoxicated/.gradle/caches/8.9/transforms/70eee6174465d56b197186057904c935/transformed/core-1.9.0/AndroidManifest.xml:28:18-86
+36        android:dataExtractionRules="@xml/data_extraction_rules"
+36-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:21:9-65
+37        android:debuggable="true"
+38        android:enableOnBackInvokedCallback="true"
+38-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:29:9-51
+39        android:extractNativeLibs="false"
+40        android:fullBackupContent="@xml/backup_rules"
+40-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:22:9-54
+41        android:icon="@mipmap/ic_launcher"
+41-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:23:9-43
+42        android:label="@string/app_name"
+42-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:24:9-41
+43        android:roundIcon="@mipmap/ic_launcher_round"
+43-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:25:9-54
+44        android:supportsRtl="true"
+44-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:26:9-35
+45        android:testOnly="true"
+46        android:theme="@style/Theme.StatusSaver" >
+46-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:27:9-49
+47        <activity android:name="com.hassan.statussaver.views.activities.SendMessageActivity" />
+47-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:32:9-74
+47-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:32:19-71
+48        <activity
+48-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:33:9-35:40
+49            android:name="com.hassan.statussaver.views.activities.ImagesPreview"
+49-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:34:13-59
+50            android:exported="false" />
+50-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:35:13-37
+51        <activity
+51-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:36:9-38:40
+52            android:name="com.hassan.statussaver.views.activities.VideosPreview"
+52-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:37:13-59
+53            android:exported="false" />
+53-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:38:13-37
+54        <activity
+54-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:39:9-47:20
+55            android:name="com.hassan.statussaver.views.activities.MainActivity"
+55-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:40:13-58
+56            android:exported="true" >
+56-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:41:13-36
+57            <intent-filter>
+57-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:43:13-46:29
+58                <action android:name="android.intent.action.MAIN" />
+58-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:44:17-69
+58-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:44:25-66
+59
+60                <category android:name="android.intent.category.LAUNCHER" />
+60-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:45:17-77
+60-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:45:27-74
+61            </intent-filter>
+62        </activity>
+63        <activity
+63-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:48:9-50:40
+64            android:name="com.hassan.statussaver.views.activities.SavedMediaPreview"
+64-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:49:13-63
+65            android:exported="false" />
+65-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:50:13-37
+66
+67        <service
+67-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:52:9-53:55
+68            android:name="com.hassan.statussaver.services.FileObserverService"
+68-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:52:18-62
+69            android:foregroundServiceType="dataSync" />
+69-->/Users/intoxicated/Downloads/statusSaver/app/src/main/AndroidManifest.xml:53:13-53
+70
+71        <provider
+71-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:29:9-37:20
+72            android:name="androidx.startup.InitializationProvider"
+72-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:30:13-67
+73            android:authorities="com.hassan.statussaver.androidx-startup"
+73-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:31:13-68
+74            android:exported="false" >
+74-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:32:13-37
+75            <meta-data
+75-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:34:13-36:52
+76                android:name="androidx.work.WorkManagerInitializer"
+76-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:35:17-68
+77                android:value="androidx.startup" />
+77-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:36:17-49
+78            <meta-data
+78-->[androidx.emoji2:emoji2:1.2.0] /Users/intoxicated/.gradle/caches/8.9/transforms/ac54c8610adf527a3dac4826ffa23f6a/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+79                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+79-->[androidx.emoji2:emoji2:1.2.0] /Users/intoxicated/.gradle/caches/8.9/transforms/ac54c8610adf527a3dac4826ffa23f6a/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+80                android:value="androidx.startup" />
+80-->[androidx.emoji2:emoji2:1.2.0] /Users/intoxicated/.gradle/caches/8.9/transforms/ac54c8610adf527a3dac4826ffa23f6a/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+81            <meta-data
+81-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/intoxicated/.gradle/caches/8.9/transforms/cf1e428ec3565989d3cf908fff949542/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:29:13-31:52
+82                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+82-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/intoxicated/.gradle/caches/8.9/transforms/cf1e428ec3565989d3cf908fff949542/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:30:17-78
+83                android:value="androidx.startup" />
+83-->[androidx.lifecycle:lifecycle-process:2.6.1] /Users/intoxicated/.gradle/caches/8.9/transforms/cf1e428ec3565989d3cf908fff949542/transformed/lifecycle-process-2.6.1/AndroidManifest.xml:31:17-49
+84            <meta-data
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+85                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+86                android:value="androidx.startup" />
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+87        </provider>
+88
+89        <service
+89-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:39:9-45:35
+90            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+90-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:40:13-88
+91            android:directBootAware="false"
+91-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:41:13-44
+92            android:enabled="@bool/enable_system_alarm_service_default"
+92-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:42:13-72
+93            android:exported="false" />
+93-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:43:13-37
+94        <service
+94-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:46:9-52:35
+95            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+95-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:47:13-84
+96            android:directBootAware="false"
+96-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:48:13-44
+97            android:enabled="@bool/enable_system_job_service_default"
+97-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:49:13-70
+98            android:exported="true"
+98-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:50:13-36
+99            android:permission="android.permission.BIND_JOB_SERVICE" />
+99-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:51:13-69
+100        <service
+100-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:53:9-59:35
+101            android:name="androidx.work.impl.foreground.SystemForegroundService"
+101-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:54:13-81
+102            android:directBootAware="false"
+102-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:55:13-44
+103            android:enabled="@bool/enable_system_foreground_service_default"
+103-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:56:13-77
+104            android:exported="false" />
+104-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:57:13-37
+105
+106        <receiver
+106-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:61:9-66:35
+107            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+107-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:62:13-88
+108            android:directBootAware="false"
+108-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:63:13-44
+109            android:enabled="true"
+109-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:64:13-35
+110            android:exported="false" />
+110-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:65:13-37
+111        <receiver
+111-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:67:9-77:20
+112            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+112-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:68:13-106
+113            android:directBootAware="false"
+113-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:69:13-44
+114            android:enabled="false"
+114-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:70:13-36
+115            android:exported="false" >
+115-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:71:13-37
+116            <intent-filter>
+116-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:73:13-76:29
+117                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+117-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:74:17-87
+117-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:74:25-84
+118                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+118-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:75:17-90
+118-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:75:25-87
+119            </intent-filter>
+120        </receiver>
+121        <receiver
+121-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:78:9-88:20
+122            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+122-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:79:13-104
+123            android:directBootAware="false"
+123-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:80:13-44
+124            android:enabled="false"
+124-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:81:13-36
+125            android:exported="false" >
+125-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:82:13-37
+126            <intent-filter>
+126-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:84:13-87:29
+127                <action android:name="android.intent.action.BATTERY_OKAY" />
+127-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:85:17-77
+127-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:85:25-74
+128                <action android:name="android.intent.action.BATTERY_LOW" />
+128-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:86:17-76
+128-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:86:25-73
+129            </intent-filter>
+130        </receiver>
+131        <receiver
+131-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:89:9-99:20
+132            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+132-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:90:13-104
+133            android:directBootAware="false"
+133-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:91:13-44
+134            android:enabled="false"
+134-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:92:13-36
+135            android:exported="false" >
+135-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:93:13-37
+136            <intent-filter>
+136-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:95:13-98:29
+137                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+137-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:96:17-83
+137-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:96:25-80
+138                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+138-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:97:17-82
+138-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:97:25-79
+139            </intent-filter>
+140        </receiver>
+141        <receiver
+141-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:100:9-109:20
+142            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+142-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:101:13-103
+143            android:directBootAware="false"
+143-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:102:13-44
+144            android:enabled="false"
+144-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:103:13-36
+145            android:exported="false" >
+145-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:104:13-37
+146            <intent-filter>
+146-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:106:13-108:29
+147                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+147-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:107:17-79
+147-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:107:25-76
+148            </intent-filter>
+149        </receiver>
+150        <receiver
+150-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:110:9-121:20
+151            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+151-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:111:13-88
+152            android:directBootAware="false"
+152-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:112:13-44
+153            android:enabled="false"
+153-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:113:13-36
+154            android:exported="false" >
+154-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:114:13-37
+155            <intent-filter>
+155-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:116:13-120:29
+156                <action android:name="android.intent.action.BOOT_COMPLETED" />
+156-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:117:17-79
+156-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:117:25-76
+157                <action android:name="android.intent.action.TIME_SET" />
+157-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:118:17-73
+157-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:118:25-70
+158                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+158-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:119:17-81
+158-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:119:25-78
+159            </intent-filter>
+160        </receiver>
+161        <receiver
+161-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:122:9-131:20
+162            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+162-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:123:13-99
+163            android:directBootAware="false"
+163-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:124:13-44
+164            android:enabled="@bool/enable_system_alarm_service_default"
+164-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:125:13-72
+165            android:exported="false" >
+165-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:126:13-37
+166            <intent-filter>
+166-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:128:13-130:29
+167                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+167-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:129:17-98
+167-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:129:25-95
+168            </intent-filter>
+169        </receiver>
+170        <receiver
+170-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:132:9-142:20
+171            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+171-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:133:13-78
+172            android:directBootAware="false"
+172-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:134:13-44
+173            android:enabled="true"
+173-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:135:13-35
+174            android:exported="true"
+174-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:136:13-36
+175            android:permission="android.permission.DUMP" >
+175-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:137:13-57
+176            <intent-filter>
+176-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:139:13-141:29
+177                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+177-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:140:17-88
+177-->[androidx.work:work-runtime:2.8.1] /Users/intoxicated/.gradle/caches/8.9/transforms/f8df36bfeaabb1fe7dca4585b8f92c1f/transformed/work-runtime-2.8.1/AndroidManifest.xml:140:25-85
+178            </intent-filter>
+179        </receiver>
+180
+181        <service
+181-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:24:9-28:63
+182            android:name="androidx.room.MultiInstanceInvalidationService"
+182-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:25:13-74
+183            android:directBootAware="true"
+183-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:26:13-43
+184            android:exported="false" />
+184-->[androidx.room:room-runtime:2.5.0] /Users/intoxicated/.gradle/caches/8.9/transforms/4e49aa6ab07677e6517a5357065c4862/transformed/room-runtime-2.5.0/AndroidManifest.xml:27:13-37
+185
+186        <receiver
+186-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+187            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+187-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+188            android:directBootAware="false"
+188-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+189            android:enabled="true"
+189-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+190            android:exported="true"
+190-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+191            android:permission="android.permission.DUMP" >
+191-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+192            <intent-filter>
+192-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+193                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+193-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+193-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+194            </intent-filter>
+195            <intent-filter>
+195-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+196                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+196-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+196-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+197            </intent-filter>
+198            <intent-filter>
+198-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+199                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+199-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+199-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+200            </intent-filter>
+201            <intent-filter>
+201-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+202                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+202-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+202-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/intoxicated/.gradle/caches/8.9/transforms/9892fbb2d7efc7c98d975a02537e11dc/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+203            </intent-filter>
+204        </receiver>
+205    </application>
+206
+207</manifest>

@@ -123,8 +123,10 @@ class MainActivity : AppCompatActivity() {
       notification_btn.setOnClickListener {
         getNotificationpermission()
 
-        if(!isFileObserverServiceRunning()&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+        if((ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
           WorkManager.getInstance(this).cancelAllWork()
+          val intent = Intent(this, FileObserverService::class.java)
+          stopService(intent)
           val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
             .build()
           WorkManager.getInstance(this).enqueue(workRequest)
@@ -322,13 +324,17 @@ class MainActivity : AppCompatActivity() {
     }
   }
   private fun isFileObserverServiceRunning(): Boolean {
+    var returnValue = false
     val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
     for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
       if (FileObserverService::class.java.name == service.service.className) {
-        return true
+        returnValue = true
+      }
+      else{
+        returnValue = false
       }
     }
-    return false
+    return returnValue
   }
 
   override fun onResume() {
@@ -342,12 +348,12 @@ class MainActivity : AppCompatActivity() {
     )
 
     val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
-    if(!isFileObserverServiceRunning()&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
-      WorkManager.getInstance(this).cancelAllWork()
-      val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-        .build()
-      WorkManager.getInstance(this).enqueue(workRequest)
-    }
+//    if(!isFileObserverServiceRunning()&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+//      WorkManager.getInstance(this).cancelAllWork()
+//      val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+//        .build()
+//      WorkManager.getInstance(this).enqueue(workRequest)
+//    }
 //    if (!isFileObserverServiceRunning() || ContextCompat.checkSelfPermission(
 //        this,
 //        "android.permission.POST_NOTIFICATIONS"
@@ -365,14 +371,29 @@ class MainActivity : AppCompatActivity() {
     if(ContextCompat.checkSelfPermission(
         this,
         "android.permission.POST_NOTIFICATIONS"
-      ) == PackageManager.PERMISSION_DENIED)
+      ) == PackageManager.PERMISSION_DENIED || !isFileObserverServiceRunning()
+    )
     {
       Log.d("MainActivity", "Notification permission not granted")
+      val intent = Intent(this, FileObserverService::class.java)
+      stopService(intent)
+
             notification_btn.visibility = View.VISIBLE
     }
     if(!isPermissionGranted || (isFileObserverServiceRunning())){
       Log.d("MainActivity onResume", "Permission not granted")
       notification_btn.visibility = View.GONE
+    }
+    if((ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+      if(isFileObserverServiceRunning()==false && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        WorkManager.getInstance(this).cancelAllWork()
+        val intent = Intent(this, FileObserverService::class.java)
+        stopService(intent)
+        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
+          .build()
+        WorkManager.getInstance(this).enqueue(workRequest)
+        notification_btn.visibility = View.GONE
+      }
     }
 
 

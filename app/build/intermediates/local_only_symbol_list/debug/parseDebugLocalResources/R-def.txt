@@ -19,6 +19,7 @@ drawable baseline_menu_24
 drawable bottom_sheet_background
 drawable button_background
 drawable cancel
+drawable delete
 drawable edit_text_background
 drawable gradient
 drawable help_1
