@@ -2,23 +2,20 @@ package com.hassan.statussaver.views.activities
 
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.ActionBar
 import android.app.Activity
 import android.app.ActivityManager
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.FileObserver
-import android.os.StrictMode
 import android.util.Log
-import android.view.MotionEvent
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -30,32 +27,20 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.afollestad.materialdialogs.BuildConfig
+import com.google.android.material.appbar.AppBarLayout
 import com.hassan.statussaver.R
 import com.hassan.statussaver.data.StatusRepo
 import com.hassan.statussaver.databinding.ActivityMainBinding
+import com.hassan.statussaver.databinding.DialogGuideBinding
+import com.hassan.statussaver.services.FileObserverService
 import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.utils.SharedPrefKeys
 import com.hassan.statussaver.utils.SharedPrefUtils
+import com.hassan.statussaver.utils.getFolderPermissions
 import com.hassan.statussaver.utils.replaceFragment
-import com.hassan.statussaver.views.fragments.FragmentSettings
 import com.hassan.statussaver.views.fragments.FragmentStatus
-import com.hassan.statussaver.workers.RestartServiceWorker
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.hassan.statussaver.databinding.DialogGuideBinding
-import java.util.concurrent.TimeUnit
-import androidx.work.*
-import com.google.common.util.concurrent.ListenableFuture
-import com.hassan.statussaver.databinding.ItemSettingsBinding
-import com.hassan.statussaver.services.FileObserverService
-import com.hassan.statussaver.views.adapters.SettingsAdapter
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -69,11 +54,10 @@ class MainActivity : AppCompatActivity() {
   private var isBusiness: Boolean = false
   private lateinit var bottomSheet: LinearLayout
   private lateinit var grayShade: View
-  private lateinit var settingsAdapter: SettingsAdapter
+  var isBtnPressed = 0
 
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
-    settingsAdapter = SettingsAdapter(arrayListOf(), this)
 
     SharedPrefUtils.init(activity) // Ensure this is called early
     val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
@@ -91,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     try {
       setContentView(binding.root)
-      supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
+//      supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentLifecycleCallbacks, true)
       SharedPrefUtils.init(activity)
       statusRepo = StatusRepo(this)
       bottomSheet = findViewById(R.id.bottomSheet)
@@ -121,17 +105,33 @@ class MainActivity : AppCompatActivity() {
         notification_btn.visibility = View.GONE
       }
       notification_btn.setOnClickListener {
-        getNotificationpermission()
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_service, null)
+        val dialog = Dialog(this)
+        dialog.setContentView(dialogView)
+        dialog.window?.setLayout(
+          ViewGroup.LayoutParams.MATCH_PARENT,
+          ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        dialog.show()
+        val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
+        dialogButton.setOnClickListener {
+          getNotificationpermission()
+          isBtnPressed = 1
 
-        if((ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
-          WorkManager.getInstance(this).cancelAllWork()
-          val intent = Intent(this, FileObserverService::class.java)
-          stopService(intent)
-          val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-            .build()
-          WorkManager.getInstance(this).enqueue(workRequest)
+          if((ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
+            WorkManager.getInstance(this).cancelAllWork()
+            val intent = Intent(this, FileObserverService::class.java)
+            stopService(intent)
+            val serviceIntent = Intent(this, FileObserverService::class.java)
+            this.startForegroundService(serviceIntent)
+          }
+          notification_btn.visibility = View.GONE
+          dialog.dismiss()
         }
-        notification_btn.visibility = View.GONE
+        val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+        cancelButton.setOnClickListener {
+          dialog.dismiss()
+        }
       }
       binding.apply {
         buttonIcon2.setOnClickListener {
@@ -144,6 +144,9 @@ class MainActivity : AppCompatActivity() {
           }
         }
         if (isFirstRun()) {
+          SharedPrefUtils.clearPreferences()
+          Log.d("MainActivity", "First run")
+          clearAppSettings()
           dialogLogic()
         }
         requestPermission()
@@ -185,8 +188,15 @@ class MainActivity : AppCompatActivity() {
 
       }
       settingIcon?.setOnClickListener {
-        header.visibility = View.GONE
-        replaceFragment(FragmentSettings())
+//        header.visibility = View.GONE
+//        val fragmentSettings = FragmentSettings()
+//        val bundle = Bundle()
+//        bundle.putBoolean("isBusiness", isBusiness)
+//        fragmentSettings.arguments = bundle
+//        replaceFragment(fragmentSettings)
+        val intent = Intent(this, Settings::class.java)
+        intent.putExtra("isBusiness", isBusiness)
+        startActivity(intent)
       }
     }
     catch (e: Exception) {
@@ -201,7 +211,9 @@ class MainActivity : AppCompatActivity() {
     startActivity(intent)
   }
 
-  private val PERMISSION_REQUEST_CODE = 50
+  private val PERMISSION_REQUEST_CODE1 = 50
+  private val PERMISSION_REQUEST_CODE2 = 52
+  private val PERMISSION_REQUEST_CODE3 = 51
   private fun requestPermission() {
     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
       val isPermissionsGranted = SharedPrefUtils.getPrefBoolean(
@@ -212,9 +224,12 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(
           /* activity = */ activity,
           /* permissions = */ arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-          /* requestCode = */ PERMISSION_REQUEST_CODE
+          /* requestCode = */ PERMISSION_REQUEST_CODE1
         )
-        Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE2)
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE3)
+
+//        Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
       }
     }
   }
@@ -253,7 +268,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Notification permission denied!", Toast.LENGTH_SHORT).show()
       }
     }
-    if (requestCode == PERMISSION_REQUEST_CODE) {
+    if (requestCode == PERMISSION_REQUEST_CODE1) {
       val isGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED
       if (isGranted) {
         SharedPrefUtils.putPrefBoolean(SharedPrefKeys.PREF_KEY_IS_PERMISSIONS_GRANTED, true)
@@ -266,25 +281,28 @@ class MainActivity : AppCompatActivity() {
       }
     }
   }
-  private val fragmentLifecycleCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
-    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
-      super.onFragmentResumed(fm, f)
-      if (f is FragmentStatus) {
-        findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.VISIBLE
-      }
-    }
-  }
+//  private val fragmentLifecycleCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
+//    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+//      super.onFragmentResumed(fm, f)
+//      if (f is FragmentStatus) {
+//        findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.GONE
+//      }
+//      else{
+//        findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.VISIBLE
+//      }
+//    }
+//  }
 
 
   private fun isFirstRun(): Boolean {
     val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
-    return sharedPreferences.getBoolean("is_first_run", true)
+    return sharedPreferences.getBoolean("isFistRun", true)
   }
 
   private fun setFirstRunCompleted() {
     val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
     with(sharedPreferences.edit()) {
-      putBoolean("is_first_run", false)
+      putBoolean("isFistRun", false)
       apply()
     }
   }
@@ -336,7 +354,19 @@ class MainActivity : AppCompatActivity() {
     }
     return returnValue
   }
-
+  private fun clearAppSettings() {
+    // Clear shared preferences or other data
+    val sharedPreferencesDir = File(applicationContext.filesDir.parentFile, "shared_prefs")
+    if (sharedPreferencesDir.exists() && sharedPreferencesDir.isDirectory) {
+      val files = sharedPreferencesDir.listFiles()
+      if (files != null) {
+        for (file in files) {
+          file.delete()
+        }
+      }
+    }
+  }
+  @RequiresApi(Build.VERSION_CODES.O)
   override fun onResume() {
     super.onResume()
     val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
@@ -347,55 +377,40 @@ class MainActivity : AppCompatActivity() {
       false
     )
 
-    val notification_btn = findViewById<ImageButton>(R.id.notification_icon)
-//    if(!isFileObserverServiceRunning()&& (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
-//      WorkManager.getInstance(this).cancelAllWork()
-//      val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-//        .build()
-//      WorkManager.getInstance(this).enqueue(workRequest)
-//    }
-//    if (!isFileObserverServiceRunning() || ContextCompat.checkSelfPermission(
-//        this,
-//        "android.permission.POST_NOTIFICATIONS"
-//      ) == PackageManager.PERMISSION_DENIED
-//    ) {
-//
-//      Log.d("MainActivity", "Permission not granted for service")
-//      if(isFileObserverServiceRunning()){
-//        Log.d("MainActivity", "Service is running")
-//        notification_btn.visibility = View.GONE
-//
-//      }
-//      notification_btn.visibility = View.VISIBLE
-//    }
-    if(ContextCompat.checkSelfPermission(
+    val notificationBtn = findViewById<ImageButton>(R.id.notification_icon)
+    if (ContextCompat.checkSelfPermission(
         this,
         "android.permission.POST_NOTIFICATIONS"
       ) == PackageManager.PERMISSION_DENIED || !isFileObserverServiceRunning()
-    )
-    {
+    ) {
       Log.d("MainActivity", "Notification permission not granted")
+      isBtnPressed = 0
       val intent = Intent(this, FileObserverService::class.java)
       stopService(intent)
-
-            notification_btn.visibility = View.VISIBLE
+      notificationBtn.visibility = View.VISIBLE
     }
-    if(!isPermissionGranted || (isFileObserverServiceRunning())){
+    if (!isPermissionGranted || (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED && isFileObserverServiceRunning())) {
       Log.d("MainActivity onResume", "Permission not granted")
-      notification_btn.visibility = View.GONE
+      notificationBtn.visibility = View.GONE
     }
-    if((ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
-      if(isFileObserverServiceRunning()==false && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        WorkManager.getInstance(this).cancelAllWork()
-        val intent = Intent(this, FileObserverService::class.java)
-        stopService(intent)
-        val workRequest = PeriodicWorkRequestBuilder<RestartServiceWorker>(0, TimeUnit.MINUTES)
-          .build()
-        WorkManager.getInstance(this).enqueue(workRequest)
-        notification_btn.visibility = View.GONE
+    if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
+      if (!isFileObserverServiceRunning()) {
+        Log.d("isFileObserverServiceRunning", "${isFileObserverServiceRunning()}")
+        if (isPermissionGranted) {
+          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Log.d("isFileObserverServiceRunning", "${isFileObserverServiceRunning()}")
+            if(isBtnPressed == 1) {
+              WorkManager.getInstance(this).cancelAllWork()
+              val intent = Intent(this, FileObserverService::class.java)
+              stopService(intent)
+              val serviceIntent = Intent(this, FileObserverService::class.java)
+              this.startForegroundService(serviceIntent)
+              notificationBtn.visibility = View.GONE
+            }
+          }
+        }
       }
     }
-
 
   }
 

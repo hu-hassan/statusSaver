@@ -10,12 +10,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="29"/>
+        android:maxSdkVersion="29"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29"
         tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29"
+        tools:ignore="ScopedStorage" />
 
-
+<!--    android:name=".application.MyApp"-->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -27,8 +31,7 @@
         android:theme="@style/Theme.StatusSaver"
         tools:targetApi="tiramisu"
         android:enableOnBackInvokedCallback="true"
-        android:name=".application.MyApp"
-        >
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".views.activities.SendMessageActivity" />
         <activity
             android:name=".views.activities.ImagesPreview"
@@ -48,9 +51,21 @@
         <activity
             android:name=".views.activities.SavedMediaPreview"
             android:exported="false" />
+        <activity
+            android:name=".views.activities.Settings"
+            android:exported="false" />
 
         <service android:name=".services.FileObserverService"
             android:foregroundServiceType="dataSync"/>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 

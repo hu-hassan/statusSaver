@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.hassan.statussaver.R
 import com.hassan.statussaver.data.StatusRepo
@@ -149,9 +150,16 @@ class FragmentMedia : Fragment() {
                 list.remove(model)
             }
         }
-
+        var activity = FragmentActivity();
+        if (isAdded) {
+            // Your existing code that requires the fragment to be attached to an activity
+            activity = requireActivity()
+            // ... rest of your code
+        } else {
+            Log.w("FragmentMedia", "Fragment is not attached to an activity")
+        }
         // Update the adapter with the final list
-        adapter = MediaAdapter(ArrayList(list), requireActivity(), false)
+        adapter = MediaAdapter(ArrayList(list), activity, false)
         binding.mediaRecyclerView.adapter = adapter
 
         // Show or hide the temporary text based on whether the final list is empty
@@ -175,9 +183,16 @@ class FragmentMedia : Fragment() {
                 list.remove(model)
             }
         }
-
+        var activity = FragmentActivity();
+        if (isAdded) {
+            // Your existing code that requires the fragment to be attached to an activity
+            activity = requireActivity()
+            // ... rest of your code
+        } else {
+            Log.w("FragmentMedia", "Fragment is not attached to an activity")
+        }
         // Update the adapter with the final list
-        adapter = MediaAdapter(ArrayList(list), requireActivity(), false)
+        adapter = MediaAdapter(ArrayList(list), activity, false)
         binding.mediaRecyclerView.adapter = adapter
 
         // Show or hide the temporary text based on whether the final list is empty
@@ -201,9 +216,16 @@ class FragmentMedia : Fragment() {
                 list.remove(model)
             }
         }
-
+        var activity = FragmentActivity();
+        if (isAdded) {
+            // Your existing code that requires the fragment to be attached to an activity
+             activity = requireActivity()
+            // ... rest of your code
+        } else {
+            Log.w("FragmentMedia", "Fragment is not attached to an activity")
+        }
         // Update the adapter with the final list
-        adapter = MediaAdapter(ArrayList(list), requireActivity(), true)
+        adapter = MediaAdapter(ArrayList(list), activity, true)
         binding.mediaRecyclerView.adapter = adapter
 
         // Show or hide the temporary text based on whether the final list is empty

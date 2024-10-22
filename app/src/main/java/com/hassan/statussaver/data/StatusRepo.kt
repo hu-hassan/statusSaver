@@ -149,9 +149,9 @@ class StatusRepo(val context: Context) {
                             type = type,
                             isDownloaded = isDownloaded
                         )
-                        if (!model.fileName.contains(".trashed-")) {
+//                        if (!model.fileName.contains(".trashed-")) {
                             wpSavedStatusesList.add(model)
-                        }
+//                        }
                     }
                 }
             }
@@ -173,9 +173,9 @@ class StatusRepo(val context: Context) {
                             type = type,
                             isDownloaded = isDownloaded
                         )
-                        if (!model.fileName.contains(".trashed-")) {
+//                        if (!model.fileName.contains(".trashed-")) {
                             wpSavedStatusesList.add(model)
-                        }
+//                        }
                     }
                 }
             }

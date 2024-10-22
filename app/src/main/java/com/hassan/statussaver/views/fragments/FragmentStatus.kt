@@ -1,7 +1,9 @@
 package com.hassan.statussaver.views.fragments
 
 import android.Manifest
+import android.app.ActionBar
 import android.app.Activity
+import android.app.ActivityManager
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.NotificationChannel
@@ -43,7 +45,13 @@ import com.hassan.statussaver.views.adapters.MediaViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import android.net.Uri
 import android.provider.Settings
+import androidx.appcompat.app.AppCompatActivity.ACTIVITY_SERVICE
+import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
+import com.hassan.statussaver.databinding.DialogGuideBinding
+import com.hassan.statussaver.services.FileObserverService
+import java.io.File
 
 
 class FragmentStatus : Fragment() {
@@ -56,6 +64,7 @@ class FragmentStatus : Fragment() {
     lateinit var viewModel: StatusViewModel
     var isPermissionGrantedS = false
     var isPermissionGrantedSB = false
+    private lateinit var mediaAdapter: MediaViewPagerAdapter // Declare mediaAdapter here
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,7 +89,7 @@ class FragmentStatus : Fragment() {
 
                 type = it.getString(Constants.FRAGMENT_TYPE_KEY, "")
 
-                when (type) {
+                mediaAdapter = when (type) {
                     Constants.TYPE_WHATSAPP_MAIN -> {
                         // check permission
                         // granted then fetch statuses
@@ -156,23 +165,23 @@ class FragmentStatus : Fragment() {
 
                         }
 
-                        val mediaAdapter = MediaViewPagerAdapter(
+                         MediaViewPagerAdapter(
                             requireActivity(),
                             imagesType = Constants.MEDIA_TYPE_WHATSAPP_IMAGES,
                             videosType = Constants.MEDIA_TYPE_WHATSAPP_VIDEOS,
                             savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
                         )
 
-                        statusViewPager.adapter = mediaAdapter
-                        setupViewPager()
-                        TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
-                            tab.text = when (pos) {
-                                0 -> "Images"
-                                1 -> "Videos"
-                                2 -> "Saved"
-                                else -> throw IllegalStateException("Unexpected position $pos")
-                            }
-                        }.attach()
+//                        statusViewPager.adapter = mediaAdapter
+//                        setupViewPager()
+//                        TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
+//                            tab.text = when (pos) {
+//                                0 -> "Images"
+//                                1 -> "Videos"
+//                                2 -> "Saved"
+//                                else -> throw IllegalStateException("Unexpected position $pos")
+//                            }
+//                        }.attach()
 
                     }
 
@@ -295,27 +304,31 @@ class FragmentStatus : Fragment() {
                             }
 
                         }
-                        val mediaAdapter = MediaViewPagerAdapter(
+                         MediaViewPagerAdapter(
                             requireActivity(),
                             imagesType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES,
                             videosType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS,
                             savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
                         )
 
-                        statusViewPager.adapter = mediaAdapter
-                        setupViewPager()
-                        TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
-                            tab.text = when (pos) {
-                                0 -> "Images"
-                                1 -> "Videos"
-                                2 -> "Saved"
-                                else -> throw IllegalStateException("Unexpected position $pos")
-                            }
-                        }.attach()
+//                        statusViewPager.adapter = mediaAdapter
+//                        setupViewPager()
+//                        TabLayoutMediator(tabLayout, statusViewPager) { tab, pos ->
+//                            tab.text = when (pos) {
+//                                0 -> "Images"
+//                                1 -> "Videos"
+//                                2 -> "Saved"
+//                                else -> throw IllegalStateException("Unexpected position $pos")
+//                            }
+//                        }.attach()
 
                     }
+                    else -> throw IllegalStateException("Unexpected type $type")
                 }
+                statusViewPager.adapter = mediaAdapter
+                setupViewPager()
             }
+
         }
 
     }
@@ -416,19 +429,78 @@ class FragmentStatus : Fragment() {
                     SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
                     true
                 )
-    getWhatsAppBusinessStatuses()
-}
-}
+                getWhatsAppBusinessStatuses()
+            }
+        }
 
 
 
-}
+    }
     fun getSavedStatuses() {
         // function to get saved statuses
         Log.d(TAG, "getSavedStatuses: Getting Saved Statuses")
         viewModel.getSavedStatuses()
     }
+    private fun isFirstRun(): Boolean {
+        val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", MODE_PRIVATE)
+        return sharedPreferences.getBoolean("is_first_run", true)
+    }
 
+    private fun setFirstRunCompleted() {
+        val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putBoolean("is_first_run", false)
+            apply()
+        }
+    }
+    private fun getNotificationpermission(){
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                "android.permission.POST_NOTIFICATIONS"
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // If not, request the permission
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf("android.permission.POST_NOTIFICATIONS"),
+                101
+            )
+        }
+    }
+
+    private fun dialogLogic() {
+        val dialog = Dialog(requireActivity())
+        val dialogBinding = DialogGuideBinding.inflate((this as Activity).layoutInflater)
+        dialogBinding.okayBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setContentView(dialogBinding.root)
+
+        dialog.window?.setLayout(
+            ActionBar.LayoutParams.MATCH_PARENT,
+            ActionBar.LayoutParams.WRAP_CONTENT
+        )
+
+        dialog.show()
+        setFirstRunCompleted()
+        val cancelBtn = dialog.findViewById<ImageView>(R.id.cancel_btn)
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+    }
+    private fun isFileObserverServiceRunning(): Boolean {
+        var returnValue = false
+        val activityManager = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
+            if (FileObserverService::class.java.name == service.service.className) {
+                returnValue = true
+            }
+            else{
+                returnValue = false
+            }
+        }
+        return returnValue
+    }
     override fun onResume() {
         super.onResume()
         when (type) {

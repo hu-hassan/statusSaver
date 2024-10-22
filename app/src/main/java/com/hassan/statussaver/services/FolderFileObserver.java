@@ -21,14 +21,18 @@ import com.hassan.statussaver.views.activities.MainActivity;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class FolderFileObserver extends FileObserver {
     private Context context;
     private String folderPath;
     private Handler handler;
-    private long checkInterval = 0L; // Check every 5 seconds
+    private long checkInterval = 1000L; // Check every 5 seconds
     private Map<String, Long> fileMap;
     private boolean isInitialLoad = true;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+
 
 
     public FolderFileObserver(Context context, String path) {
@@ -70,59 +74,115 @@ public class FolderFileObserver extends FileObserver {
         }, checkInterval);
     }
 
+//    private void checkForModifications() {
+//        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.Q){
+//            Uri folderUri = Uri.parse(SharedPrefUtils.INSTANCE.getPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, ""));
+////            Log.d("Uritest", "Checking for modifications in folder: " + folderUri);
+//
+//                try {
+//                    DocumentFile folder = DocumentFile.fromTreeUri(context, folderUri);
+//                    if (folder != null && folder.isDirectory()) {
+//                        Log.d("Uritest", "Folder exists and is a directory");
+//                        for (DocumentFile file : folder.listFiles()) {
+//                            long lastModified = file.lastModified();
+//                            if (fileMap.containsKey(file.getName())) {
+//                                if (!fileMap.get(file.getName()).equals(lastModified)) {
+//                                    fileMap.put(file.getName(), lastModified);
+//                                    Log.d("New File", "New file created or written: " + file.getName());
+//                                    sendNotification(context, "New Status Available", "Click here to download new status");
+//                                }
+//                            } else {
+//                                fileMap.put(file.getName(), lastModified);
+//                                if (!isInitialLoad) {
+//                                    Log.d("New File", "New file created or written: " + file.getName());
+//                                    sendNotification(context, "New Status Available", "Click here to download new status");
+//                                }
+//                            }
+//                        }
+//                        isInitialLoad = false;
+//                    } else {
+//                        Log.e("Folder not exist", "Folder does not exist or is not a directory");
+//                    }
+//                } catch (Exception e) {
+//                    Log.d("Uritest", "Error: " + e.getMessage());
+//                }
+//        }
+//        else {
+//            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+//                File folder = new File(folderPath);
+//                if (folder.exists() && folder.isDirectory()) {
+//                    File[] files = folder.listFiles();
+//                    if (files != null) {
+//                        for (File file : files) {
+//                            long lastModified = file.lastModified();
+//                            if (fileMap.containsKey(file.getName())) {
+//                                if (!fileMap.get(file.getName()).equals(lastModified)) {
+//                                    fileMap.put(file.getName(), lastModified);
+//                                    sendNotification(context, "New Status Available", "Click here to download new status");
+//                                }
+//                            } else {
+//                                fileMap.put(file.getName(), lastModified);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+
     private void checkForModifications() {
-        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.Q){
-            Uri folderUri = Uri.parse(SharedPrefUtils.INSTANCE.getPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, ""));
-//            Log.d("Uritest", "Checking for modifications in folder: " + folderUri);
-            try {
-                DocumentFile folder = DocumentFile.fromTreeUri(context, folderUri);
-                if (folder != null && folder.isDirectory()) {
-                    Log.d("Uritest", "Folder exists and is a directory");
-                    for (DocumentFile file : folder.listFiles()) {
-                        long lastModified = file.lastModified();
-                        if (fileMap.containsKey(file.getName())) {
-                            if (!fileMap.get(file.getName()).equals(lastModified)) {
+        executor.execute(() -> {
+            if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+                Uri folderUri = Uri.parse(SharedPrefUtils.INSTANCE.getPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, ""));
+                try {
+                    DocumentFile folder = DocumentFile.fromTreeUri(context, folderUri);
+                    if (folder != null && folder.isDirectory()) {
+                        Log.d("Uritest", "Folder exists and is a directory");
+                        for (DocumentFile file : folder.listFiles()) {
+                            long lastModified = file.lastModified();
+                            if (fileMap.containsKey(file.getName())) {
+                                if (!fileMap.get(file.getName()).equals(lastModified)) {
+                                    fileMap.put(file.getName(), lastModified);
+                                    Log.d("New File", "New file created or written: " + file.getName());
+                                    sendNotification(context, "New Status Available", "Click here to download new status");
+                                }
+                            } else {
                                 fileMap.put(file.getName(), lastModified);
-                                Log.d("New File", "New file created or written: " + file.getName());
-                                sendNotification(context, "New Status Available", "Click here to download new status");
+                                if (!isInitialLoad) {
+                                    Log.d("New File", "New file created or written: " + file.getName());
+                                    sendNotification(context, "New Status Available", "Click here to download new status");
+                                }
                             }
-                        } else {
-                            fileMap.put(file.getName(), lastModified);
-                            if (!isInitialLoad) {
-                                Log.d("New File", "New file created or written: " + file.getName());
-                                sendNotification(context, "New Status Available", "Click here to download new status");
+                        }
+                        isInitialLoad = false;
+                    } else {
+                        Log.e("Folder not exist", "Folder does not exist or is not a directory");
+                    }
+                } catch (Exception e) {
+                    Log.d("Uritest", "Error: " + e.getMessage());
+                }
+            } else {
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+                    File folder = new File(folderPath);
+                    if (folder.exists() && folder.isDirectory()) {
+                        File[] files = folder.listFiles();
+                        if (files != null) {
+                            for (File file : files) {
+                                long lastModified = file.lastModified();
+                                if (fileMap.containsKey(file.getName())) {
+                                    if (!fileMap.get(file.getName()).equals(lastModified)) {
+                                        fileMap.put(file.getName(), lastModified);
+                                        sendNotification(context, "New Status Available", "Click here to download new status");
+                                    }
+                                } else {
+                                    fileMap.put(file.getName(), lastModified);
+                                }
                             }
                         }
                     }
-                    isInitialLoad = false;
-                }
-                else {
-                    Log.e("Folder not exist", "Folder does not exist or is not a directory");
                 }
             }
-            catch (Exception e){
-                Log.d("Uritest", "Error: " + e.getMessage());
-            }
-        }
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q){
-            File folder = new File(folderPath);
-            if (folder.exists() && folder.isDirectory()) {
-                File[] files = folder.listFiles();
-                if (files != null) {
-                    for (File file : files) {
-                        long lastModified = file.lastModified();
-                        if (fileMap.containsKey(file.getName())) {
-                            if (!fileMap.get(file.getName()).equals(lastModified)) {
-                                fileMap.put(file.getName(), lastModified);
-                                sendNotification(context, "New Status Available", "Click here to download new status");
-                            }
-                        } else {
-                            fileMap.put(file.getName(), lastModified);
-                        }
-                    }
-                }
-            }
-        }
+        });
     }
 
     public static void sendNotification(Context context, String title, String message) {

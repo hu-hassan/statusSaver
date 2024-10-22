@@ -41,8 +41,10 @@ public class FileObserverService extends Service {
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)) {
                     try {
+                        Log.d("FileObserverService", "Waiting for WP permission");
                         Thread.sleep(1000); // Wait for 1 second before checking again
                     } catch (InterruptedException e) {
+                        Log.d("FileObserverService", "Interrupted");
                         Thread.currentThread().interrupt();
                         return;
                     }
@@ -59,8 +61,10 @@ public class FileObserverService extends Service {
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)) {
                     try {
+                        Log.d("FileObserverService", "Waiting for WP Business permission");
                         Thread.sleep(1000); // Wait for 1 second before checking again
                     } catch (InterruptedException e) {
+                        Log.d("FileObserverService", "Interrupted");
                         Thread.currentThread().interrupt();
                         return;
                     }
@@ -78,8 +82,10 @@ public class FileObserverService extends Service {
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)) {
                     try {
+                        Log.d("FileObserverService", "Waiting for WP permission");
                         Thread.sleep(1000); // Wait for 1 second before checking again
                     } catch (InterruptedException e) {
+                        Log.d("FileObserverService", "Interrupted");
                         Thread.currentThread().interrupt();
                         return;
                     }
@@ -98,8 +104,10 @@ public class FileObserverService extends Service {
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)) {
                     try {
+                        Log.d("FileObserverService", "Waiting for WP Business permission");
                         Thread.sleep(1000); // Wait for 1 second before checking again
                     } catch (InterruptedException e) {
+                        Log.d("FileObserverService", "Interrupted");
                         Thread.currentThread().interrupt();
                         return;
                     }
@@ -122,7 +130,7 @@ public class FileObserverService extends Service {
         Log.d("FileObserverService", "createNotification");
         return new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Status Notification")
-                .setContentText("Once you give us folder permission, we will notify you for new statuses.")
+                .setContentText("Once you give folder permissions, you will be notified when new statuses are available.")
                 .setSmallIcon(R.drawable.ic_menu_wp_downloads)
                 .build();
     }
@@ -146,7 +154,7 @@ public class FileObserverService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.OptIn
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hassan.statussaver.databinding.SavedMediaPreviewBinding
@@ -54,7 +55,8 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
         binding.mediaContainer.removeAllViews()
 
         if (mediaModel.type == "video") {
-            val videoView = LayoutInflater.from(context).inflate(R.layout.item_video_preview, binding.mediaContainer, false)
+            val videoView = LayoutInflater.from(context)
+                .inflate(R.layout.item_video_preview, binding.mediaContainer, false)
             val player = ExoPlayer.Builder(context).build()
             videoView.findViewById<PlayerView>(R.id.player_view).player = player
             val mediaItem = MediaItem.fromUri(mediaModel.pathUri)
@@ -64,7 +66,8 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
             players[position] = player
             binding.mediaContainer.addView(videoView)
         } else {
-            val imageView = LayoutInflater.from(context).inflate(R.layout.item_image_preview, binding.mediaContainer, false)
+            val imageView = LayoutInflater.from(context)
+                .inflate(R.layout.item_image_preview, binding.mediaContainer, false)
             Glide.with(context)
                 .load(mediaModel.pathUri)
                 .into(imageView.findViewById(R.id.zoomable_image_view))
@@ -76,7 +79,6 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
 
     private fun setupDownloadButton(mediaModel: MediaModel) {
         binding.tools.text.text = "Delete"
-
         binding.tools.statusDownload.setImageResource(R.drawable.delete)
 
         binding.tools.download.setOnClickListener {
@@ -100,15 +102,29 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
             if (context is Activity) {
                 context.finish()
             }
-
         }
+
         binding.tools.repost.setOnClickListener {
             // Create the intent for sharing the media
+            var mediaUri = Uri.parse(mediaModel.pathUri)
+            val file = when {
+                mediaModel.fileName.endsWith(".jpg", true) || mediaModel.fileName.endsWith(".png", true) ->
+                    File(Environment.getExternalStorageDirectory(), "Pictures/Status Saver/${mediaModel.fileName}")
+
+                mediaModel.fileName.endsWith(".mp4", true) || mediaModel.fileName.endsWith(".mkv", true) ->
+                    File(Environment.getExternalStorageDirectory(), "Movies/Status Saver/${mediaModel.fileName}")
+
+                else -> null
+            }
+
+            file?.let {
+                mediaUri = FileProvider.getUriForFile(context, "com.hassan.statussaver.fileprovider", it)
+                // Proceed with sharing or handling the file URI
+            }
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/octet-stream"  // Adjust the MIME type based on your media type (e.g., image/* or video/*)
 
                 // Replace with the actual Uri of the media you want to share
-                val mediaUri = Uri.parse(mediaModel.pathUri)
                 putExtra(Intent.EXTRA_STREAM, mediaUri)
 
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)  // Grant permission for the apps to access the file
@@ -153,11 +169,26 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
         }
         binding.tools.share.setOnClickListener {
             // Create the intent for sharing the media
+            var mediaUri = Uri.parse(mediaModel.pathUri)
+            val file = when {
+                mediaModel.fileName.endsWith(".jpg", true) || mediaModel.fileName.endsWith(".png", true) ->
+                    File(Environment.getExternalStorageDirectory(), "Pictures/Status Saver/${mediaModel.fileName}")
+
+                mediaModel.fileName.endsWith(".mp4", true) || mediaModel.fileName.endsWith(".mkv", true) ->
+                    File(Environment.getExternalStorageDirectory(), "Movies/Status Saver/${mediaModel.fileName}")
+
+                else -> null
+            }
+
+            file?.let {
+                 mediaUri = FileProvider.getUriForFile(context, "com.hassan.statussaver.fileprovider", it)
+                // Proceed with sharing or handling the file URI
+            }
+
             val shareIntent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/octet-stream"  // Adjust the MIME type based on your media type (e.g., image/* or video/*)
 
                 // Replace with the actual Uri of the media you want to share
-                val mediaUri = Uri.parse(mediaModel.pathUri)
                 putExtra(Intent.EXTRA_STREAM, mediaUri)
 
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)  // Grant permission to the receiving app to access the file
@@ -167,10 +198,8 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
             context.startActivity(Intent.createChooser(shareIntent, "Share media..."))
         }
         binding.root.findViewById<View>(R.id.tools_holder)?.visibility = View.GONE
-
     }
 }
-
     fun pauseAllVideosOnDestroy() {
         players.forEach { (_, player) ->
             player.playWhenReady = false

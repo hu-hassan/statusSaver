@@ -14,7 +14,7 @@ class RestartServiceWorker(context: Context, workerParams: WorkerParameters) : W
     override fun doWork(): Result {
         Log.d("RestartServiceWorker", "Restarting service");
         val serviceIntent = Intent(applicationContext, FileObserverService::class.java)
-        applicationContext.startForegroundService(serviceIntent)
+        applicationContext.startService(serviceIntent)
         return Result.success()
     }
 }
