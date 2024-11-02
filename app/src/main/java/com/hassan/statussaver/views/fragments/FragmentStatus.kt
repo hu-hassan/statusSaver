@@ -103,7 +103,21 @@ class FragmentStatus : Fragment() {
                         binding.swipeRefreshLayout.setOnRefreshListener {
                             refreshStatuses()
                         }
+//                        if (!isAppInstalled(requireContext(), "com.whatsapp.w4b")) {
+//                            permissionLayoutHolder.visibility = View.VISIBLE
+//                            permissionLayout.textView.text = "You don't have Whatsapp Business installed in your phone"
+//                            permissionLayout.textView.textSize = 12f
+//                            permissionLayout.btnPermission.text = "Install WhatsApp Business"
+//                            permissionLayout.btnPermission.icon = null
+//                            permissionLayout.btnPermission.setOnClickListener {
+//                                val playStoreUri = Uri.parse("market://details?id=com.whatsapp.w4b")
+//                                val intent = Intent(Intent.ACTION_VIEW, playStoreUri)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                                requireContext().startActivity(intent)
+//                            }
+//                        }
                         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                            permissionLayoutHolder.visibility = View.VISIBLE
                             permissionLayout.textView.text = "Allow Storage Permission to continue with this app"
                             binding.permissionLayout.textView.textSize = 12f
                             permissionLayout.btnPermission.text = "Allow Storage Permission"
@@ -129,41 +143,43 @@ class FragmentStatus : Fragment() {
                             }
                             else
                             {
-                                permissionLayout.textView.text = "Please Allow Permissions for Statuses"
-                                permissionLayout.textView.textSize = 16f
-                                permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.icons8_whatsapp)
-                                permissionLayout.btnPermission.text = "Allow Permission for WhatsApp"
-                                permissionLayout.btnPermission.setOnClickListener {
-                                    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
-                                    val dialog = Dialog(requireContext())
-                                    dialog.setContentView(dialogView)
-                                    dialog.window?.setLayout(
-                                        ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT
-                                    )
-                                    dialog.show()
-                                    val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
-                                    dialogButton.setOnClickListener {
-                                        // Perform the desired task here
-                                        getFolderPermissions(
-                                            context = requireActivity(),
-                                            REQUEST_CODE = WHATSAPP_REQUEST_CODE,
-                                            initialUri = Constants.getWhatsappUri()
-                                        )
-                                        dialog.dismiss()
-                                    }
-                                    val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
-                                    cancelButton.setOnClickListener {
-                                        dialog.dismiss()
-                                    }
-                                }
+//                                permissionLayout.textView.text = "Please Allow Permissions for Statuses"
+//                                permissionLayout.textView.textSize = 16f
+//                                permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.icons8_whatsapp)
+//                                permissionLayout.btnPermission.text = "Allow Permission for WhatsApp"
+//                                permissionLayout.btnPermission.setOnClickListener {
+//                                    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+//                                    val dialog = Dialog(requireContext())
+//                                    dialog.setContentView(dialogView)
+//                                    dialog.window?.setLayout(
+//                                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                                        ViewGroup.LayoutParams.WRAP_CONTENT
+//                                    )
+//                                    dialog.show()
+//                                    val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn1)
+//                                    dialogButton.setOnClickListener {
+//                                        // Perform the desired task here
+//                                        Log.d("Requesting permission of", "${Constants.WHATSAPP_PARENT_URI})")
+//                                        getFolderPermissions(
+//                                            context = requireActivity(),
+//                                            REQUEST_CODE = WHATSAPP_REQUEST_CODE,
+//                                            initialUri = Constants.getWhatsappUri()
+//                                        )
+//                                        dialog.dismiss()
+//                                    }
+//                                    val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+//                                    cancelButton.setOnClickListener {
+//                                        dialog.dismiss()
+//                                    }
+//                                }
+                                getWhatsAppStatuses()
+                                getSavedStatuses()
                             }
                         }
-                        if (isPermissionGranted) {
-                            getWhatsAppStatuses()
-                            getSavedStatuses()
-
-                        }
+//                        if (isPermissionGranted) {
+//
+//
+//                        }
 
                          MediaViewPagerAdapter(
                             requireActivity(),
@@ -182,12 +198,14 @@ class FragmentStatus : Fragment() {
 //                                else -> throw IllegalStateException("Unexpected position $pos")
 //                            }
 //                        }.attach()
+//                        statusViewPager.adapter = mediaAdapter
+//                        setupViewPager()
 
                     }
 
                     Constants.TYPE_WHATSAPP_BUSINESS -> {
                         val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
-                            SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED,
+                            SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
                             false
                         )
                         Log.d("FragmentStatus", "WhatsApp Business Permission "+ isPermissionGranted)
@@ -241,69 +259,70 @@ class FragmentStatus : Fragment() {
                                     requireContext().startActivity(intent)
                                 }
                             } else {
-                                Log.d(TAG, "wbm: WhatsApp Business both conditions met")
-                                permissionLayout.textView.text = "Please Allow Permissions for Statuses"
-                                permissionLayout.textView.textSize = 16f
-                                permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
-                                permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
-                                permissionLayout.btnPermission.setOnClickListener {
-                                    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
-                                    val dialog = Dialog(requireContext())
-                                    dialog.setContentView(dialogView)
-                                    dialog.window?.setLayout(
-                                        ViewGroup.LayoutParams.MATCH_PARENT,
-                                        ViewGroup.LayoutParams.WRAP_CONTENT
-                                    )
-                                    dialog.show()
-                                    val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
-                                    dialogButton.setOnClickListener {
-                                        // Perform the desired task here
-                                        getFolderPermissions(
-                                            context = requireActivity(),
-                                            REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
-                                            initialUri = Constants.getWhatsappBusinessUri()
-                                        )
-                                        dialog.dismiss()
-                                    }
-                                    val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
-                                    cancelButton.setOnClickListener {
-                                        dialog.dismiss()
-                                    }
-
-                                }
+//                                Log.d(TAG, "wbm: WhatsApp Business both conditions met")
+//                                permissionLayout.textView.text = "Please Allow Permissions for Statuses"
+//                                permissionLayout.textView.textSize = 16f
+//                                permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
+//                                permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
+//                                permissionLayout.btnPermission.setOnClickListener {
+//                                    val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+//                                    val dialog = Dialog(requireContext())
+//                                    dialog.setContentView(dialogView)
+//                                    dialog.window?.setLayout(
+//                                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                                        ViewGroup.LayoutParams.WRAP_CONTENT
+//                                    )
+//                                    dialog.show()
+//                                    val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn1)
+//                                    dialogButton.setOnClickListener {
+//                                        // Perform the desired task here
+//                                        getFolderPermissions(
+//                                            context = requireActivity(),
+//                                            REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
+//                                            initialUri = Constants.getWhatsappUri()
+//                                        )
+//                                        dialog.dismiss()
+//                                    }
+//                                    val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+//                                    cancelButton.setOnClickListener {
+//                                        dialog.dismiss()
+//                                    }
+//
+//                                }
+                                getWhatsAppBusinessStatuses()
+                                getSavedStatuses()
                             }
                         }
-                        if (isPermissionGranted) {
-                            getWhatsAppBusinessStatuses()
-                            getSavedStatuses()
-                        }
-                        permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
-                        permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
-                        permissionLayout.btnPermission.setOnClickListener {
-                            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
-                            val dialog = Dialog(requireContext())
-                            dialog.setContentView(dialogView)
-                            dialog.window?.setLayout(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT
-                            )
-                            dialog.show()
-                            val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
-                            dialogButton.setOnClickListener {
-                                // Perform the desired task here
-                                getFolderPermissions(
-                                    context = requireActivity(),
-                                    REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
-                                    initialUri = Constants.getWhatsappBusinessUri()
-                                )
-                                dialog.dismiss()
-                            }
-                            val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
-                            cancelButton.setOnClickListener {
-                                dialog.dismiss()
-                            }
-
-                        }
+//                        if (isPermissionGranted) {
+//
+//                        }
+//                        permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
+//                        permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
+//                        permissionLayout.btnPermission.setOnClickListener {
+//                            val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+//                            val dialog = Dialog(requireContext())
+//                            dialog.setContentView(dialogView)
+//                            dialog.window?.setLayout(
+//                                ViewGroup.LayoutParams.MATCH_PARENT,
+//                                ViewGroup.LayoutParams.WRAP_CONTENT
+//                            )
+//                            dialog.show()
+//                            val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn1)
+//                            dialogButton.setOnClickListener {
+//                                // Perform the desired task here
+//                                getFolderPermissions(
+//                                    context = requireActivity(),
+//                                    REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
+//                                    initialUri = Constants.getWhatsappBusinessUri()
+//                                )
+//                                dialog.dismiss()
+//                            }
+//                            val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+//                            cancelButton.setOnClickListener {
+//                                dialog.dismiss()
+//                            }
+//
+//                        }
                          MediaViewPagerAdapter(
                             requireActivity(),
                             imagesType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES,
@@ -344,26 +363,49 @@ class FragmentStatus : Fragment() {
                 if(!SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)){
                     Toast.makeText(requireActivity(), "Please grant permission to refresh statuses", Toast.LENGTH_SHORT)
                         .show()
+
                 }
                 else {
-                    Toast.makeText(requireActivity(), "Refreshing WP Statuses", Toast.LENGTH_SHORT)
-                        .show()
-                    getWhatsAppStatuses()
+                    if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                        Toast.makeText(requireActivity(), "Please grant storage permission to refresh statuses", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else if (!isAppInstalled(requireContext(), "com.whatsapp")) {
+                        Toast.makeText(requireActivity(), "You don't have Whatsapp installed in your phone", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else{
+                        Toast.makeText(requireActivity(), "Refreshing WP Statuses", Toast.LENGTH_SHORT)
+                            .show()
+                        getWhatsAppStatuses()
+                    }
+
                 }
             }
 
             Constants.TYPE_WHATSAPP_BUSINESS ->{
-                if(!SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)){
+                if(!SharedPrefUtils.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)){
                     Toast.makeText(requireActivity(), "Please grant permission to refresh statuses", Toast.LENGTH_SHORT)
                         .show()
                 }
                 else {
-                    Toast.makeText(
-                        requireActivity(),
-                        "Refreshing WP Business Statuses",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    getWhatsAppBusinessStatuses()
+                    if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+                        Toast.makeText(requireActivity(), "Please grant storage permission to refresh statuses", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else if (!isAppInstalled(requireContext(), "com.whatsapp")) {
+                        Toast.makeText(requireActivity(), "You don't have Whatsapp Business installed in your phone", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    else{
+                        Toast.makeText(
+                            requireActivity(),
+                            "Refreshing WP Business Statuses",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        getWhatsAppBusinessStatuses()
+                    }
+
                 }
             }
 
@@ -387,20 +429,22 @@ class FragmentStatus : Fragment() {
 
     fun getWhatsAppStatuses() {
         // function to get wp statuses
-        isPermissionGrantedS = true
-        binding.permissionLayoutHolder.visibility = View.GONE
+            isPermissionGrantedS = true
+            binding.permissionLayoutHolder.visibility = View.GONE
         Log.d(TAG, "getWhatsAppBusinessStatuses: Getting WP  Statuses")
         viewModel.getWhatsAppStatuses()
     }
 
-    private val TAG = "FragmentStatus"
     fun getWhatsAppBusinessStatuses() {
         // function to get wp statuses
-        isPermissionGrantedSB = true
-        binding.permissionLayoutHolder.visibility = View.GONE
+            isPermissionGrantedSB = true
+            binding.permissionLayoutHolder.visibility = View.GONE
+
         Log.d(TAG, "getWhatsAppBusinessStatuses: Getting Wp Business Statuses")
         viewModel.getWhatsAppBusinessStatuses()
     }
+
+    private val TAG = "FragmentStatus"
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -409,12 +453,13 @@ class FragmentStatus : Fragment() {
             val treeUri = data?.data!!
             requireActivity().contentResolver.takePersistableUriPermission(
                 treeUri,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
             if (requestCode == WHATSAPP_REQUEST_CODE) {
                 // whatsapp logic here
                 SharedPrefUtils.putPrefString(
                     SharedPrefKeys.PREF_KEY_WP_TREE_URI,
+//                    Constants.getWhatsappUri().toString()
                     treeUri.toString()
                 )
                 SharedPrefUtils.putPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, true)
@@ -436,70 +481,12 @@ class FragmentStatus : Fragment() {
 
 
     }
+
+
     fun getSavedStatuses() {
         // function to get saved statuses
         Log.d(TAG, "getSavedStatuses: Getting Saved Statuses")
         viewModel.getSavedStatuses()
-    }
-    private fun isFirstRun(): Boolean {
-        val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", MODE_PRIVATE)
-        return sharedPreferences.getBoolean("is_first_run", true)
-    }
-
-    private fun setFirstRunCompleted() {
-        val sharedPreferences = requireActivity().getSharedPreferences("app_prefs", MODE_PRIVATE)
-        with(sharedPreferences.edit()) {
-            putBoolean("is_first_run", false)
-            apply()
-        }
-    }
-    private fun getNotificationpermission(){
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                "android.permission.POST_NOTIFICATIONS"
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            // If not, request the permission
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf("android.permission.POST_NOTIFICATIONS"),
-                101
-            )
-        }
-    }
-
-    private fun dialogLogic() {
-        val dialog = Dialog(requireActivity())
-        val dialogBinding = DialogGuideBinding.inflate((this as Activity).layoutInflater)
-        dialogBinding.okayBtn.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.setContentView(dialogBinding.root)
-
-        dialog.window?.setLayout(
-            ActionBar.LayoutParams.MATCH_PARENT,
-            ActionBar.LayoutParams.WRAP_CONTENT
-        )
-
-        dialog.show()
-        setFirstRunCompleted()
-        val cancelBtn = dialog.findViewById<ImageView>(R.id.cancel_btn)
-        cancelBtn.setOnClickListener {
-            dialog.dismiss()
-        }
-    }
-    private fun isFileObserverServiceRunning(): Boolean {
-        var returnValue = false
-        val activityManager = requireContext().getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (service in activityManager.getRunningServices(Int.MAX_VALUE)) {
-            if (FileObserverService::class.java.name == service.service.className) {
-                returnValue = true
-            }
-            else{
-                returnValue = false
-            }
-        }
-        return returnValue
     }
     override fun onResume() {
         super.onResume()
@@ -510,7 +497,22 @@ class FragmentStatus : Fragment() {
                     false
                 )
                 binding.apply {
-                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
+//                    if (!isAppInstalled(requireContext(), "com.whatsapp")) {
+//                        permissionLayoutHolder.visibility = View.VISIBLE
+//                        permissionLayout.textView.text =
+//                            "You don't have Whatsapp installed in your phone"
+//                        permissionLayout.textView.textSize = 12f
+//                        permissionLayout.btnPermission.icon = null
+//                        permissionLayout.btnPermission.text = "Install WhatsApp"
+//                        permissionLayout.btnPermission.setOnClickListener {
+//                            val playStoreUri = Uri.parse("market://details?id=com.whatsapp")
+//                            val intent = Intent(Intent.ACTION_VIEW, playStoreUri)
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                            requireContext().startActivity(intent)
+//                        }
+//                    }
+
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
                             requireContext(),
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                         ) == PackageManager.PERMISSION_DENIED
@@ -562,45 +564,48 @@ class FragmentStatus : Fragment() {
                                 requireContext().startActivity(intent)
                             }
                         } else {
-                            binding.permissionLayout.textView.text = "Please Allow Permissions for Statuses"
-                            binding.permissionLayout.textView.textSize = 16f
-                            binding.permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.icons8_whatsapp)
-                            binding.permissionLayout.btnPermission.text = "Allow Permission for WhatsApp"
-                            binding.permissionLayout.btnPermission.setOnClickListener {
-                                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
-                                val dialog = Dialog(requireContext())
-                                dialog.setContentView(dialogView)
-                                dialog.window?.setLayout(
-                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.WRAP_CONTENT
-                                )
-                                dialog.show()
-                                val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
-                                dialogButton.setOnClickListener {
-                                    // Perform the desired task here
-                                    getFolderPermissions(
-                                        context = requireActivity(),
-                                        REQUEST_CODE = WHATSAPP_REQUEST_CODE,
-                                        initialUri = Constants.getWhatsappUri()
-                                    )
-                                    dialog.dismiss()
-                                }
-                                val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
-                                cancelButton.setOnClickListener {
-                                    dialog.dismiss()
-                                }
-
+//                            binding.permissionLayout.textView.text = "Please Allow Permissions for Statuses"
+//                            binding.permissionLayout.textView.textSize = 16f
+//                            binding.permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.icons8_whatsapp)
+//                            binding.permissionLayout.btnPermission.text = "Allow Permission for WhatsApp"
+//                            binding.permissionLayout.btnPermission.setOnClickListener {
+//                                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+//                                val dialog = Dialog(requireContext())
+//                                dialog.setContentView(dialogView)
+//                                dialog.window?.setLayout(
+//                                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                                    ViewGroup.LayoutParams.WRAP_CONTENT
+//                                )
+//                                dialog.show()
+//                                val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn1)
+//                                dialogButton.setOnClickListener {
+//                                    Log.d("Requesting permission of", "${Constants.WHATSAPP_PARENT_URI})")
+//
+//                                    // Perform the desired task here
+//                                    getFolderPermissions(
+//                                        context = requireActivity(),
+//                                        REQUEST_CODE = WHATSAPP_REQUEST_CODE,
+//                                        initialUri = Constants.getWhatsappUri()
+//                                    )
+//                                    dialog.dismiss()
+//                                }
+//                                val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+//                                cancelButton.setOnClickListener {
+//                                    dialog.dismiss()
+//                                }
+//
+//                            }
+                            getWhatsAppStatuses()
+                            viewModel.getSavedStatuses()
+                            binding.swipeRefreshLayout.setOnRefreshListener {
+                                refreshStatuses()
                             }
                         }
                     }
                 }
-                if (isPermissionGranted) {
-                    getWhatsAppStatuses()
-                    viewModel.getSavedStatuses()
-                    binding.swipeRefreshLayout.setOnRefreshListener {
-                        refreshStatuses()
-                    }
-                }
+//                if (isPermissionGranted) {
+//
+//                }
 
             }
             Constants.TYPE_WHATSAPP_BUSINESS -> {
@@ -609,6 +614,20 @@ class FragmentStatus : Fragment() {
                     false
                 )
                 binding.apply {
+//                    if (!isAppInstalled(requireContext(), "com.whatsapp.w4b")) {
+//                        permissionLayoutHolder.visibility = View.VISIBLE
+//                        permissionLayout.textView.text =
+//                            "You don't have Whatsapp Business installed in your phone"
+//                        permissionLayout.textView.textSize = 12f
+//                        permissionLayout.btnPermission.text = "Install WhatsApp Business"
+//                        permissionLayout.btnPermission.icon = null
+//                        permissionLayout.btnPermission.setOnClickListener {
+//                            val playStoreUri = Uri.parse("market://details?id=com.whatsapp.w4b")
+//                            val intent = Intent(Intent.ACTION_VIEW, playStoreUri)
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                            requireContext().startActivity(intent)
+//                        }
+//                    }
                     if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(
                             requireContext(),
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -661,54 +680,54 @@ class FragmentStatus : Fragment() {
                                 requireContext().startActivity(intent)
                             }
                         } else {
-                            Log.d(TAG, "wbm: WhatsApp Business both conditions met")
-                            binding.permissionLayout.textView.text = "Please Allow Permissions for Statuses"
-                            binding.permissionLayout.textView.textSize = 16f
-                            binding.permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
-                            binding.permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
-                            binding.permissionLayout.btnPermission.setOnClickListener {
-                                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
-                                val dialog = Dialog(requireContext())
-                                dialog.setContentView(dialogView)
-                                dialog.window?.setLayout(
-                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.WRAP_CONTENT
-                                )
-                                dialog.show()
-                                val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
-                                dialogButton.setOnClickListener {
-                                    // Perform the desired task here
-                                    getFolderPermissions(
-                                        context = requireActivity(),
-                                        REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
-                                        initialUri = Constants.getWhatsappBusinessUri()
-                                    )
-                                    dialog.dismiss()
-                                }
-                                val cancelButton =
-                                    dialogView.findViewById<ImageView>(R.id.cancel_btn)
-                                cancelButton.setOnClickListener {
-                                    dialog.dismiss()
-                                }
-
+//                            Log.d(TAG, "wbm: WhatsApp Business both conditions met")
+//                            binding.permissionLayout.textView.text = "Please Allow Permissions for Statuses"
+//                            binding.permissionLayout.textView.textSize = 16f
+//                            binding.permissionLayout.btnPermission.icon = resources.getDrawable(R.drawable.whatsapp_business)
+//                            binding.permissionLayout.btnPermission.text = "Allow Permission for WhatsApp Business"
+//                            binding.permissionLayout.btnPermission.setOnClickListener {
+//                                val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_permission, null)
+//                                val dialog = Dialog(requireContext())
+//                                dialog.setContentView(dialogView)
+//                                dialog.window?.setLayout(
+//                                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                                    ViewGroup.LayoutParams.WRAP_CONTENT
+//                                )
+//                                dialog.show()
+//                                val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn1)
+//                                dialogButton.setOnClickListener {
+//                                    // Perform the desired task here
+//                                    getFolderPermissions(
+//                                        context = requireActivity(),
+//                                        REQUEST_CODE = WHATSAPP_BUSINESS_REQUEST_CODE,
+//                                        initialUri = Constants.getWhatsappUri()
+//                                    )
+//                                    dialog.dismiss()
+//                                }
+//                                val cancelButton =
+//                                    dialogView.findViewById<ImageView>(R.id.cancel_btn)
+//                                cancelButton.setOnClickListener {
+//                                    dialog.dismiss()
+//                                }
+//
+//                            }
+                            getWhatsAppBusinessStatuses()
+                            viewModel.getSavedStatuses()
+                            binding.swipeRefreshLayout.setOnRefreshListener {
+                                refreshStatuses()
                             }
                         }
                     }
                 }
-                if (isPermissionGranted) {
-                    getWhatsAppBusinessStatuses()
-                    viewModel.getSavedStatuses()
-                    binding.swipeRefreshLayout.setOnRefreshListener {
-                        refreshStatuses()
-                    }
-                }
+//                if (isPermissionGranted) {
+//
+//                }
             }
 
         }
         getSavedStatuses()
 
     }
-
 
     private fun setupViewPager() {
 

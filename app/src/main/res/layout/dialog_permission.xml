@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="You'll need to allow the storge permession of .statuses folder in order to save statuses"
+            android:text="You'll need to allow the storge permession of media folder in order to save statuses"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -64,7 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/okay_btn"
+            android:id="@+id/okay_btn1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"

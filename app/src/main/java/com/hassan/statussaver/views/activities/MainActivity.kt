@@ -7,6 +7,7 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -25,8 +26,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.work.WorkManager
 import com.google.android.material.appbar.AppBarLayout
 import com.hassan.statussaver.R
@@ -37,7 +36,6 @@ import com.hassan.statussaver.services.FileObserverService
 import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.utils.SharedPrefKeys
 import com.hassan.statussaver.utils.SharedPrefUtils
-import com.hassan.statussaver.utils.getFolderPermissions
 import com.hassan.statussaver.utils.replaceFragment
 import com.hassan.statussaver.views.fragments.FragmentStatus
 import java.io.File
@@ -115,19 +113,19 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
         val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn)
         dialogButton.setOnClickListener {
-          getNotificationpermission()
           isBtnPressed = 1
-
+          getNotificationpermission()
           if((ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED)) {
             WorkManager.getInstance(this).cancelAllWork()
             val intent = Intent(this, FileObserverService::class.java)
             stopService(intent)
             val serviceIntent = Intent(this, FileObserverService::class.java)
             this.startForegroundService(serviceIntent)
+            notification_btn.visibility = View.GONE
           }
-          notification_btn.visibility = View.GONE
           dialog.dismiss()
         }
+
         val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
         cancelButton.setOnClickListener {
           dialog.dismiss()
@@ -144,7 +142,7 @@ class MainActivity : AppCompatActivity() {
           }
         }
         if (isFirstRun()) {
-          SharedPrefUtils.clearPreferences()
+//          SharedPrefUtils.clearPreferences()
           Log.d("MainActivity", "First run")
           clearAppSettings()
           dialogLogic()
@@ -188,12 +186,6 @@ class MainActivity : AppCompatActivity() {
 
       }
       settingIcon?.setOnClickListener {
-//        header.visibility = View.GONE
-//        val fragmentSettings = FragmentSettings()
-//        val bundle = Bundle()
-//        bundle.putBoolean("isBusiness", isBusiness)
-//        fragmentSettings.arguments = bundle
-//        replaceFragment(fragmentSettings)
         val intent = Intent(this, Settings::class.java)
         intent.putExtra("isBusiness", isBusiness)
         startActivity(intent)
@@ -241,11 +233,17 @@ class MainActivity : AppCompatActivity() {
       data?.data?.let { uri ->
         contentResolver.takePersistableUriPermission(
           uri,
-          Intent.FLAG_GRANT_READ_URI_PERMISSION
+          Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         )
         // Save the granted URI to SharedPreferences
-        SharedPrefUtils.setPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, uri.toString())
-        statusRepo.getAllStatuses()
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(this@MainActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED){
+
+        }
+        else{
+          SharedPrefUtils.setPrefString(SharedPrefKeys.PREF_KEY_WP_TREE_URI, uri.toString())
+          statusRepo.getAllStatuses()
+        }
+
       }
     } else {
       val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer)
@@ -281,28 +279,16 @@ class MainActivity : AppCompatActivity() {
       }
     }
   }
-//  private val fragmentLifecycleCallbacks = object : FragmentManager.FragmentLifecycleCallbacks() {
-//    override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
-//      super.onFragmentResumed(fm, f)
-//      if (f is FragmentStatus) {
-//        findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.GONE
-//      }
-//      else{
-//        findViewById<AppBarLayout>(R.id.appBarLayout).visibility = View.VISIBLE
-//      }
-//    }
-//  }
-
 
   private fun isFirstRun(): Boolean {
     val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
-    return sharedPreferences.getBoolean("isFistRun", true)
+    return sharedPreferences.getBoolean("isFirstRun", true)
   }
 
   private fun setFirstRunCompleted() {
     val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
     with(sharedPreferences.edit()) {
-      putBoolean("isFistRun", false)
+      putBoolean("isFirstRun", false)
       apply()
     }
   }
@@ -384,7 +370,6 @@ class MainActivity : AppCompatActivity() {
       ) == PackageManager.PERMISSION_DENIED || !isFileObserverServiceRunning()
     ) {
       Log.d("MainActivity", "Notification permission not granted")
-      isBtnPressed = 0
       val intent = Intent(this, FileObserverService::class.java)
       stopService(intent)
       notificationBtn.visibility = View.VISIBLE
@@ -394,11 +379,13 @@ class MainActivity : AppCompatActivity() {
       notificationBtn.visibility = View.GONE
     }
     if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED) {
+      Log.d("BtnPress", "${isBtnPressed}")
       if (!isFileObserverServiceRunning()) {
         Log.d("isFileObserverServiceRunning", "${isFileObserverServiceRunning()}")
         if (isPermissionGranted) {
           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Log.d("isFileObserverServiceRunning", "${isFileObserverServiceRunning()}")
+
             if(isBtnPressed == 1) {
               WorkManager.getInstance(this).cancelAllWork()
               val intent = Intent(this, FileObserverService::class.java)

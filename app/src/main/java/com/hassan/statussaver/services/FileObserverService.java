@@ -37,7 +37,7 @@ public class FileObserverService extends Service {
         executorService = Executors.newSingleThreadExecutor();
 
         String path;
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)) {
                     try {
@@ -59,7 +59,7 @@ public class FileObserverService extends Service {
                 fileObserverm = new FolderFileObserver(FileObserverService.this, localPath);
             });
             executorService.execute(() -> {
-                while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)) {
+                while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)) {
                     try {
                         Log.d("FileObserverService", "Waiting for WP Business permission");
                         Thread.sleep(1000); // Wait for 1 second before checking again
@@ -102,7 +102,7 @@ public class FileObserverService extends Service {
             });
 
             executorService.execute(() -> {
-                while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_BUSINESS_PERMISSION_GRANTED, false)) {
+                while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)) {
                     try {
                         Log.d("FileObserverService", "Waiting for WP Business permission");
                         Thread.sleep(1000); // Wait for 1 second before checking again
@@ -154,7 +154,7 @@ public class FileObserverService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override

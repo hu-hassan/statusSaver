@@ -17,5 +17,6 @@
     <color name="colorActiveItemNight">#fff</color>
     <color name="red">#FF0000</color>
     <color name="buttonshade">#69827f</color>
+    <color name="progressBar">#7FFFD4</color>
 
 </resources>

@@ -1,7 +1,9 @@
 package com.hassan.statussaver.views.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -49,11 +51,11 @@ class FragmentMedia : Fragment() {
                         binding.tempMediaText.visibility = View.GONE
                         binding.tempMediaText2.visibility = View.GONE
                         binding.tempMediaBtn.visibility = View.GONE
-                        viewModel.whatsAppImagesLiveData.observe(requireActivity()) { unFilteredList ->
+                        viewModel.whatsAppImagesLiveData.observe(this@FragmentMedia) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
                         binding.tempMediaBtn.setOnClickListener {
-                            val packageName = "com.whatsapp.w4b"
+                            val packageName = "com.whatsapp"
                             var intent =
                                 requireActivity().packageManager.getLaunchIntentForPackage(packageName)
                             startActivity(intent)
@@ -63,7 +65,7 @@ class FragmentMedia : Fragment() {
                         binding.tempMediaText.visibility = View.GONE
                         binding.tempMediaText2.visibility = View.GONE
                         binding.tempMediaBtn.visibility = View.GONE
-                        viewModel.whatsAppVideosLiveData.observe(requireActivity()) { unFilteredList ->
+                        viewModel.whatsAppVideosLiveData.observe(this@FragmentMedia) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
                         binding.tempMediaBtn.setOnClickListener {
@@ -163,9 +165,9 @@ class FragmentMedia : Fragment() {
         binding.mediaRecyclerView.adapter = adapter
 
         // Show or hide the temporary text based on whether the final list is empty
-        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-        binding.tempMediaText2.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-        binding.tempMediaBtn.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaText.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp")) View.VISIBLE else View.GONE
+        binding.tempMediaText2.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp")) View.VISIBLE else View.GONE
+        binding.tempMediaBtn.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp")) View.VISIBLE else View.GONE
     }
     private fun updateUIB(unFilteredList: ArrayList<MediaModel>) {
         // Create a copy of the unfiltered list to avoid concurrent modification issues
@@ -196,9 +198,9 @@ class FragmentMedia : Fragment() {
         binding.mediaRecyclerView.adapter = adapter
 
         // Show or hide the temporary text based on whether the final list is empty
-        binding.tempMediaText.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-        binding.tempMediaText2.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
-        binding.tempMediaBtn.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        binding.tempMediaText.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp.w4b")) View.VISIBLE else View.GONE
+        binding.tempMediaText2.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp.w4b")) View.VISIBLE else View.GONE
+        binding.tempMediaBtn.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp.w4b")) View.VISIBLE else View.GONE
     }
 
     private fun updateUIforSaved(unFilteredList: ArrayList<MediaModel>) {
@@ -283,6 +285,16 @@ class FragmentMedia : Fragment() {
                     }
                 }
             }
+        }
+    }
+    fun isAppInstalled(context: Context, packageName: String): Boolean {
+        return try {
+            context.packageManager.getPackageInfo(packageName, 0)
+            Log.d("FragmentMedia", "isAppInstalled: App Installed")
+            true
+        } catch (e: PackageManager.NameNotFoundException) {
+            Log.d("FragmentMedia", "isAppInstalled: App Not Installed")
+            false
         }
     }
 }
