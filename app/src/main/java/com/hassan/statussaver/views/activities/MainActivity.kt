@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         if (isFirstRun()) {
 //          SharedPrefUtils.clearPreferences()
           Log.d("MainActivity", "First run")
-          clearAppSettings()
+//          clearAppSettings()
           dialogLogic()
         }
         requestPermission()
@@ -281,12 +281,12 @@ class MainActivity : AppCompatActivity() {
   }
 
   private fun isFirstRun(): Boolean {
-    val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+    val sharedPreferences = getSharedPreferences("app_prefs1", MODE_PRIVATE)
     return sharedPreferences.getBoolean("isFirstRun", true)
   }
 
   private fun setFirstRunCompleted() {
-    val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+    val sharedPreferences = getSharedPreferences("app_prefs1", MODE_PRIVATE)
     with(sharedPreferences.edit()) {
       putBoolean("isFirstRun", false)
       apply()

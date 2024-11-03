@@ -19,6 +19,7 @@
         android:maxSdkVersion="29"
         tools:ignore="ScopedStorage" />
 
+    <!--        android:name=".application.MyApp"-->
 
     <application
         android:allowBackup="true"
@@ -30,7 +31,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StatusSaver"
         tools:targetApi="tiramisu"
-        android:name=".application.MyApp"
         android:enableOnBackInvokedCallback="true"
         android:requestLegacyExternalStorage="true">
         <activity android:name=".views.activities.SendMessageActivity" />

@@ -4,12 +4,16 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.hassan.statussaver.R;
 import com.hassan.statussaver.utils.SharedPrefKeys;
@@ -24,6 +28,7 @@ public class FileObserverService extends Service {
     private FolderFileObserver fileObserverb;
     private ExecutorService executorService;
 
+
       @Override
     public void onCreate() {
         super.onCreate();
@@ -37,7 +42,7 @@ public class FileObserverService extends Service {
         executorService = Executors.newSingleThreadExecutor();
 
         String path;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             executorService.execute(() -> {
                 while (!SharedPrefUtils.INSTANCE.getPrefBoolean(SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED, false)) {
                     try {

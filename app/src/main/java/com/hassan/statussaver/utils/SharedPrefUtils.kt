@@ -18,7 +18,6 @@ object SharedPrefUtils {
             "${context.getString(R.string.app_name).replace(" ", "_")}_prefs",
             Context.MODE_PRIVATE
         )
-//            preferences.edit().clear().apply()  // Clear all existing preferences
     }
     fun clearPreferences() {
         preferences.edit().clear().apply()  // Clear all existing preferences

@@ -40,23 +40,23 @@ class SplashScreen : AppCompatActivity() {
     private val WHATSAPP_REQUEST_CODE = 101
     var isWmSAvailable: Boolean = true
     var isWbSAvailable: Boolean = true
-    private var progress = 0
-    private val handler = Handler(Looper.getMainLooper())
-    private val delayMillis: Long = 2000 // 2 seconds delay
-    private val intervalMillis: Int = 100 // Update progress every 100ms
-    private lateinit var runnable: Runnable
-
+    private var loaderStarted = false // Flag to track if loader has started
+    private var mainActivityLaunched = false
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         // Initialize SharedPrefUtils
-        SharedPrefUtils.init(this)
-        if (isFirstRun()) {
+        Log.d("SplashScreen", "onCreate: Initializing SharedPrefUtils")
+        SharedPrefUtils.init(this@SplashScreen)
+        if(isFirstRun()){
+            Log.d("SplashScreen", "Clearing prefrences")
+            Log.d("isFirstRun()", "${isFirstRun()}")
             SharedPrefUtils.clearPreferences()
             setFirstRunCompleted()
         }
         requestPermission()
+
 
         binding.apply {
             val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
@@ -100,7 +100,7 @@ class SplashScreen : AppCompatActivity() {
                     loadBar.visibility = View.GONE
                     permissionBtn.visibility = View.VISIBLE
                     permissionBtn.text = "View Status in Whatsapp"
-                    permissionBtn.setOnClickListener {
+                    permissionBtn.setOnClickListener{
                         val packageName = "com.whatsapp"
                         var intent =
                             this@SplashScreen.packageManager.getLaunchIntentForPackage(packageName)
@@ -112,7 +112,7 @@ class SplashScreen : AppCompatActivity() {
                     loadBar.visibility = View.GONE
                     permissionBtn.visibility = View.VISIBLE
                     permissionBtn.text = "View Status in Whatsapp Business"
-                    permissionBtn.setOnClickListener {
+                    permissionBtn.setOnClickListener{
                         val packageName = "com.whatsapp.w4b"
                         var intent =
                             this@SplashScreen.packageManager.getLaunchIntentForPackage(packageName)
@@ -120,59 +120,168 @@ class SplashScreen : AppCompatActivity() {
                     }
                     Toast.makeText(this@SplashScreen, "Please view statuses in Whatsapp Business", Toast.LENGTH_SHORT).show()
                 } else {
-                    permissionBtn.visibility = View.GONE
-                    loadBar.indeterminateDrawable.setColorFilter(
-                        ContextCompat.getColor(this@SplashScreen, R.color.progressBar),
-                        android.graphics.PorterDuff.Mode.SRC_IN
-                    )
-                    loadBar.visibility = View.VISIBLE
+                    if (!loaderStarted && !mainActivityLaunched) {
+                        loaderStarted = true
+                        permissionBtn.visibility = View.GONE
+                        loadBar.indeterminateDrawable.setColorFilter(
+                            ContextCompat.getColor(this@SplashScreen, R.color.progressBar),
+                            android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                        loadBar.visibility = View.VISIBLE
 
-                    runnable = object : Runnable {
-                        override fun run() {
-                            if (progress < delayMillis) {
-                                loadBar.progress = (progress * 100 / delayMillis).toInt()
-                                progress += intervalMillis
-                                handler.postDelayed(this, intervalMillis.toLong())
-                            } else {
-                                val bundle = Bundle().apply {
-                                    putString(
-                                        Constants.FRAGMENT_TYPE_KEY,
-                                        Constants.TYPE_WHATSAPP_MAIN
-                                    )
-                                }
+                        val handler = Handler(Looper.getMainLooper())
+                        val delayMillis: Long = 2000 // 3 seconds delay
+                        val intervalMillis: Int = 100 // Update progress every 100ms
 
-                                val intent =
-                                    Intent(this@SplashScreen, MainActivity::class.java).apply {
-                                        putExtras(bundle)
+                        val runnable = object : Runnable {
+                            var progress = 0
+                            override fun run() {
+                                if (progress < delayMillis) {
+                                    loadBar.progress = (progress * 100 / delayMillis).toInt()
+                                    progress += intervalMillis
+                                    handler.postDelayed(this, intervalMillis.toLong())
+                                } else if (!mainActivityLaunched) { // Double-check flag before launching
+                                    mainActivityLaunched = true
+                                    val bundle = Bundle().apply {
+                                        putString(
+                                            Constants.FRAGMENT_TYPE_KEY,
+                                            Constants.TYPE_WHATSAPP_MAIN
+                                        )
                                     }
 
-                                startActivity(intent)
-                                finish()
+                                    val intent =
+                                        Intent(this@SplashScreen, MainActivity::class.java).apply {
+                                            putExtras(bundle)
+                                        }
+                                    startActivity(intent)
+                                    finish()
+                                }
                             }
                         }
+                        handler.post(runnable)
                     }
-                    handler.post(runnable)
                 }
             }
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        handler.removeCallbacks(runnable)
-    }
-
     override fun onResume() {
         super.onResume()
-        handler.post(runnable)
+
+        binding.apply {
+            val isPermissionGranted = SharedPrefUtils.getPrefBoolean(
+                SharedPrefKeys.PREF_KEY_WP_PERMISSION_GRANTED,
+                false
+            )
+            if (!isPermissionGranted) {
+                permissionBtn.visibility = View.VISIBLE
+                permissionBtn.setOnClickListener {
+                    val dialogView = LayoutInflater.from(this@SplashScreen).inflate(R.layout.dialog_permission, null)
+                    val dialog = Dialog(this@SplashScreen)
+                    dialog.setContentView(dialogView)
+                    dialog.window?.setLayout(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                    dialog.show()
+                    val dialogButton = dialogView.findViewById<Button>(R.id.okay_btn1)
+                    dialogButton.setOnClickListener {
+                        Log.d("Requesting permission of", "${Constants.WHATSAPP_PARENT_URI})")
+
+                        // Perform the desired task here
+                        getFolderPermissions(
+                            context = this@SplashScreen,
+                            REQUEST_CODE = WHATSAPP_REQUEST_CODE,
+                            initialUri = Constants.getWhatsappUri()
+                        )
+                        dialog.dismiss()
+                    }
+                    val cancelButton = dialogView.findViewById<ImageView>(R.id.cancel_btn)
+                    cancelButton.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                }
+            } else {
+                isWSExist()
+                Log.d("SplashScreen", "isWmSAvailable: $isWmSAvailable")
+                Log.d("SplashScreen", "isWbSAvailable: $isWbSAvailable")
+                if (!isWmSAvailable) {
+                    Log.d("SplashScreen omCreate", "Whatsapp Status Folder not found")
+                    loadBar.visibility = View.GONE
+                    permissionBtn.visibility = View.VISIBLE
+                    permissionBtn.text = "View Status in Whatsapp"
+                    permissionBtn.setOnClickListener{
+                        val packageName = "com.whatsapp"
+                        var intent =
+                            this@SplashScreen.packageManager.getLaunchIntentForPackage(packageName)
+                        startActivity(intent)
+                    }
+                    Toast.makeText(this@SplashScreen, "Please view statuses in Whatsapp", Toast.LENGTH_SHORT).show()
+
+                } else if (!isWbSAvailable) {
+                    loadBar.visibility = View.GONE
+                    permissionBtn.visibility = View.VISIBLE
+                    permissionBtn.text = "View Status in Whatsapp Business"
+                    permissionBtn.setOnClickListener{
+                        val packageName = "com.whatsapp.w4b"
+                        var intent =
+                            this@SplashScreen.packageManager.getLaunchIntentForPackage(packageName)
+                        startActivity(intent)
+                    }
+                    Toast.makeText(this@SplashScreen, "Please view statuses in Whatsapp Business", Toast.LENGTH_SHORT).show()
+                } else {
+                    if (!loaderStarted && !mainActivityLaunched) {
+                        loaderStarted = true
+                        permissionBtn.visibility = View.GONE
+                        loadBar.indeterminateDrawable.setColorFilter(
+                            ContextCompat.getColor(this@SplashScreen, R.color.progressBar),
+                            android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                        loadBar.visibility = View.VISIBLE
+
+                        val handler = Handler(Looper.getMainLooper())
+                        val delayMillis: Long = 2000 // 3 seconds delay
+                        val intervalMillis: Int = 100 // Update progress every 100ms
+
+                        val runnable = object : Runnable {
+                            var progress = 0
+                            override fun run() {
+                                if (progress < delayMillis) {
+                                    loadBar.progress = (progress * 100 / delayMillis).toInt()
+                                    progress += intervalMillis
+                                    handler.postDelayed(this, intervalMillis.toLong())
+                                } else if (!mainActivityLaunched) { // Double-check flag before launching
+                                    mainActivityLaunched = true
+                                    val bundle = Bundle().apply {
+                                        putString(
+                                            Constants.FRAGMENT_TYPE_KEY,
+                                            Constants.TYPE_WHATSAPP_MAIN
+                                        )
+                                    }
+
+                                    val intent =
+                                        Intent(this@SplashScreen, MainActivity::class.java).apply {
+                                            putExtras(bundle)
+                                        }
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
+                        }
+                        handler.post(runnable)
+                    }
+                }
+            }
+        }
     }
+
     private fun isFirstRun(): Boolean {
-        val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("app_pref", MODE_PRIVATE)
         return sharedPreferences.getBoolean("isFirstRun", true)
     }
 
     private fun setFirstRunCompleted() {
-        val sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("app_pref", MODE_PRIVATE)
         with(sharedPreferences.edit()) {
             putBoolean("isFirstRun", false)
             apply()
@@ -308,7 +417,6 @@ class SplashScreen : AppCompatActivity() {
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE2)
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE), PERMISSION_REQUEST_CODE3)
 
-//        Toast.makeText(activity, "Please Grant Permissions", Toast.LENGTH_SHORT).show()
             }
         }
     }

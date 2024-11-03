@@ -37,6 +37,7 @@ public class FolderFileObserver extends FileObserver {
 
 
 
+
     public FolderFileObserver(Context context, String path) {
         super(path, FileObserver.ALL_EVENTS);
         this.context = context;
@@ -239,8 +240,19 @@ private static long lastNotificationTime = 0;
                         folderUri = folder1.findFile("com.whatsapp.w4b").findFile("WhatsApp Business").findFile("Media").findFile(".Statuses").getUri();
                     }
                 } catch (NullPointerException e) {
-                    Log.e("FolderPath", "NullPointerException occurred: " + e.getMessage());
-                    folderUri = null;
+                    try{
+                        if (folderPath.equals(SharedPrefKeys.getWhatsappDirectoryAdress10m().getAbsolutePath())) {
+                            Log.d("FolderPath", "checkForModifications: " + folderPath);
+                            folderUri = folder1.findFile("Android").findFile("media").findFile("com.whatsapp").findFile("WhatsApp").findFile("Media").findFile(".Statuses").getUri();
+                        }
+                        else{
+                            folderUri = folder1.findFile("Android").findFile("media").findFile("com.whatsapp.w4b").findFile("WhatsApp Business").findFile("Media").findFile(".Statuses").getUri();
+
+                        }
+                    }catch (NullPointerException e2) {
+                        Log.e("FolderPath", "NullPointerException occurred: " + e2.getMessage());
+                        folderUri = null;
+                    }
                 }
                 try {
                     DocumentFile folder = DocumentFile.fromTreeUri(context, folderUri);
