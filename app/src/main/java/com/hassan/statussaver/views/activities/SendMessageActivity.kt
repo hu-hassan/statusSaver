@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.activities
 
+import BaseActivity
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -12,7 +13,7 @@ import com.hassan.statussaver.databinding.ActivitySendMessageBinding
 import com.google.android.material.appbar.MaterialToolbar
 import com.hbb20.CountryCodePicker
 
-class SendMessageActivity : AppCompatActivity() {
+class SendMessageActivity : BaseActivity() {
     private val binding by lazy {
         ActivitySendMessageBinding.inflate(layoutInflater)
     }
@@ -27,7 +28,7 @@ class SendMessageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        performAction()
         isBusiness = intent.getBooleanExtra("isBusiness", false)
 
         countryCodePicker = findViewById(R.id.country_code)

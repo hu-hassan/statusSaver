@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.activities
 
+import BaseActivity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class VideosPreview : AppCompatActivity() {
+class VideosPreview : BaseActivity() {
     private val activity = this
     private val binding by lazy {
         ActivityVideosPreviewBinding.inflate(layoutInflater)
@@ -32,6 +33,7 @@ class VideosPreview : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        performAction()
         val header = findViewById<MaterialToolbar>(R.id.tool_bar)
         header.setNavigationOnClickListener {
             finish()

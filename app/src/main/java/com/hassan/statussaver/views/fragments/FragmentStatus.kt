@@ -89,7 +89,7 @@ class FragmentStatus : Fragment() {
 
                 type = it.getString(Constants.FRAGMENT_TYPE_KEY, "")
 
-                mediaAdapter = when (type) {
+                 when (type) {
                     Constants.TYPE_WHATSAPP_MAIN -> {
                         // check permission
                         // granted then fetch statuses
@@ -180,13 +180,21 @@ class FragmentStatus : Fragment() {
 //
 //
 //                        }
-
-                         MediaViewPagerAdapter(
+                        val viewPagerAdaoter = MediaViewPagerAdapter(
                             requireActivity(),
                             imagesType = Constants.MEDIA_TYPE_WHATSAPP_IMAGES,
                             videosType = Constants.MEDIA_TYPE_WHATSAPP_VIDEOS,
                             savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
                         )
+                        statusViewPager.adapter = viewPagerAdaoter
+                        setupViewPager()
+
+//                        MediaViewPagerAdapter(
+//                            requireActivity(),
+//                            imagesType = Constants.MEDIA_TYPE_WHATSAPP_IMAGES,
+//                            videosType = Constants.MEDIA_TYPE_WHATSAPP_VIDEOS,
+//                            savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
+//                        )
 
 //                        statusViewPager.adapter = mediaAdapter
 //                        setupViewPager()
@@ -323,12 +331,14 @@ class FragmentStatus : Fragment() {
 //                            }
 //
 //                        }
-                         MediaViewPagerAdapter(
+                        val viewPagerAdaoter =MediaViewPagerAdapter(
                             requireActivity(),
                             imagesType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES,
                             videosType = Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS,
                             savedType = Constants.MEDIA_TYPE_WHATSAPP_SAVED
                         )
+                        statusViewPager.adapter = viewPagerAdaoter
+                        setupViewPager()
 
 //                        statusViewPager.adapter = mediaAdapter
 //                        setupViewPager()
@@ -344,8 +354,7 @@ class FragmentStatus : Fragment() {
                     }
                     else -> throw IllegalStateException("Unexpected type $type")
                 }
-                statusViewPager.adapter = mediaAdapter
-                setupViewPager()
+
             }
 
         }

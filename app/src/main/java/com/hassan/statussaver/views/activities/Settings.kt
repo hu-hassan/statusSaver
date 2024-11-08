@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.activities
 
+import BaseActivity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActionBar
@@ -44,7 +45,7 @@ import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.utils.SharedPrefKeys
 import com.hassan.statussaver.utils.SharedPrefUtils
 
-class Settings : AppCompatActivity() {
+class Settings : BaseActivity() {
     private val activity = this
     private val binding by lazy {
         ActivitySettingsBinding.inflate(layoutInflater)
@@ -62,7 +63,7 @@ class Settings : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         SharedPrefUtils.init(this)
-
+        performAction()
         isBusiness = intent.getBooleanExtra("isBusiness", false)
         if (ContextCompat.checkSelfPermission(this, "android.permission.POST_NOTIFICATIONS") == PackageManager.PERMISSION_GRANTED){
             notificationState = true

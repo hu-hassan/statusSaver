@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.adapters
 
+import BaseActivity
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -53,6 +54,9 @@ class VideoPreviewAdapter(val list: ArrayList<MediaModel>, val context: Context)
                             mediaModel.isDownloaded = true
                             tools.text.text = "Saved"
                             tools.statusDownload.setImageResource(R.drawable.ic_downloaded)
+                            if (context is BaseActivity) {
+                                (context as BaseActivity).performAction()
+                            }
                         } else {
                             // Unable to download status
                             Toast.makeText(context, "Unable to Save", Toast.LENGTH_SHORT).show()

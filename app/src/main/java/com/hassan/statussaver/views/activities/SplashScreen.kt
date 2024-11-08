@@ -6,30 +6,30 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Process
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.documentfile.provider.DocumentFile
 import com.hassan.statussaver.R
 import com.hassan.statussaver.databinding.ActivitySplashBinding
 import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.utils.SharedPrefKeys
 import com.hassan.statussaver.utils.SharedPrefUtils
-import android.os.Handler
-import android.os.Looper
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.documentfile.provider.DocumentFile
 import com.hassan.statussaver.utils.getFolderPermissions
-import java.net.URLDecoder
+import com.hassan.statussaver.viewmodels.factories.StatusViewModel
 import kotlin.properties.Delegates
 
 class SplashScreen : AppCompatActivity() {
@@ -37,7 +37,8 @@ class SplashScreen : AppCompatActivity() {
     private val binding by lazy {
         ActivitySplashBinding.inflate(layoutInflater)
     }
-    private val WHATSAPP_REQUEST_CODE = 101
+    var isFirstRun1 : Boolean = true
+    val WHATSAPP_REQUEST_CODE = 101
     var isWmSAvailable: Boolean = true
     var isWbSAvailable: Boolean = true
     private var loaderStarted = false // Flag to track if loader has started
@@ -53,7 +54,8 @@ class SplashScreen : AppCompatActivity() {
             Log.d("SplashScreen", "Clearing prefrences")
             Log.d("isFirstRun()", "${isFirstRun()}")
             SharedPrefUtils.clearPreferences()
-            setFirstRunCompleted()
+            val sharedPreferences = getSharedPreferences("app_prefs1", MODE_PRIVATE)
+            sharedPreferences.edit().clear().apply()
         }
         requestPermission()
 
@@ -274,7 +276,13 @@ class SplashScreen : AppCompatActivity() {
             }
         }
     }
+    class AppSession {
+        companion object {
+            var isFirstRun = true
+        }
+    }
 
+    // Usage
     private fun isFirstRun(): Boolean {
         val sharedPreferences = getSharedPreferences("app_pref", MODE_PRIVATE)
         return sharedPreferences.getBoolean("isFirstRun", true)
@@ -370,6 +378,7 @@ class SplashScreen : AppCompatActivity() {
             }
                 if(isAppInstalled(this@SplashScreen,"com.whatsapp") && (wmPath == null || !wmPath.exists())){
                     if((wmPath2 == null || !wmPath2.exists())){
+                        isFirstRun1 = true
                         isWmSAvailable = false
                     }
                     else{
@@ -385,6 +394,7 @@ class SplashScreen : AppCompatActivity() {
                 ?.findFile("Media")?.findFile(".Statuses")
             if(isAppInstalled(this@SplashScreen,"com.whatsapp.w4b") && (wbPath == null || !wbPath.exists())){
                 if((wbPath2 == null || !wbPath2.exists())){
+//                    isFirstRun1 = true
                     isWbSAvailable = false
                 }
                 else{

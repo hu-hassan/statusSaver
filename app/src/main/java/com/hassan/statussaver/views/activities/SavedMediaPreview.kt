@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.activities
 
+import BaseActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -14,13 +15,14 @@ import com.hassan.statussaver.utils.Constants
 import com.hassan.statussaver.views.adapters.SavedPreviewAdapter
 import com.hassan.statussaver.views.adapters.VideoPreviewAdapter
 
-class SavedMediaPreview : AppCompatActivity() {
+class SavedMediaPreview : BaseActivity() {
     private lateinit var binding: ActivitySavedPreviewBinding
     private lateinit var adapter: SavedPreviewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySavedPreviewBinding.inflate(layoutInflater)
+        performAction()
         setContentView(binding.root)
         val header = findViewById<MaterialToolbar>(R.id.tool_bar)
         header.setNavigationOnClickListener {

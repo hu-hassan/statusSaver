@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hassan.statussaver.R
 import com.hassan.statussaver.data.StatusRepo
 import com.hassan.statussaver.databinding.FragmentMediaBinding
@@ -33,6 +35,8 @@ class FragmentMedia : Fragment() {
     private val binding by lazy {
         FragmentMediaBinding.inflate(layoutInflater)
     }
+//private var _binding: FragmentMediaBinding = null!!
+
     lateinit var viewModel: StatusViewModel
     lateinit var adapter: MediaAdapter
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -145,7 +149,7 @@ class FragmentMedia : Fragment() {
 
         // Iterate over the filtered list and add/remove elements based on conditions
         filteredList.forEach { model ->
-            if (isStatusExistInStatuses(model.fileName) || isStatusExistInBStatuses(model.fileName)) {
+            if (isStatusExistInStatuses(model.fileName)) {
                 Log.d("FragmentMedia", "updateUI: ${model.fileName}")
                 list.add(model)
             } else {
@@ -163,6 +167,7 @@ class FragmentMedia : Fragment() {
         // Update the adapter with the final list
         adapter = MediaAdapter(ArrayList(list), activity, false)
         binding.mediaRecyclerView.adapter = adapter
+
 
         // Show or hide the temporary text based on whether the final list is empty
         binding.tempMediaText.visibility = if (list.isEmpty() && isAppInstalled(requireContext(),"com.whatsapp")) View.VISIBLE else View.GONE
@@ -238,6 +243,26 @@ class FragmentMedia : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = binding.root
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//            arguments?.let {
+//                val repo = StatusRepo(requireActivity())
+//                viewModel = ViewModelProvider(
+//                    requireActivity(),
+//                    StatusViewModelFactory(repo)
+//                )[StatusViewModel::class.java]
+//                val mediaType = it.getString(Constants.MEDIA_TYPE_KEY, "")
+//                if(mediaType == Constants.MEDIA_TYPE_WHATSAPP_SAVED){
+//                    adapter = MediaAdapter(ArrayList(), requireActivity(), true)
+//                }
+//                else{
+//                    adapter = MediaAdapter(ArrayList(), requireActivity(), false)
+//                }
+//            }
+////        adapter = MediaAdapter(ArrayList(), requireActivity(), false)
+//        binding.mediaRecyclerView.adapter = adapter
+//    }
+
     override fun onResume() {
         super.onResume()
         binding.tempMediaText.visibility = View.GONE
@@ -254,39 +279,45 @@ class FragmentMedia : Fragment() {
                 val mediaType = it.getString(Constants.MEDIA_TYPE_KEY, "")
                 when (mediaType) {
                     Constants.MEDIA_TYPE_WHATSAPP_IMAGES -> {
-                        viewModel.whatsAppImagesLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                        viewModel.whatsAppImagesLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_VIDEOS -> {
-                        viewModel.whatsAppVideosLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                        viewModel.whatsAppVideosLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUI(unFilteredList)
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_IMAGES -> {
 
-                        viewModel.whatsAppBusinessImagesLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                        viewModel.whatsAppBusinessImagesLiveData.observe(requireActivity()) { unFilteredList ->
                             Log.d("FragmentMedia", "Whatsapp Business update ui calling")
                             Log.d("FragmentMedia", "Whatsapp Business size given to update ui ${unFilteredList.size}")
                             updateUIB(unFilteredList)
                         }
                     }
                     Constants.MEDIA_TYPE_WHATSAPP_BUSINESS_VIDEOS -> {
-                        viewModel.whatsAppBusinessVideosLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                        viewModel.whatsAppBusinessVideosLiveData.observe(requireActivity()) { unFilteredList ->
                             Log.d("FragmentMedia", "Whatsapp Business update ui calling")
                             Log.d("FragmentMedia", "Whatsapp Business size given to update ui ${unFilteredList.size}")
                             updateUIB(unFilteredList)
                         }
                     }
                         Constants.MEDIA_TYPE_WHATSAPP_SAVED -> {
-                        viewModel.wpSavedStatusLiveData.observe(viewLifecycleOwner) { unFilteredList ->
+                        viewModel.wpSavedStatusLiveData.observe(requireActivity()) { unFilteredList ->
                             updateUIforSaved(unFilteredList)
                         }
                     }
                 }
             }
         }
+//        recyclerView?.layoutManager?.scrollToPosition(scrollPosition)
+
     }
+//    override fun onPause() {
+//        super.onPause()
+//        scrollPosition = (recyclerView?.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
+//    }
     fun isAppInstalled(context: Context, packageName: String): Boolean {
         return try {
             context.packageManager.getPackageInfo(packageName, 0)

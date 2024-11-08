@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.activities
 
+import BaseActivity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +17,7 @@ import com.hassan.statussaver.views.adapters.ImagePreviewAdapter
 import com.google.android.material.appbar.MaterialToolbar
 import com.hassan.statussaver.models.MEDIA_TYPE_VIDEO
 
-class ImagesPreview : AppCompatActivity() {
+class ImagesPreview : BaseActivity() {
     private val activity = this
     private val binding by lazy {
         ActivityImagesPreviewBinding.inflate(layoutInflater)
@@ -25,6 +26,7 @@ class ImagesPreview : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        performAction()
         val header = findViewById<MaterialToolbar>(R.id.tool_bar)
         header.setNavigationOnClickListener {
             finish()

@@ -1,5 +1,6 @@
 package com.hassan.statussaver.views.adapters
 
+import BaseActivity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.hassan.statussaver.R
@@ -23,6 +25,27 @@ import com.hassan.statussaver.views.activities.VideosPreview
 
 class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isSavedTab: Boolean) :
     RecyclerView.Adapter<MediaAdapter.ViewHolder>() {
+    class MediaDiffCallback(
+        private val oldList: List<MediaModel>,
+        private val newList: List<MediaModel>
+    ) : DiffUtil.Callback() {
+        override fun getOldListSize() = oldList.size
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            oldList[oldItemPosition].fileName == newList[newItemPosition].fileName
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+            oldList[oldItemPosition] == newList[newItemPosition]
+    }
+    fun updateData(newList: List<MediaModel>) {
+        val diffCallback = MediaDiffCallback(list, newList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        list.clear()
+        list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
 
     inner class ViewHolder(val binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(mediaModel: MediaModel) {
@@ -42,6 +65,7 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isS
                 if(isSavedTab){
                     statusDownload.visibility = View.GONE
                     cardStatus.setOnClickListener {
+
                         Intent().apply {
                             putExtra(Constants.MEDIA_LIST_KEY,list)
                             putExtra(Constants.MEDIA_SCROLL_KEY,layoutPosition)
@@ -89,6 +113,9 @@ class MediaAdapter(val list: ArrayList<MediaModel>, val context: Context,val isS
                             statusDownload.setImageResource(R.drawable.ic_downloaded)
                             // Optionally show a toast message for confirmation
                             Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
+                            if (context is BaseActivity) {
+                                (context as BaseActivity).performAction()
+                            }
                         } else {
                             // Handle the failure to download status
                             Toast.makeText(context, "Unable to save status", Toast.LENGTH_SHORT).show()

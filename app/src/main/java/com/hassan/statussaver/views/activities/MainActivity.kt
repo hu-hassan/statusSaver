@@ -1,6 +1,7 @@
 package com.hassan.statussaver.views.activities
 
 
+import BaseActivity
 import android.Manifest
 import android.app.ActionBar
 import android.app.Activity
@@ -41,7 +42,7 @@ import com.hassan.statussaver.views.fragments.FragmentStatus
 import java.io.File
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
   private val activity = this
   private val binding by lazy {
     ActivityMainBinding.inflate(layoutInflater)
@@ -153,6 +154,7 @@ class MainActivity : AppCompatActivity() {
         bundle.putString(Constants.FRAGMENT_TYPE_KEY, Constants.TYPE_WHATSAPP_MAIN)
         replaceFragment(fragmentWhatsapp, bundle)
         findViewById<TextView>(R.id.item1).setOnClickListener {
+          performAction()
           grayShade.visibility = View.GONE
           buttonIcon?.visibility = View.VISIBLE
           text?.visibility = View.VISIBLE
@@ -165,6 +167,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         findViewById<TextView>(R.id.item2).setOnClickListener {
+          performAction()
           grayShade.visibility = View.GONE
           buttonIcon?.visibility = View.VISIBLE
           text?.visibility = View.VISIBLE
