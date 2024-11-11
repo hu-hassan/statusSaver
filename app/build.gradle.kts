@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "com.hassan.statussaver"
+    namespace = "com.tenmillionapps.statussaver"
     compileSdk = 34
 
     defaultConfig {
         buildFeatures{
             viewBinding = true
         }
-        applicationId = "com.hassan.statussaver"
+        applicationId = "com.tenmillionapps.statussaver"
         minSdk = 24
         //noinspection EditedTargetSdkVersion
         targetSdk = 34

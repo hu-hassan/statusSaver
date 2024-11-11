@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hassan.statussaver">
+    package="com.tenmillionapps.statussaver">
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -22,8 +22,8 @@
     <!--        android:name=".application.MyApp"-->
 
     <application
-        android:allowBackup="true"
-        android:fullBackupContent="@xml/backup_rules"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -33,15 +33,15 @@
         tools:targetApi="tiramisu"
         android:enableOnBackInvokedCallback="true"
         android:requestLegacyExternalStorage="true">
-        <activity android:name=".views.activities.SendMessageActivity" />
+        <activity android:name="com.tenmillionapps.statussaver.views.activities.SendMessageActivity" />
         <activity
-            android:name=".views.activities.ImagesPreview"
+            android:name="com.tenmillionapps.statussaver.views.activities.ImagesPreview"
             android:exported="false" />
         <activity
-            android:name=".views.activities.VideosPreview"
+            android:name="com.tenmillionapps.statussaver.views.activities.VideosPreview"
             android:exported="false" />
         <activity
-            android:name=".views.activities.MainActivity"
+            android:name="com.tenmillionapps.statussaver.views.activities.MainActivity"
             android:exported="true"
             >
 <!--            <intent-filter>-->
@@ -50,7 +50,7 @@
 <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name=".views.activities.SplashScreen"
+            android:name="com.tenmillionapps.statussaver.views.activities.SplashScreen"
             android:exported="true"
             >
             <intent-filter>
@@ -59,13 +59,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.activities.SavedMediaPreview"
+            android:name="com.tenmillionapps.statussaver.views.activities.SavedMediaPreview"
             android:exported="false" />
         <activity
-            android:name=".views.activities.Settings"
+            android:name="com.tenmillionapps.statussaver.views.activities.Settings"
             android:exported="false" />
 
-        <service android:name=".services.FileObserverService"
+        <service android:name="com.tenmillionapps.statussaver.services.FileObserverService"
             android:foregroundServiceType="dataSync"/>
         <provider
             android:name="androidx.core.content.FileProvider"
