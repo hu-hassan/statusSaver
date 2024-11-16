@@ -60,7 +60,7 @@ open class BaseActivity : AppCompatActivity() {
                     dialogButton.backgroundTintList = ContextCompat.getColorStateList(this@BaseActivity, R.color.colorPrimary)
                     dialogButton.setOnClickListener {
                         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                            data = Uri.parse("mailto:hassan.hu.usman@gmail.com?subject=" + Uri.encode("Feedback of Status Saver App"))
+                            data = Uri.parse("mailto:10millionapps@gmail.com?subject=" + Uri.encode("Feedback of Status Saver App"))
                         }
                         this@BaseActivity.startActivity(Intent.createChooser(emailIntent, "Send email..."))
                         dialog.dismiss()

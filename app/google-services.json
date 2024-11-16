@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "972615393100",
+    "project_id": "status-saver-a3f00",
+    "storage_bucket": "status-saver-a3f00.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:972615393100:android:effb176ac0230c2b0839e9",
+        "android_client_info": {
+          "package_name": "com.tenmillionapps.statussaver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGe9jiYl8vgKl6bF4fIToI3VcUbjBwyeo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

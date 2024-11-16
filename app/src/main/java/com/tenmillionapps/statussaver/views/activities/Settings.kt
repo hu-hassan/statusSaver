@@ -106,8 +106,8 @@ class Settings : BaseActivity() {
             )
             list.add(
                 SettingsModel(
-                    title = "Disclaimer",
-                    desc = "Read Our Disclaimer"
+                    title = "Feedback",
+                    desc = "Report bugs and tell us what to improve"
                 )
             )
             list.add(
@@ -198,15 +198,20 @@ class Settings : BaseActivity() {
                                 // Handle Save in Folder click
                             }
                             3 -> {
-                                MaterialAlertDialogBuilder(context).apply {
-                                    setTitle("Disclaimer")
-                                    setMessage("We do not collect any data from user")
-                                    setPositiveButton("Okay", null)
-                                    show()
+//                                MaterialAlertDialogBuilder(context).apply {
+//                                    setTitle("Disclaimer")
+//                                    setMessage("We do not collect any data from user")
+//                                    setPositiveButton("Okay", null)
+//                                    show()
+//                                }
+                                val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
+                                    data = Uri.parse("mailto:10millionapps@gmail.com?subject=" + Uri.encode("Feedback of Status Saver App"))
                                 }
+                                context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
+//                                dialog.dismiss()
                             }
                             4 -> {
-                                Intent(Intent.ACTION_VIEW, Uri.parse("https://gimmypieapps.blogspot.com/p/status-saver-privacy-policy.html?m=1")).apply {
+                                Intent(Intent.ACTION_VIEW, Uri.parse("https://tenmillionapps.blogspot.com/2024/11/status-saver-privacy-policy.html")).apply {
                                     context.startActivity(this)
                                 }
                             }
@@ -242,7 +247,7 @@ class Settings : BaseActivity() {
                                             dialogButton.backgroundTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
                                             dialogButton.setOnClickListener {
                                                 val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-                                                    data = Uri.parse("mailto:hassan.hu.usman@gmail.com?subject=" + Uri.encode("Feedback of Status Saver App"))
+                                                    data = Uri.parse("mailto:10millionapps@gmail.com?subject=" + Uri.encode("Feedback of Status Saver App"))
                                                 }
                                                 context.startActivity(Intent.createChooser(emailIntent, "Send email..."))
                                                 dialog.dismiss()
