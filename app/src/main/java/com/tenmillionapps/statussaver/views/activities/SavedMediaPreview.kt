@@ -37,6 +37,7 @@ class SavedMediaPreview : BaseActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 Log.d("SavedMediaPreview", "Page selected: $position")
+                adapter.swipe = false
                 adapter.pauseAllVideos()
                 adapter.pauseAllVideosExcept(position)
                 adapter.playVideoAtPosition(position)

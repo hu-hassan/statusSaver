@@ -30,6 +30,7 @@ class SavedPreviewAdapter(
 ) : RecyclerView.Adapter<SavedPreviewAdapter.MediaViewHolder>() {
 
     private val players = mutableMapOf<Int, ExoPlayer>()
+    var swipe = true
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MediaViewHolder {
         val binding = SavedMediaPreviewBinding.inflate(LayoutInflater.from(context), parent, false)
@@ -53,14 +54,17 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
         if (mediaModel.type == "video") {
             val videoView = LayoutInflater.from(context)
                 .inflate(R.layout.item_video_preview, binding.mediaContainer, false)
-            val player = ExoPlayer.Builder(context).build()
+            binding.mediaContainer.addView(videoView)
+            val player = ExoPlayer.Builder(context).setSeekBackIncrementMs(5000).setSeekForwardIncrementMs(5000).build()
+            player.seekTo(player.currentPosition + 5000)
             videoView.findViewById<PlayerView>(R.id.player_view).player = player
             val mediaItem = MediaItem.fromUri(mediaModel.pathUri)
             player.setMediaItem(mediaItem)
             player.prepare()
             player.repeatMode = Player.REPEAT_MODE_ONE
             players[position] = player
-            binding.mediaContainer.addView(videoView)
+            player.playWhenReady = swipe
+
         } else {
             val imageView = LayoutInflater.from(context)
                 .inflate(R.layout.item_image_preview, binding.mediaContainer, false)

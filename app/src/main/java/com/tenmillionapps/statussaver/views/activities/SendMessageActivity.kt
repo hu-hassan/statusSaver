@@ -44,7 +44,7 @@ class SendMessageActivity : BaseActivity() {
 
     private fun sendMessage() {
         val countryCode = countryCodePicker.selectedCountryCodeWithPlus
-        val phoneNumber = editTextPhoneNumber.text.toString().trim()
+        var phoneNumber = editTextPhoneNumber.text.toString().trim()
         val message = editTextMessage.text.toString().trim()
 
         if (countryCode.isEmpty()) {
@@ -54,6 +54,13 @@ class SendMessageActivity : BaseActivity() {
 
         if (phoneNumber.isEmpty()) {
             showToast("Phone number is required")
+            return
+        }
+        phoneNumber = phoneNumber.replace(" ", "")
+        phoneNumber = phoneNumber.replace("-", "")
+
+        if (!phoneNumber.matches(Regex("^[0-9\\s-]+$"))) {
+            showToast("Phone number can only contain numbers, spaces, or hyphens")
             return
         }
 
