@@ -3,6 +3,7 @@ package com.tenmillionapps.statussaver.views.activities
 import BaseActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewTreeObserver
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.tenmillionapps.statussaver.R
@@ -24,6 +25,8 @@ class SavedMediaPreview : BaseActivity() {
         header.setNavigationOnClickListener {
             finish()
         }
+
+        Log.d("SavedMediaPreview", "Doing rest of onCreate")
         val mediaList =
             intent.getSerializableExtra(Constants.MEDIA_LIST_KEY) as? ArrayList<MediaModel>
                 ?: arrayListOf()
@@ -41,12 +44,33 @@ class SavedMediaPreview : BaseActivity() {
                 adapter.pauseAllVideos()
                 adapter.pauseAllVideosExcept(position)
                 adapter.playVideoAtPosition(position)
+
+
             }
         })
+        binding.savedViewPager.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                binding.savedViewPager.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                val mediaType = getCurrentMediaType()
+
+                if (mediaType == "video") {
+                    Log.d("SavedMediaPreview", "Playing video at position: ${binding.savedViewPager.currentItem}")
+                    adapter.pauseAllVideos()
+                    adapter.pauseAllVideosExcept(binding.savedViewPager.currentItem)
+                    adapter.playVideoAtPosition(binding.savedViewPager.currentItem)
+                }
+            }
+        })
+
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
         adapter.pauseAllVideosOnDestroy()
+    }
+    fun getCurrentMediaType(): String? {
+        val currentPosition = binding.savedViewPager.currentItem
+        return adapter.getMediaTypeAtPosition(currentPosition)
     }
 }

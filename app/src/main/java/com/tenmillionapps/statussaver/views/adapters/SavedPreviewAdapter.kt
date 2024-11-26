@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.annotation.OptIn
 import androidx.core.content.FileProvider
@@ -62,8 +63,9 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
             player.setMediaItem(mediaItem)
             player.prepare()
             player.repeatMode = Player.REPEAT_MODE_ONE
+            Log.d("SavedPreviewAdapter", "bind: position=$position, players.size=${players.size}")
             players[position] = player
-            player.playWhenReady = swipe
+//            player.playWhenReady = swipe
 
         } else {
             val imageView = LayoutInflater.from(context)
@@ -241,6 +243,9 @@ inner class MediaViewHolder(private val binding: SavedMediaPreviewBinding) :
         players.forEach { (index, player) ->
             player.playWhenReady = index == position
         }
+    }
+    fun getMediaTypeAtPosition(position: Int): String? {
+        return mediaList.getOrNull(position)?.type
     }
 
 }
