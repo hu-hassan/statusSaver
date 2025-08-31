@@ -166,8 +166,6 @@ class FragmentMedia : Fragment() {
             Log.w("FragmentMedia", "Fragment is not attached to an activity")
         }
         // Update the adapter with the final list
-//        adapter = MediaAdapter(ArrayList(list), activity, false)
-//        binding.mediaRecyclerView.adapter = adapter
         adapter.updateData(ArrayList(list))
 
 
@@ -202,8 +200,6 @@ class FragmentMedia : Fragment() {
             Log.w("FragmentMedia", "Fragment is not attached to an activity")
         }
         // Update the adapter with the final list
-//        adapter = MediaAdapter(ArrayList(list), activity, false)
-//        binding.mediaRecyclerView.adapter = adapter
         adapter.updateData(ArrayList(list))
 
         // Show or hide the temporary text based on whether the final list is empty
@@ -237,8 +233,6 @@ class FragmentMedia : Fragment() {
             Log.w("FragmentMedia", "Fragment is not attached to an activity")
         }
         // Update the adapter with the final list
-//        adapter = MediaAdapter(ArrayList(list), activity, true)
-//        binding.mediaRecyclerView.adapter = adapter
         adapter.updateData(ArrayList(list))
 
 
@@ -261,7 +255,6 @@ class FragmentMedia : Fragment() {
                     adapter = MediaAdapter(ArrayList(), requireActivity(), false)
                 }
             }
-//        adapter = MediaAdapter(ArrayList(), requireActivity(), false)
         binding.mediaRecyclerView.adapter = adapter
     }
 
@@ -313,13 +306,9 @@ class FragmentMedia : Fragment() {
                 }
             }
         }
-//        recyclerView?.layoutManager?.scrollToPosition(scrollPosition)
 
     }
-//    override fun onPause() {
-//        super.onPause()
-//        scrollPosition = (recyclerView?.layoutManager as GridLayoutManager).findFirstVisibleItemPosition()
-//    }
+
     fun isAppInstalled(context: Context, packageName: String): Boolean {
         return try {
             context.packageManager.getPackageInfo(packageName, 0)
